@@ -1,19 +1,19 @@
 import produce from 'immer';
 import { createSlice, PayloadAction, CaseReducer } from '@reduxjs/toolkit';
 
-export interface TestState {
+export interface TestData {
     value: number;
 }
 
-type ValueReducer = CaseReducer<TestState, PayloadAction<number>>;
+type TestReducer = CaseReducer<TestData, PayloadAction<number>>;
 
 type TestReducers = {
-    readonly set: ValueReducer;
-    readonly inc: ValueReducer;
-    readonly dec: ValueReducer;
+    readonly set: TestReducer;
+    readonly inc: TestReducer;
+    readonly dec: TestReducer;
 };
 
-export const Test = createSlice<TestState, TestReducers>({
+export const Test = createSlice<TestData, TestReducers>({
     name: 'test',
     initialState: {
         value: 0

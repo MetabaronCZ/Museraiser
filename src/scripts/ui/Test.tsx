@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { State, AppDispatch } from 'store';
 import { Test as T } from 'modules/test';
+import { State, AppDispatch } from 'modules/store';
 
 const click = (cb: Function) => (e: React.MouseEvent) => {
     e.preventDefault();

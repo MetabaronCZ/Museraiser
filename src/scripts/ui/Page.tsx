@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 
-import { store } from 'store';
+import { store } from 'modules/store';
 
 import { Test } from 'ui/Test';
 import { Logo } from 'ui/common/Logo';
