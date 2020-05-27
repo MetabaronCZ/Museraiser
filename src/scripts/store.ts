@@ -10,3 +10,5 @@ export const store = configureStore<State>({
         test: Test.reducer
     }
 });
+
+export type AppDispatch = typeof store.dispatch;

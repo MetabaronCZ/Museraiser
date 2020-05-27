@@ -1,1 +1,53 @@
-/* */
+$font-size-small: 12px;
+$font-size-default: 14px;
+$font-size-large: 18px;
+$font-size-larger: 24px;
+
+$line-height-small: 2*$vu;
+$line-height-default: 2*$vu;
+$line-height-large: 2*$vu;
+$line-height-larger: 3*$vu;
+
+%font-regular {
+    font-family: "SourceSansPro-Regular";
+}
+
+%font-light {
+    font-family: "SourceSansPro-Light";
+}
+
+%font-bold {
+    font-family: "SourceSansPro-Semibold";
+}
+
+%text-body {
+    @extend %font-regular;
+    font-size: $font-size-default;
+    line-height: $line-height-default;
+}
+
+%text-small {
+    @extend %font-regular;
+    font-size: $font-size-small;
+    line-height: $line-height-small;
+}
+
+%text-heading-small {
+    @extend %font-bold;
+    font-size: $font-size-default;
+    line-height: $line-height-small;
+}
+
+%text-heading-default {
+    @extend %font-light;
+    font-size: $font-size-large;
+    line-height: $line-height-large;
+    text-transform: uppercase;
+}
+
+%text-heading-large {
+    @extend %font-light;
+    font-size: $font-size-larger;
+    line-height: $line-height-larger;
+    text-transform: uppercase;
+}

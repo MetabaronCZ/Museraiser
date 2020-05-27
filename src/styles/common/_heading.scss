@@ -1,0 +1,13 @@
+.Heading {
+    @extend %text-heading-default;
+    margin-bottom: 2*$vu;
+
+    &--small {
+        @extend %text-heading-small;
+        margin-bottom: $vu;
+    }
+
+    &--large {
+        @extend %text-heading-large;
+    }
+}

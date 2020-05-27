@@ -1,1 +1,26 @@
-/* */
+@font-face {
+    font-family: "SourceSansPro-Regular";
+    src:
+        url("#{$path-fonts}/SourceSansPro-Regular.woff") format("woff"),
+        url("#{$path-fonts}/SourceSansPro-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "SourceSansPro-Light";
+    src:
+        url(".#{$path-fonts}/SourceSansPro-Light.woff") format("woff"),
+        url(".#{$path-fonts}/SourceSansPro-Light.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "SourceSansPro-Semibold";
+    src:
+        url("#{$path-fonts}/SourceSansPro-Semibold.woff") format("woff"),
+        url("#{$path-fonts}/SourceSansPro-Semibold.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}

@@ -1,5 +1,7 @@
+// CSS reset
 @import "../../node_modules/normalize-scss/sass/normalize";
 
+// general
 @import "variables";
 @import "fonts";
 @import "mixins";
@@ -7,3 +9,13 @@
 
 @import "general";
 @import "utility";
+
+// common
+@import "common/paragraph";
+@import "common/heading";
+@import "common/logo";
+@import "common/copyright";
+
+// components
+@import "components/container";
+@import "components/page";

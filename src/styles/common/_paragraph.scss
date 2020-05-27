@@ -1,0 +1,4 @@
+.Paragraph {
+    @extend %text-body;
+    margin-bottom: 2*$vu;
+}

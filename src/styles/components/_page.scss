@@ -1,0 +1,19 @@
+.Page {
+    display: flex;
+    flex-direction: column;
+    min-width: 800px;
+    height: 100%;
+
+    &-header {
+        padding: 2*$vu 2*$vu $vu;
+    }
+
+    &-content {
+        flex: 1;
+        padding: $vu 2*$vu;
+    }
+
+    &-footer {
+        padding: $vu 2*$vu 2*$vu;
+    }
+}

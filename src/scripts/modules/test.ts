@@ -5,8 +5,12 @@ export interface TestState {
     value: number;
 }
 
+type ValueReducer = CaseReducer<TestState, PayloadAction<number>>;
+
 type TestReducers = {
-    readonly set: CaseReducer<TestState, PayloadAction<number>>;
+    readonly set: ValueReducer;
+    readonly inc: ValueReducer;
+    readonly dec: ValueReducer;
 };
 
 export const Test = createSlice<TestState, TestReducers>({
@@ -17,6 +21,14 @@ export const Test = createSlice<TestState, TestReducers>({
     reducers: {
         set: (state, action) => produce(state, draft => {
             draft.value = action.payload;
+            return draft;
+        }),
+        inc: (state, action) => produce(state, draft => {
+            draft.value += action.payload;
+            return draft;
+        }),
+        dec: (state, action) => produce(state, draft => {
+            draft.value -= action.payload;
             return draft;
         })
     }

@@ -8,6 +8,8 @@ const isDev = ('dev' === env);
 const createWindow = () => {
     const win = new BrowserWindow({
         icon: `${pathRoot}/icon.ico`,
+        minWidth: 800,
+        minHeight: 600,
         show: false,
         resizable: true,
         useContentSize: true,

@@ -19,3 +19,8 @@ html {
 * > :last-child {
     margin-bottom: 0 !important;
 }
+
+html,
+body {
+    height: 100%;
+}
