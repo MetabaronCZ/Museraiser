@@ -16,5 +16,27 @@ export const TXT = {
             positive: 'Yes',
             negative: 'No'
         }
+    },
+    menu: {
+        new: {
+            text: 'New',
+            title: 'Create new project'
+        },
+        open: {
+            text: 'Open',
+            title: 'Open project'
+        },
+        save: {
+            text: 'Save',
+            title: 'Save current project'
+        },
+        undo: {
+            text: 'Undo',
+            title: 'Undo operation'
+        },
+        redo: {
+            text: 'Redo',
+            title: 'Redo operation'
+        }
     }
 };

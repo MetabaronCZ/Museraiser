@@ -30,12 +30,14 @@ $line-height-larger: 3*$vu;
     @extend %font-regular;
     font-size: $font-size-small;
     line-height: $line-height-small;
+    color: $color-darkest;
 }
 
 %text-heading-small {
     @extend %font-bold;
     font-size: $font-size-default;
     line-height: $line-height-small;
+    color: $color-darkest;
 }
 
 %text-heading-default {
@@ -43,6 +45,7 @@ $line-height-larger: 3*$vu;
     font-size: $font-size-large;
     line-height: $line-height-large;
     text-transform: uppercase;
+    color: $color-darkest;
 }
 
 %text-heading-large {
@@ -50,4 +53,5 @@ $line-height-larger: 3*$vu;
     font-size: $font-size-larger;
     line-height: $line-height-larger;
     text-transform: uppercase;
+    color: $color-darkest;
 }

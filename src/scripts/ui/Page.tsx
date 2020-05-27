@@ -5,6 +5,7 @@ import { store } from 'modules/store';
 
 import { Test } from 'ui/Test';
 import { Logo } from 'ui/components/Logo';
+import { Menu } from 'ui/components/Menu';
 import { Copyright } from 'ui/components/Copyright';
 import { AppActions } from 'ui/components/AppActions';
 
@@ -16,7 +17,9 @@ export const Page: React.SFC = () => (
                     <Logo />
                 </div>
 
-                <div className="Page-header-item" />
+                <div className="Page-header-item">
+                    <Menu />
+                </div>
 
                 <div className="Page-header-item">
                     <AppActions />

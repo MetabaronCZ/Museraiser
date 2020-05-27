@@ -1,6 +1,6 @@
 .Logo {
     display: block;
     width: 200px;
-    height: 40px;
+    height: $logo-height;
     background: transparent url("#{$path-images}/logo.png") no-repeat 0 0;
 }

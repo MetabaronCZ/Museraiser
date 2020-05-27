@@ -1,0 +1,16 @@
+.Menu {
+    list-style-type: none;
+    display: inline-flex;
+    flex-direction: row;
+    padding: 2*$vu;
+
+    &-item {
+        flex: 1;
+        min-width: 8*$vu;
+    }
+
+    &-button {
+        @extend %button;
+        width: 100%;
+    }
+}

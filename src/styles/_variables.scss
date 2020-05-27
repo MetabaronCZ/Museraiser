@@ -5,7 +5,13 @@ $path-images: "../images";
 // vertical unit
 $vu: 10px;
 
+// dimensions, offsets, etc.
+$logo-height: 4*$vu;
+
 // colors
-$color-grey-lighter: #f0f0f0;
-$color-grey-light: #e0e0e0;
-$color-grey: #ccc;
+$color-darkest: #090908;
+$color-darker: #26221a;
+$color-dark: #403b31;
+$color-neutral: #a6a39f;
+$color-light: #d9d3c7;
+$color-lighter: #f2efe9;
