@@ -10,7 +10,7 @@ const click = (cb: Function) => (e: React.MouseEvent) => {
 };
 
 export const Test: React.SFC = () => {
-    const test = useSelector<State>(state => state.test.value);
+    const test = useSelector<State, number>(state => state.test.value);
     const dispatch = useDispatch<AppDispatch>();
     return (
         <div>

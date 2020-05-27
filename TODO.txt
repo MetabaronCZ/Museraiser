@@ -1,1 +1,8 @@
-...
+--  klavesove zkratky:
+    - Menu:
+        - CTRL+N >> New project
+        - CTRL+O >> Open project
+        - CTRL+S >> Save project
+        - CTRL+Z >> Undo operation
+        - CTRL+SHIFT+Z >> Redo operation
+        + napsat je za title menu itemu

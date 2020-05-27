@@ -16,4 +16,8 @@
     &:focus {
         background: $color-light;
     }
+
+    &:disabled {
+        color: $color-neutral;
+    }
 }
