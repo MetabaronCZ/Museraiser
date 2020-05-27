@@ -13,9 +13,11 @@
 // common
 @import "common/paragraph";
 @import "common/heading";
-@import "common/logo";
-@import "common/copyright";
 
 // components
 @import "components/container";
 @import "components/page";
+@import "components/logo";
+@import "components//copyright";
+@import "components/app-actions";
+@import "components/app-button";

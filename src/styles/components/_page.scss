@@ -5,7 +5,21 @@
     height: 100%;
 
     &-header {
-        padding: 2*$vu 2*$vu $vu;
+        display: flex;
+        flex-direction: row;
+
+        &-item {
+            flex: 1;
+
+            &:first-child {
+                flex: 0;
+                padding: 2*$vu 2*$vu $vu;
+            }
+
+            &:last-child {
+                flex: 0;
+            }
+        }
     }
 
     &-content {

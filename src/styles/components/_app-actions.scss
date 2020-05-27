@@ -1,0 +1,9 @@
+.AppActions {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+
+    &-item {
+        flex: 1;
+    }
+}

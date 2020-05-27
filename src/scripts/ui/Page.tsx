@@ -4,14 +4,23 @@ import { Provider } from 'react-redux';
 import { store } from 'modules/store';
 
 import { Test } from 'ui/Test';
-import { Logo } from 'ui/common/Logo';
-import { Copyright } from 'ui/common/Copyright';
+import { Logo } from 'ui/components/Logo';
+import { Copyright } from 'ui/components/Copyright';
+import { AppActions } from 'ui/components/AppActions';
 
 export const Page: React.SFC = () => (
     <Provider store={store}>
         <div className="Page">
             <header className="Page-header">
-                <Logo />
+                <div className="Page-header-item">
+                    <Logo />
+                </div>
+
+                <div className="Page-header-item" />
+
+                <div className="Page-header-item">
+                    <AppActions />
+                </div>
             </header>
 
             <main className="Page-content">

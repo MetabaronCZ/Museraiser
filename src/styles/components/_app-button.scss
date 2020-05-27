@@ -1,0 +1,12 @@
+.AppButton {
+    $button-size: 40px;
+    @extend %button-reset, %font-light;
+    width: $button-size;
+    font-size: 30px;
+    line-height: $button-size;
+
+    &:hover,
+    &:focus {
+        background: $color-grey-lighter;
+    }
+}
