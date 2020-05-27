@@ -12,8 +12,7 @@ const createWindow = () => {
         resizable: true,
         useContentSize: true,
         webPreferences: {
-            nodeIntegration: true,
-            enableRemoteModule: true
+            nodeIntegration: true
         }
     });
     win.setMenuBarVisibility(false);
