@@ -1,0 +1,21 @@
+// box-sizing reset
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+// general styles
+* {
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+* > :last-child {
+    margin-bottom: 0 !important;
+}
