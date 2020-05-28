@@ -1,9 +1,12 @@
 import produce from 'immer';
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
+import { TXT } from 'data/texts';
 import { RECENT_PROJECTS_MAX, RECENT_PROJECTS_VALUES } from 'data/config';
 
+import { ask } from 'modules/dialogue';
 import { getFileStats } from 'modules/file';
+import type { AppDispatch } from 'modules/store';
 import { loadFromStorage, saveToStorage } from 'modules/storage';
 
 const STORAGE_KEY = 'RECENT_PROJECTS';
@@ -81,3 +84,24 @@ export const RecentProjects = createSlice<RecentProjectData, RecentProjectReduce
         })
     }
 });
+
+export const removeRecentProject = (dispatch: AppDispatch, path: string): void => {
+    ask(TXT.recentProjects.remove.ask).then(result => {
+        if (result) {
+            dispatch(RecentProjects.actions.remove(path));
+        }
+    });
+};
+
+export const clearRecentProjects = (dispatch: AppDispatch): void => {
+    ask(TXT.recentProjects.clear.ask).then(result => {
+        if (result) {
+            dispatch(RecentProjects.actions.clear());
+        }
+    });
+};
+
+export const setMaxRecentFiles = (dispatch: AppDispatch, value: string): void => {
+    const max = parseInt(value, 10) as RecentProjectMaxValue;
+    dispatch(RecentProjects.actions.setMax(max));
+};

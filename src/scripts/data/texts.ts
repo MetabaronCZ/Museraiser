@@ -19,6 +19,9 @@ export const TXT = {
             question: 'Do you want to quit application? Unsaved data will be lost!'
         }
     },
+    overlay: {
+        back: 'Back'
+    },
     menu: {
         create: {
             text: 'New',
@@ -41,11 +44,6 @@ export const TXT = {
             title: 'Redo operation'
         }
     },
-    intro: {
-        title: 'Start creating',
-        create: 'Create new project',
-        open: 'Open existing project'
-    },
     recentProjects: {
         title: 'Recent projects',
         empty: 'There are no recently edited projects',
@@ -60,9 +58,16 @@ export const TXT = {
             ask: 'Do you want to remove all recent projects?'
         }
     },
+    intro: {
+        title: 'Start creating',
+        create: 'Create new project',
+        open: 'Open existing project'
+    },
+    create: {
+        title: 'Create project'
+    },
     settings: {
         title: 'Settings',
-        ico: '⚙',
-        back: 'Close'
+        ico: '⚙'
     }
 };

@@ -3,10 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { TXT } from 'data/texts';
 
-import { ask } from 'modules/dialogue';
 import { Logger } from 'modules/logger';
 import { State, AppDispatch } from 'modules/store';
-import { RecentProjectData, RecentProjects } from 'modules/recent-projects';
+import {
+    RecentProjectData, clearRecentProjects, removeRecentProject
+} from 'modules/recent-projects';
 
 import { Heading } from 'ui/common/Heading';
 import { Paragraph } from 'ui/common/Paragraph';
@@ -14,29 +15,13 @@ import { LinkButton } from 'ui/common/LinkButton';
 
 const open = (path: string) => () => Logger.log('OPEN', path);
 
-const onRemove = (dispatch: AppDispatch, path: string) => () => {
-    ask(TXT.recentProjects.remove.ask).then(result => {
-        if (result) {
-            dispatch(RecentProjects.actions.remove(path));
-        }
-    });
-};
-
-const onClear = (dispatch: AppDispatch) => () => {
-    ask(TXT.recentProjects.clear.ask).then(result => {
-        if (result) {
-            dispatch(RecentProjects.actions.clear());
-        }
-    });
-};
-
 export const RecentProjectsUI: React.SFC = () => {
     const { files } = useSelector<State, RecentProjectData>(state => state.recentProjects);
     const dispatch = useDispatch<AppDispatch>();
     const hasProjects = (files.length > 0);
 
     const clearButton = (
-        <LinkButton onClick={onClear(dispatch)}>
+        <LinkButton onClick={() => clearRecentProjects(dispatch)}>
             {TXT.recentProjects.clear.title}
         </LinkButton>
     );
@@ -69,7 +54,7 @@ export const RecentProjectsUI: React.SFC = () => {
                                     <div className="RecentProjects-item-actions">
                                         <LinkButton
                                             title={TXT.recentProjects.remove.title}
-                                            onClick={onRemove(dispatch, path)}
+                                            onClick={() => removeRecentProject(dispatch, path)}
                                         >
                                             {TXT.recentProjects.remove.ico}
                                         </LinkButton>

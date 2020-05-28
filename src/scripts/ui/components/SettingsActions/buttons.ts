@@ -1,7 +1,7 @@
 import { TXT } from 'data/texts';
 
-import { Settings } from 'modules/settings';
 import { AppDispatch } from 'modules/store';
+import { openOverlay } from 'modules/overlay';
 
 interface ButtonItem {
     readonly id: string;
@@ -15,6 +15,6 @@ export const getSettingsButtons = (dispatch: AppDispatch): ButtonItem[] => ([
         id: 'SETTINGS',
         title: TXT.settings.title,
         ico: TXT.settings.ico,
-        onClick: () => dispatch(Settings.actions.toggle())
+        onClick: () => openOverlay(dispatch, 'SETTINGS')
     }
 ]);

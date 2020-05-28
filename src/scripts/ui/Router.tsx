@@ -2,21 +2,28 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { State } from 'modules/store';
-import { ProjectData } from 'modules/project';
+import { OverlayData } from 'modules/overlay';
+import { ProjectDataState } from 'modules/project';
 
 import { IntroUI } from 'ui/components/Intro';
+import { CreateUI } from 'ui/components/Create';
 import { ProjectUI } from 'ui/components/Project';
 import { SettingsUI } from 'ui/components/Settings';
 
 export const RouterUI: React.SFC = () => {
-    const project = useSelector<State, ProjectData | null>(state => state.project);
-    const settings = useSelector<State, ProjectData | null>(state => state.settings.active);
+    const overlay = useSelector<State, OverlayData>(state => state.overlay);
+    const project = useSelector<State, ProjectDataState>(state => state.project);
 
-    if (settings) {
-        return <SettingsUI />;
+    switch (overlay) {
+        case 'CREATE':
+            return <CreateUI />;
+        case 'SETTINGS':
+            return <SettingsUI />;
+        default:
+            // pass
     }
     if (project) {
-        return <ProjectUI data={project} />;
+        return <ProjectUI />;
     }
     return <IntroUI />;
 };
