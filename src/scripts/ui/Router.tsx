@@ -8,7 +8,7 @@ import { IntroUI } from 'ui/components/Intro';
 import { ProjectUI } from 'ui/components/Project';
 import { SettingsUI } from 'ui/components/Settings';
 
-export const ContentUI: React.SFC = () => {
+export const RouterUI: React.SFC = () => {
     const project = useSelector<State, ProjectData | null>(state => state.project);
     const settings = useSelector<State, ProjectData | null>(state => state.settings.active);
 

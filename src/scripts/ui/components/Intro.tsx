@@ -6,13 +6,14 @@ import { Logger } from 'modules/logger';
 import { List } from 'ui/common/List';
 import { Heading } from 'ui/common/Heading';
 import { LinkButton } from 'ui/common/LinkButton';
+import { ContentUI } from 'ui/components/Content';
 import { RecentProjectsUI } from 'ui/components/RecentProjects';
 
 const create = (): void => Logger.log('CREATE');
 const open = (): void => Logger.log('OPEN');
 
 export const IntroUI: React.SFC = () => (
-    <div className="Intro">
+    <ContentUI>
         <Heading size="large" text={TXT.intro.title} />
         <List>
             <LinkButton onClick={create}>{TXT.intro.create}</LinkButton>
@@ -20,5 +21,5 @@ export const IntroUI: React.SFC = () => (
         </List>
 
         <RecentProjectsUI />
-    </div>
+    </ContentUI>
 );

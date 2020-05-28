@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 
 import { store } from 'modules/store';
 
-import { ContentUI } from 'ui/Content';
+import { RouterUI } from 'ui/Router';
 import { Logo } from 'ui/components/Logo';
 import { Menu } from 'ui/components/Menu';
 import { Copyright } from 'ui/components/Copyright';
@@ -28,15 +28,15 @@ export const PageUI: React.SFC = () => (
             </header>
 
             <main className="Page-content">
-                <ContentUI />
+                <RouterUI />
             </main>
 
             <footer className="Page-footer">
-                <div className="Page-footer-item">
+                <div className="Page-footer-copyright">
                     <Copyright />
                 </div>
 
-                <div className="Page-footer-item">
+                <div className="Page-footer-actions">
                     <SettingsActions />
                 </div>
             </footer>

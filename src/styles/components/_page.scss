@@ -41,21 +41,16 @@
     }
 
     &-footer {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-end;
-        padding-left: 2*$vu;
+        position: relative;
 
-        &-item {
-            flex: 1;
+        &-copyright {
+            padding: $vu 2*$vu 2*$vu;
+        }
 
-            &:first-child {
-                padding: $vu 2*$vu 2*$vu 35%;
-            }
-
-            &:last-child {
-                flex: 0;
-            }
+        &-actions {
+            position: absolute;
+            bottom: 0;
+            right: 0;
         }
     }
 }
