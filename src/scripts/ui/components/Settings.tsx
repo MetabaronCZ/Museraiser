@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { TXT } from 'data/texts';
 import { RECENT_PROJECTS_VALUES } from 'data/config';
 
-import { State, AppDispatch } from 'modules/store';
+import { AppState, AppDispatch } from 'modules/store';
 import { setMaxRecentFiles, RecentProjectData } from 'modules/recent-projects';
 
 import { Heading } from 'ui/common/Heading';
@@ -19,7 +19,7 @@ const options = createSelectOptions(Array.from(RECENT_PROJECTS_VALUES), value =>
 }));
 
 export const SettingsUI: React.SFC = () => {
-    const recentProjects = useSelector<State, RecentProjectData>(state => state.recentProjects);
+    const recentProjects = useSelector<AppState, RecentProjectData>(state => state.recentProjects);
     const dispatch = useDispatch<AppDispatch>();
     return (
         <OverlayUI title={TXT.settings.title}>

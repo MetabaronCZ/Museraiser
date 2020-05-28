@@ -3,16 +3,14 @@ import { useDispatch } from 'react-redux';
 
 import { TXT } from 'data/texts';
 
-import { Logger } from 'modules/logger';
 import { AppDispatch } from 'modules/store';
 import { openOverlay } from 'modules/overlay';
+import { selectProject } from 'modules/project';
 
 import { List } from 'ui/common/List';
 import { OverlayUI } from 'ui/components/Overlay';
 import { LinkButton } from 'ui/common/LinkButton';
 import { RecentProjectsUI } from 'ui/components/RecentProjects';
-
-const open = (): void => Logger.log('OPEN');
 
 export const IntroUI: React.SFC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -23,7 +21,9 @@ export const IntroUI: React.SFC = () => {
                     {TXT.intro.create}
                 </LinkButton>
 
-                <LinkButton onClick={open}>{TXT.intro.open}</LinkButton>
+                <LinkButton onClick={() => selectProject(dispatch)}>
+                    {TXT.intro.open}
+                </LinkButton>
             </List>
 
             <RecentProjectsUI />

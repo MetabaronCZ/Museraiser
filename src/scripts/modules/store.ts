@@ -4,13 +4,13 @@ import { OverlayData, Overlay } from 'modules/overlay';
 import { ProjectDataState, Project } from 'modules/project';
 import { RecentProjectData, RecentProjects } from 'modules/recent-projects';
 
-export interface State {
+export interface AppState {
     readonly overlay: OverlayData;
     readonly project: ProjectDataState;
     readonly recentProjects: RecentProjectData;
 }
 
-export const store = configureStore<State>({
+export const store = configureStore<AppState>({
     reducer: {
         overlay: Overlay.reducer,
         project: Project.reducer,

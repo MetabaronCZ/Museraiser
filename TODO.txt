@@ -1,3 +1,6 @@
+--  pridat extra button k OverlayUI
+--  u REDO a UNDO menu itemu kontrolovat project.redo.length, apod.
+--  u "ask" dialogu ohledne ulozenych dat kontrolovat, jestli je projekt zmenen
 --  klavesove zkratky:
     - Menu:
         - CTRL+N >> New project

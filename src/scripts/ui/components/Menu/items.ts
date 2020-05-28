@@ -1,10 +1,14 @@
 import React from 'react';
 
 import { TXT } from 'data/texts';
-import { State } from 'modules/store';
-import { Logger } from 'modules/logger';
 
-const { create, open, save, undo, redo } = TXT.menu;
+import { openOverlay } from 'modules/overlay';
+import { AppState, AppDispatch } from 'modules/store';
+import {
+    closeProject, saveProject, selectProject, undoProject, redoProject
+} from 'modules/project';
+
+const { create, open, save, undo, redo, close } = TXT.menu;
 
 type OnClick = () => void;
 type OnMouseClick = (e: React.MouseEvent) => void;
@@ -22,40 +26,47 @@ interface MenuItem {
     readonly onClick: OnMouseClick;
 }
 
-export const getMenuItems = (state: State): MenuItem[] => [
+export const getMenuItems = (state: AppState, dispatch: AppDispatch): MenuItem[] => [
     {
         id: 'CREATE',
         text: create.text,
         title: create.title,
         disabled: false,
-        onClick: click(() => Logger.log('CREATE'))
+        onClick: click(() => openOverlay(dispatch, 'CREATE'))
     },
     {
         id: 'OPEN',
         text: open.text,
         title: open.title,
         disabled: false,
-        onClick: click(() => Logger.log('OPEN'))
+        onClick: click(() => selectProject(dispatch))
     },
     {
         id: 'SAVE',
         text: save.text,
         title: save.title,
         disabled: true,
-        onClick: click(() => Logger.log('SAVE'))
+        onClick: click(() => saveProject(dispatch))
     },
     {
         id: 'UNDO',
         text: undo.text,
         title: undo.title,
         disabled: true,
-        onClick: click(() => Logger.log('UNDO'))
+        onClick: click(() => undoProject(dispatch))
     },
     {
         id: 'REDO',
         text: redo.text,
         title: redo.title,
         disabled: true,
-        onClick: click(() => Logger.log('REDO'))
+        onClick: click(() => redoProject(dispatch))
+    },
+    {
+        id: 'CLOSE',
+        text: close.text,
+        title: close.title,
+        disabled: !state.project,
+        onClick: click(() => closeProject(dispatch))
     }
 ];

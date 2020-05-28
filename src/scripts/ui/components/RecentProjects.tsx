@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { TXT } from 'data/texts';
 
-import { Logger } from 'modules/logger';
-import { State, AppDispatch } from 'modules/store';
+import { openProject } from 'modules/project';
+import { AppState, AppDispatch } from 'modules/store';
 import {
     RecentProjectData, clearRecentProjects, removeRecentProject
 } from 'modules/recent-projects';
@@ -13,10 +13,8 @@ import { Heading } from 'ui/common/Heading';
 import { Paragraph } from 'ui/common/Paragraph';
 import { LinkButton } from 'ui/common/LinkButton';
 
-const open = (path: string) => () => Logger.log('OPEN', path);
-
 export const RecentProjectsUI: React.SFC = () => {
-    const { files } = useSelector<State, RecentProjectData>(state => state.recentProjects);
+    const { files } = useSelector<AppState, RecentProjectData>(state => state.recentProjects);
     const dispatch = useDispatch<AppDispatch>();
     const hasProjects = (files.length > 0);
 
@@ -44,7 +42,7 @@ export const RecentProjectsUI: React.SFC = () => {
                                     <div className="RecentProjects-item-title">
                                         <LinkButton
                                             title={path}
-                                            onClick={open(path)}
+                                            onClick={() => openProject(dispatch, path)}
                                             limited
                                         >
                                             {title}

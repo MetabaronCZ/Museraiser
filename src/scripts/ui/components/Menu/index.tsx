@@ -1,12 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { State } from 'modules/store';
+import { AppState, AppDispatch } from 'modules/store';
 import { getMenuItems } from 'ui/components/Menu/items';
 
 export const Menu: React.SFC = () => {
-    const state = useSelector<State, State>(s => s);
-    const items = getMenuItems(state);
+    const state = useSelector<AppState, AppState>(s => s);
+    const dispatch = useDispatch<AppDispatch>();
+    const items = getMenuItems(state, dispatch);
     return (
         <ul className="Menu">
             {items.map(({ id, text, title, disabled, onClick }) => (

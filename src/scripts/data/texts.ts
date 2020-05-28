@@ -42,6 +42,10 @@ export const TXT = {
         redo: {
             text: 'Redo',
             title: 'Redo operation'
+        },
+        close: {
+            text: 'Close',
+            title: 'Close current project'
         }
     },
     recentProjects: {
@@ -64,10 +68,16 @@ export const TXT = {
         open: 'Open existing project'
     },
     create: {
-        title: 'Create project'
+        title: 'Create project',
+        new: 'Create'
     },
     settings: {
         title: 'Settings',
         ico: '⚙'
+    },
+    project: {
+        close: {
+            ask: 'Do you want to close project? Unsaved data will be lost!'
+        }
     }
 };
