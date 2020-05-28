@@ -8,7 +8,6 @@ import { Logger } from 'modules/logger';
 import { State, AppDispatch } from 'modules/store';
 import { RecentProjectData, RecentProjects } from 'modules/recent-projects';
 
-import { List } from 'ui/common/List';
 import { Heading } from 'ui/common/Heading';
 import { Paragraph } from 'ui/common/Paragraph';
 import { LinkButton } from 'ui/common/LinkButton';
@@ -51,13 +50,13 @@ export const RecentProjectsUI: React.SFC = () => {
             {(!hasProjects
                 ? <Paragraph>{TXT.recentProjects.empty}</Paragraph>
                 : (
-                    <List>
+                    <ul className="RecentProjects">
                         {projects.map((path, i) => {
                             const parts = path.split('/');
                             const title = parts[parts.length - 1];
                             return (
-                                <div className="RecentProject" key={i}>
-                                    <div className="RecentProject-title">
+                                <li className="RecentProjects-item" key={i}>
+                                    <div className="RecentProjects-item-title">
                                         <LinkButton
                                             title={path}
                                             onClick={open(path)}
@@ -67,7 +66,7 @@ export const RecentProjectsUI: React.SFC = () => {
                                         </LinkButton>
                                     </div>
 
-                                    <div className="RecentProject-actions">
+                                    <div className="RecentProjects-item-actions">
                                         <LinkButton
                                             title={TXT.recentProjects.remove.title}
                                             onClick={onRemove(dispatch, path)}
@@ -75,10 +74,10 @@ export const RecentProjectsUI: React.SFC = () => {
                                             {TXT.recentProjects.remove.ico}
                                         </LinkButton>
                                     </div>
-                                </div>
+                                </li>
                             );
                         })}
-                    </List>
+                    </ul>
                 )
             )}
         </>

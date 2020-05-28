@@ -1,0 +1,21 @@
+.RecentProjects {
+    list-style-type: none;
+    overflow-y: auto;
+    max-height: 30*$vu;
+
+    &-item {
+        @extend %text-body;
+        display: flex;
+        flex-direction: row;
+
+        &-title {
+            flex: 1;
+            min-width: 0; // for text truncation take effect
+        }
+        
+        &-actions {
+            font-size: $font-size-large;
+            padding-left: $vu;
+        }
+    }
+}
