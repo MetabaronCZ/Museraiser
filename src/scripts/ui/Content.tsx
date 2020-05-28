@@ -6,12 +6,17 @@ import { ProjectData } from 'modules/project';
 
 import { IntroUI } from 'ui/components/Intro';
 import { ProjectUI } from 'ui/components/Project';
+import { SettingsUI } from 'ui/components/Settings';
 
 export const ContentUI: React.SFC = () => {
     const project = useSelector<State, ProjectData | null>(state => state.project);
+    const settings = useSelector<State, ProjectData | null>(state => state.settings.active);
 
-    if (!project) {
-        return <IntroUI />;
+    if (settings) {
+        return <SettingsUI />;
     }
-    return <ProjectUI data={project} />;
+    if (project) {
+        return <ProjectUI data={project} />;
+    }
+    return <IntroUI />;
 };

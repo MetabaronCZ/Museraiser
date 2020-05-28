@@ -1,5 +1,7 @@
 import { TXT } from 'data/texts';
-import { Logger } from 'modules/logger';
+
+import { Settings } from 'modules/settings';
+import { AppDispatch } from 'modules/store';
 
 interface ButtonItem {
     readonly id: string;
@@ -8,8 +10,11 @@ interface ButtonItem {
     readonly onClick: () => void;
 }
 
-const showSettings = (): void => Logger.log('SETTINGS');
-
-export const settingsButtons: ButtonItem[] = [
-    { id: 'SETTINGS', title: TXT.settings.title, ico: TXT.settings.ico, onClick: showSettings }
-];
+export const getSettingsButtons = (dispatch: AppDispatch): ButtonItem[] => ([
+    {
+        id: 'SETTINGS',
+        title: TXT.settings.title,
+        ico: TXT.settings.ico,
+        onClick: () => dispatch(Settings.actions.toggle())
+    }
+]);
