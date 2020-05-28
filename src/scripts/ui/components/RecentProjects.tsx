@@ -31,9 +31,9 @@ const onClear = (dispatch: AppDispatch) => () => {
 };
 
 export const RecentProjectsUI: React.SFC = () => {
-    const projects = useSelector<State, RecentProjectData>(state => state.recentProjects);
+    const { files } = useSelector<State, RecentProjectData>(state => state.recentProjects);
     const dispatch = useDispatch<AppDispatch>();
-    const hasProjects = (projects.length > 0);
+    const hasProjects = (files.length > 0);
 
     const clearButton = (
         <LinkButton onClick={onClear(dispatch)}>
@@ -51,7 +51,7 @@ export const RecentProjectsUI: React.SFC = () => {
                 ? <Paragraph>{TXT.recentProjects.empty}</Paragraph>
                 : (
                     <ul className="RecentProjects">
-                        {projects.map((path, i) => {
+                        {files.map((path, i) => {
                             const parts = path.split('/');
                             const title = parts[parts.length - 1];
                             return (
