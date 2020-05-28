@@ -1,7 +1,9 @@
 import React from 'react';
 
+const year = new Date().getFullYear();
+
 export const Copyright: React.SFC = () => (
     <div className="Copyright">
-        Copyright © {new Date().getFullYear()} Milan K.
+        Copyright © {year} Milan K.
     </div>
 );

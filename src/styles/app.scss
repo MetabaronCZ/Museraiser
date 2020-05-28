@@ -13,6 +13,8 @@
 // common
 @import "common/paragraph";
 @import "common/heading";
+@import "common/list";
+@import "common/link-button";
 
 // components
 @import "components/container";
@@ -22,3 +24,5 @@
 @import "components/app-actions";
 @import "components/app-button";
 @import "components/menu";
+@import "components/intro";
+@import "components/recent-project";

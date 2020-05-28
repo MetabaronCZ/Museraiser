@@ -3,13 +3,11 @@ import { remote } from 'electron';
 import { TXT } from 'data/texts';
 import { ask } from 'modules/dialogue';
 
-type OnClick = () => void;
-
 interface ButtonItem {
     readonly id: string;
     readonly title: string;
     readonly ico: string;
-    readonly onClick: OnClick;
+    readonly onClick: () => void;
 }
 
 const minimize = (): void => {
@@ -27,12 +25,11 @@ const maximize = (): void => {
 };
 
 const close = (): void => {
-    ask(TXT.app.close.question, TXT.app.close.positive, TXT.app.close.negative)
-        .then(result => {
-            if (result) {
-                remote.getCurrentWindow().close();
-            }
-        });
+    ask(TXT.app.close.question).then(result => {
+        if (result) {
+            remote.getCurrentWindow().close();
+        }
+    });
 };
 
 export const appButtons: ButtonItem[] = [

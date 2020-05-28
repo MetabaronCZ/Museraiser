@@ -1,10 +1,21 @@
 .Heading {
     @extend %text-heading-default;
-    margin-bottom: 2*$vu;
+    display: flex;
+    margin: 2*$vu 0 $vu;
+
+    &-text {
+        flex: 1;
+    }
+
+    &-extra {
+        @extend %text-body;
+        font-weight: normal;
+        vertical-align: middle;
+    }
 
     &--small {
         @extend %text-heading-small;
-        margin-bottom: $vu;
+        margin-bottom: 0;
     }
 
     &--large {

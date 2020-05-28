@@ -2,9 +2,9 @@ import React from 'react';
 import { render } from 'react-dom';
 
 import { TXT } from 'data/texts';
-import { Page } from 'ui/Page';
+import { PageUI } from 'ui/Page';
 
 document.title = TXT.app.title;
 
 const root = document.querySelector('.Container');
-render(<Page />, root);
+render(<PageUI />, root);

@@ -4,7 +4,7 @@ import { TXT } from 'data/texts';
 import { State } from 'modules/store';
 import { Logger } from 'modules/logger';
 
-const { new: create, open, save, undo, redo } = TXT.menu;
+const { create, open, save, undo, redo } = TXT.menu;
 
 type OnClick = () => void;
 type OnMouseClick = (e: React.MouseEvent) => void;
@@ -24,11 +24,11 @@ interface MenuItem {
 
 export const getMenuItems = (state: State): MenuItem[] => [
     {
-        id: 'NEW',
+        id: 'CREATE',
         text: create.text,
         title: create.title,
         disabled: false,
-        onClick: click(() => Logger.log('NEW'))
+        onClick: click(() => Logger.log('CREATE'))
     },
     {
         id: 'OPEN',

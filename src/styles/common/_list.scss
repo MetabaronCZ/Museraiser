@@ -1,0 +1,8 @@
+.List {
+    list-style-type: none;
+    margin-bottom: 2*$vu;
+
+    &-item {
+        @extend %text-body;
+    }
+}

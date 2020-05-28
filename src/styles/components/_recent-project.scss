@@ -1,0 +1,13 @@
+.RecentProject {
+    display: flex;
+    flex-direction: row;
+
+    &-title {
+        flex: 1;
+        min-width: 0; // for text truncation take effect
+    }
+    
+    &-actions {
+        padding-left: $vu;
+    }
+}

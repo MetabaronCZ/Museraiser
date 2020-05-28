@@ -1,4 +1,8 @@
 export const TXT = {
+    dialogue: {
+        positive: 'Yes',
+        negative: 'No'
+    },
     app: {
         title: 'Museraiser',
         minimize: {
@@ -12,13 +16,11 @@ export const TXT = {
         close: {
             ico: '×',
             title: 'Close window',
-            question: 'Do you want to quit application? Unsaved data will be lost!',
-            positive: 'Yes',
-            negative: 'No'
+            question: 'Do you want to quit application? Unsaved data will be lost!'
         }
     },
     menu: {
-        new: {
+        create: {
             text: 'New',
             title: 'Create new project'
         },
@@ -37,6 +39,24 @@ export const TXT = {
         redo: {
             text: 'Redo',
             title: 'Redo operation'
+        }
+    },
+    intro: {
+        title: 'Start creating',
+        create: 'Create new project',
+        open: 'Open existing project'
+    },
+    recentProjects: {
+        title: 'Recent projects',
+        empty: 'There are no recently edited projects',
+        remove: {
+            title: 'Remove recent project',
+            ico: '×',
+            ask: 'Do you want to remove recent project?'
+        },
+        clear: {
+            title: 'Clear',
+            ask: 'Do you want to remove all recent projects?'
         }
     }
 };

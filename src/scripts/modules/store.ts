@@ -1,21 +1,21 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { TestData, Test } from 'modules/test';
 import { SettingsData, Settings } from 'modules/settings';
+import { ProjectDataState, Project } from 'modules/project';
+import { RecentProjectData, RecentProjects } from 'modules/recent-projects';
 
 export interface State {
-    readonly test: TestData;
+    readonly project: ProjectDataState;
     readonly settings: SettingsData;
+    readonly recentProjects: RecentProjectData;
 }
 
 export const store = configureStore<State>({
     reducer: {
-        test: Test.reducer,
-        settings: Settings.reducer
+        project: Project.reducer,
+        settings: Settings.reducer,
+        recentProjects: RecentProjects.reducer
     }
 });
 
 export type AppDispatch = typeof store.dispatch;
-
-// init
-store.dispatch(Settings.actions.load());

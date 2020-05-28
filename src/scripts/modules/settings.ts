@@ -1,7 +1,6 @@
-import produce from 'immer';
 import { createSlice, PayloadAction, CaseReducer } from '@reduxjs/toolkit';
 
-import { Logger } from 'modules/logger';
+import { loadFromStorage, saveToStorage } from 'modules/storage';
 
 const STORAGE_KEY = 'SETTINGS';
 
@@ -9,31 +8,25 @@ export interface SettingsData {
     /* */
 }
 
+const load = (): SettingsData => {
+    return loadFromStorage<SettingsData>(STORAGE_KEY, {});
+};
+
+const save = (state: SettingsData): void => {
+    saveToStorage<SettingsData>(STORAGE_KEY, state);
+};
+
 type SettingsReducers = {
-    readonly load: CaseReducer<SettingsData, PayloadAction>;
-    readonly save: CaseReducer<SettingsData, PayloadAction<SettingsData>>;
+    readonly test: CaseReducer<SettingsData, PayloadAction>;
 };
 
 export const Settings = createSlice<SettingsData, SettingsReducers>({
     name: 'settings',
-    initialState: {},
+    initialState: load(),
     reducers: {
-        load: state => produce(state, draft => {
-            const saved = localStorage.getItem(STORAGE_KEY) || '';
-            try {
-                return JSON.parse(saved) as Storage;
-            } catch (err) {
-                Logger.error(err);
-                return draft;
-            }
-        }),
-        save: state => {
-            try {
-                const data = JSON.stringify(state);
-                localStorage.setItem(STORAGE_KEY, data);
-            } catch (err) {
-                Logger.error(err);
-            }
+        test: state => {
+            save(state);
+            return state;
         }
     }
 });

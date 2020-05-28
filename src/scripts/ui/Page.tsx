@@ -3,13 +3,13 @@ import { Provider } from 'react-redux';
 
 import { store } from 'modules/store';
 
-import { Test } from 'ui/Test';
+import { ContentUI } from 'ui/Content';
 import { Logo } from 'ui/components/Logo';
 import { Menu } from 'ui/components/Menu';
 import { Copyright } from 'ui/components/Copyright';
 import { AppActions } from 'ui/components/AppActions';
 
-export const Page: React.SFC = () => (
+export const PageUI: React.SFC = () => (
     <Provider store={store}>
         <div className="Page">
             <header className="Page-header">
@@ -27,7 +27,7 @@ export const Page: React.SFC = () => (
             </header>
 
             <main className="Page-content">
-                <Test />
+                <ContentUI />
             </main>
 
             <footer className="Page-footer">
