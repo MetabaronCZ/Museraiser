@@ -5,10 +5,21 @@ import { TXT } from 'data/texts';
 import { ask } from 'modules/dialogue';
 import { Logger } from 'modules/logger';
 import type { AppDispatch } from 'modules/store';
+import { ProjectFile, createProjectFile } from 'modules/project/file';
 
 export interface ProjectData {
-    /* */
+    readonly file: ProjectFile;
+    readonly undo: ProjectFile[];
+    readonly redo: ProjectFile[];
+    saved: boolean;
 }
+export const createProjectData = (): ProjectData => ({
+    file: createProjectFile(),
+    saved: false,
+    undo: [],
+    redo: []
+});
+
 export type ProjectDataState = ProjectData | null;
 
 type ProjectReducers = {
@@ -25,8 +36,8 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
     }
 });
 
-export const createProject = (dispatch: AppDispatch, data: ProjectData): void => {
-    Logger.log('CREATE PROJECT', data);
+export const setProject = (dispatch: AppDispatch, data: ProjectData): void => {
+    Logger.log('SET PROJECT DATA', data);
 };
 
 export const openProject = (dispatch: AppDispatch, path: string): void => {
