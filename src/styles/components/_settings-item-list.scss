@@ -1,0 +1,8 @@
+.SettingsItemList {
+    list-style-type: none;
+    margin-bottom: 2*$vu;
+
+    &-item {
+        margin-bottom: $vu;
+    }
+}

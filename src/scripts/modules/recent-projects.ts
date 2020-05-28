@@ -1,23 +1,21 @@
 import produce from 'immer';
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
-import {
-    MAX_RECENT_PROJECTS,
-    RECENT_PROJECTS_BOTTOM_LIMIT,
-    RECENT_PROJECTS_TOP_LIMIT
-} from 'data/config';
+import { RECENT_PROJECTS_MAX, RECENT_PROJECTS_VALUES } from 'data/config';
 
 import { getFileStats } from 'modules/file';
 import { loadFromStorage, saveToStorage } from 'modules/storage';
 
 const STORAGE_KEY = 'RECENT_PROJECTS';
 
+export type RecentProjectMaxValue = typeof RECENT_PROJECTS_VALUES[number];
+
 export interface RecentProjectData {
     max: number;
     files: string[]
 }
 const createRecentProjectData = (): RecentProjectData => ({
-    max: MAX_RECENT_PROJECTS,
+    max: RECENT_PROJECTS_MAX,
     files: []
 });
 
@@ -25,7 +23,7 @@ type RecentProjectReducers = {
     readonly add: CaseReducer<RecentProjectData, PayloadAction<string>>;
     readonly remove: CaseReducer<RecentProjectData, PayloadAction<string>>;
     readonly clear: CaseReducer<RecentProjectData, PayloadAction>;
-    readonly setMax: CaseReducer<RecentProjectData, PayloadAction<number>>;
+    readonly setMax: CaseReducer<RecentProjectData, PayloadAction<RecentProjectMaxValue>>;
 };
 
 const projectExists = (path: string): boolean => {
@@ -75,8 +73,9 @@ export const RecentProjects = createSlice<RecentProjectData, RecentProjectReduce
         setMax: (state, action) => produce(state, draft => {
             const max = action.payload;
 
-            if (max >= RECENT_PROJECTS_BOTTOM_LIMIT && max <= RECENT_PROJECTS_TOP_LIMIT) {
+            if (RECENT_PROJECTS_VALUES.includes(max)) {
                 draft.max = max;
+                save(draft);
             }
             return draft;
         })

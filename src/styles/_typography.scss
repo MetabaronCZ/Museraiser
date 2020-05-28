@@ -24,6 +24,7 @@ $line-height-larger: 3*$vu;
     @extend %font-regular;
     font-size: $font-size-default;
     line-height: $line-height-default;
+    color: $color-darkest;
 }
 
 %text-small {

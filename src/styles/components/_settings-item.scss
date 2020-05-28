@@ -1,0 +1,13 @@
+.SettingsItem {
+    display: flex;
+    flex-direction: row;
+
+    &-label {
+        @extend %text-body;
+        flex: 1;
+    }
+
+    &-field {
+        @extend %text-body;
+    }
+}
