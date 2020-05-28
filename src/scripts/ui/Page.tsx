@@ -7,7 +7,8 @@ import { ContentUI } from 'ui/Content';
 import { Logo } from 'ui/components/Logo';
 import { Menu } from 'ui/components/Menu';
 import { Copyright } from 'ui/components/Copyright';
-import { AppActions } from 'ui/components/AppActions';
+import { WindowActions } from 'ui/components/WindowActions';
+import { SettingsActions } from 'ui/components/SettingsActions';
 
 export const PageUI: React.SFC = () => (
     <Provider store={store}>
@@ -22,7 +23,7 @@ export const PageUI: React.SFC = () => (
                 </div>
 
                 <div className="Page-header-item">
-                    <AppActions />
+                    <WindowActions />
                 </div>
             </header>
 
@@ -31,7 +32,13 @@ export const PageUI: React.SFC = () => (
             </main>
 
             <footer className="Page-footer">
-                <Copyright />
+                <div className="Page-footer-item">
+                    <Copyright />
+                </div>
+
+                <div className="Page-footer-item">
+                    <SettingsActions />
+                </div>
             </footer>
         </div>
     </Provider>

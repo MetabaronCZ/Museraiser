@@ -36,11 +36,26 @@
 
     &-content {
         flex: 1;
-        padding: $vu 2*$vu;
+        padding: 0 2*$vu $vu;
         overflow: auto;
     }
 
     &-footer {
-        padding: $vu 2*$vu 2*$vu;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        padding-left: 2*$vu;
+
+        &-item {
+            flex: 1;
+
+            &:first-child {
+                padding: $vu 2*$vu 2*$vu 35%;
+            }
+
+            &:last-child {
+                flex: 0;
+            }
+        }
     }
 }

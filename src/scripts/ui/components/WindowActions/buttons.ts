@@ -32,7 +32,7 @@ const close = (): void => {
     });
 };
 
-export const appButtons: ButtonItem[] = [
+export const windowButtons: ButtonItem[] = [
     { id: 'MINIMIZE', title: TXT.app.minimize.title, ico: TXT.app.minimize.ico, onClick: minimize },
     { id: 'MAXIMIZE', title: TXT.app.maximize.title, ico: TXT.app.maximize.ico, onClick: maximize },
     { id: 'CLOSE', title: TXT.app.close.title, ico: TXT.app.close.ico, onClick: close }

@@ -51,12 +51,16 @@ export const TXT = {
         empty: 'There are no recently edited projects',
         remove: {
             title: 'Remove recent project',
-            ico: '×',
+            ico: '✕',
             ask: 'Do you want to remove recent project?'
         },
         clear: {
             title: 'Clear',
             ask: 'Do you want to remove all recent projects?'
         }
+    },
+    settings: {
+        title: 'Settings',
+        ico: '⚙'
     }
 };
