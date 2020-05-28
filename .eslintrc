@@ -1,9 +1,8 @@
 {
     "extends": [
-        "airbnb-typescript",
-        "plugin:import/errors",
-        "plugin:import/warnings",
-        "plugin:import/typescript"
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "env": {
         "browser": true,
@@ -11,49 +10,48 @@
         "es6": true
     },
     "parserOptions": {
-        "project": "./tsconfig.json"
+        "project": "./tsconfig.json",
+        "ecmaFeatures": {
+            "jsx": true
+        }
     },
     "settings": {
-        "import/resolver": {
-            "typescript": {}
-        },
-        "import/core-modules": ["electron"]
+        "react": {
+            "version": "detect"
+        }
     },
     "rules": {
-        "yoda": ["off"],
-        "max-len": ["off"],
-        "no-bitwise": ["off"],
-        "no-iterator": ["off"],
-        "no-continue": ["off"],
-        "no-plusplus": ["off"],
-        "arrow-body-style": ["off"],
-        "space-infix-ops": ["error"],
-        "no-param-reassign": ["off"],
-        "no-restricted-syntax": ["off"],
-        "object-curly-newline": ["off"],
-        "prefer-destructuring": ["off"],
-        "class-methods-use-this": ["off"],
+        "yoda": "off",
+        "max-len": "off",
+        "no-bitwise": "off",
+        "no-iterator": "off",
+        "no-continue": "off",
+        "no-plusplus": "off",
+        "arrow-body-style": "off",
+        "space-infix-ops": "error",
+        "no-param-reassign": "off",
+        "no-restricted-syntax": "off",
+        "object-curly-newline": "off",
+        "prefer-destructuring": "off",
+        "class-methods-use-this": "off",
         "comma-dangle": ["error", "never"],
         "arrow-parens": ["error", "as-needed"],
         "linebreak-style": ["error", "windows"],
-        "lines-between-class-members": ["off"],
+        "lines-between-class-members": "off",
 
-        "react/sort-comp": ["off"],
-        "react/prop-types": ["off"],
-        "react/no-array-index-key": ["off"],
+        "react/sort-comp": "off",
+        "react/prop-types": "off",
+        "react/no-array-index-key": "off",
         "react/jsx-indent": ["error", 4, { "checkAttributes": true, "indentLogicalExpressions": true }],
-        "react/jsx-key": ["error"],
+        "react/jsx-key": "error",
         "react/jsx-indent-props": ["error", 4],
-        "react/jsx-one-expression-per-line": ["off"],
+        "react/jsx-one-expression-per-line": "off",
 
-        "import/newline-after-import": ["off"],
-        "import/prefer-default-export": ["off"],
-
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-empty-interface": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/indent": ["error", 4, { "SwitchCase": 1 }],
         "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
-        "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }],
-
-        /* temporary: until typescript-airbnb ugrade */
-        "@typescript-eslint/camelcase": "off"
+        "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }]
     }
 }

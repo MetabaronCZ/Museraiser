@@ -1,13 +1,15 @@
 import React from 'react';
 import cn from 'classnames';
 
+type OnClick = () => void;
+
 interface Props {
     readonly title?: string;
     readonly limited?: boolean;
-    readonly onClick: Function;
+    readonly onClick: OnClick;
 }
 
-const click = (cb: Function) => (e: React.MouseEvent) => {
+const click = (cb: OnClick) => (e: React.MouseEvent) => {
     e.preventDefault();
     cb();
 };

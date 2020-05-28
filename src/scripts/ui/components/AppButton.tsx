@@ -1,6 +1,8 @@
 import React from 'react';
 
-const click = (cb: Function) => (e: React.MouseEvent) => {
+type OnClick = () => void;
+
+const click = (cb: OnClick) => (e: React.MouseEvent) => {
     e.preventDefault();
     cb();
 };
@@ -8,7 +10,7 @@ const click = (cb: Function) => (e: React.MouseEvent) => {
 interface Props {
     readonly title: string;
     readonly ico: string;
-    readonly onClick: Function;
+    readonly onClick: OnClick;
 }
 
 export const AppButton: React.SFC<Props> = ({ title, ico, onClick }) => (
