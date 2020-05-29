@@ -76,8 +76,6 @@ export const TXT = {
         ico: '⚙'
     },
     project: {
-        close: {
-            ask: 'Do you want to close project? Unsaved data will be lost!'
-        }
+        closeAsk: 'Do you want to close current project? Unsaved data will be lost!'
     }
 };

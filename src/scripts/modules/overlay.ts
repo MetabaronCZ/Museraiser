@@ -1,13 +1,13 @@
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 import type { AppDispatch } from 'modules/store';
 
-export type OverlayData = null | 'CREATE' | 'SETTINGS';
+export type OverlayID = null | 'CREATE' | 'SETTINGS';
 
 type OverlayReducers = {
-    readonly set: CaseReducer<OverlayData, PayloadAction<OverlayData>>;
+    readonly set: CaseReducer<OverlayID, PayloadAction<OverlayID>>;
 };
 
-export const Overlay = createSlice<OverlayData, OverlayReducers>({
+export const Overlay = createSlice<OverlayID, OverlayReducers>({
     name: 'view',
     initialState: null,
     reducers: {
@@ -15,7 +15,7 @@ export const Overlay = createSlice<OverlayData, OverlayReducers>({
     }
 });
 
-export const openOverlay = (dispatch: AppDispatch, id: OverlayData): void => {
+export const openOverlay = (dispatch: AppDispatch, id: OverlayID): void => {
     dispatch(Overlay.actions.set(id));
 };
 

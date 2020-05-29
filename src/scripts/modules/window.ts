@@ -1,7 +1,7 @@
 import { remote } from 'electron';
 
 import { TXT } from 'data/texts';
-import { ask } from 'modules/dialogue';
+import { ask } from 'modules/dialog';
 
 export const minimizeWindow = (): void => {
     return remote.getCurrentWindow().minimize();

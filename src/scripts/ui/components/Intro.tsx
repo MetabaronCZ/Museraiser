@@ -21,7 +21,7 @@ export const IntroUI: React.SFC = () => {
                     {TXT.intro.create}
                 </LinkButton>
 
-                <LinkButton onClick={() => selectProject(dispatch)}>
+                <LinkButton onClick={() => selectProject(dispatch, null)}>
                     {TXT.intro.open}
                 </LinkButton>
             </List>

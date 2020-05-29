@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { OverlayData, Overlay } from 'modules/overlay';
+import { OverlayID, Overlay } from 'modules/overlay';
 import { ProjectDataState, Project } from 'modules/project';
 import { RecentProjectData, RecentProjects } from 'modules/recent-projects';
 
 export interface AppState {
-    readonly overlay: OverlayData;
+    readonly overlay: OverlayID;
     readonly project: ProjectDataState;
     readonly recentProjects: RecentProjectData;
 }

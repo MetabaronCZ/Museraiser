@@ -4,7 +4,7 @@ import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 import { TXT } from 'data/texts';
 import { RECENT_PROJECTS_MAX, RECENT_PROJECTS_VALUES } from 'data/config';
 
-import { ask } from 'modules/dialogue';
+import { ask } from 'modules/dialog';
 import { getFileStats } from 'modules/file';
 import type { AppDispatch } from 'modules/store';
 import { loadFromStorage, saveToStorage } from 'modules/storage';

@@ -2,10 +2,10 @@ import React from 'react';
 
 import { TXT } from 'data/texts';
 
-import { openOverlay } from 'modules/overlay';
-import { AppState, AppDispatch } from 'modules/store';
+import { AppDispatch } from 'modules/store';
 import {
-    closeProject, saveProject, selectProject, undoProject, redoProject
+    ProjectDataState,
+    closeProject, saveProject, selectProject, undoProject, redoProject, createProject
 } from 'modules/project';
 
 const { create, open, save, undo, redo, close } = TXT.menu;
@@ -26,47 +26,47 @@ interface MenuItem {
     readonly onClick: OnMouseClick;
 }
 
-export const getMenuItems = (state: AppState, dispatch: AppDispatch): MenuItem[] => [
+export const getMenuItems = (dispatch: AppDispatch, project: ProjectDataState): MenuItem[] => [
     {
         id: 'CREATE',
         text: create.text,
         title: create.title,
         disabled: false,
-        onClick: click(() => openOverlay(dispatch, 'CREATE'))
+        onClick: click(() => createProject(dispatch, project))
     },
     {
         id: 'OPEN',
         text: open.text,
         title: open.title,
         disabled: false,
-        onClick: click(() => selectProject(dispatch))
+        onClick: click(() => selectProject(dispatch, project))
     },
     {
         id: 'SAVE',
         text: save.text,
         title: save.title,
-        disabled: true,
+        disabled: (!project || project.saved),
         onClick: click(() => saveProject(dispatch))
     },
     {
         id: 'UNDO',
         text: undo.text,
         title: undo.title,
-        disabled: true,
+        disabled: (!project || !project.undo.length),
         onClick: click(() => undoProject(dispatch))
     },
     {
         id: 'REDO',
         text: redo.text,
         title: redo.title,
-        disabled: true,
+        disabled: (!project || !project.redo.length),
         onClick: click(() => redoProject(dispatch))
     },
     {
         id: 'CLOSE',
         text: close.text,
         title: close.title,
-        disabled: !state.project,
-        onClick: click(() => closeProject(dispatch))
+        disabled: !project,
+        onClick: click(() => closeProject(dispatch, project))
     }
 ];

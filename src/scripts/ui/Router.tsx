@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { AppState } from 'modules/store';
-import { OverlayData } from 'modules/overlay';
+import { OverlayID } from 'modules/overlay';
 import { ProjectDataState } from 'modules/project';
 
 import { IntroUI } from 'ui/components/Intro';
@@ -11,7 +11,7 @@ import { ProjectUI } from 'ui/components/Project';
 import { SettingsUI } from 'ui/components/Settings';
 
 export const RouterUI: React.SFC = () => {
-    const overlay = useSelector<AppState, OverlayData>(state => state.overlay);
+    const overlay = useSelector<AppState, OverlayID>(state => state.overlay);
     const project = useSelector<AppState, ProjectDataState>(state => state.project);
 
     switch (overlay) {
