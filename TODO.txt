@@ -1,6 +1,7 @@
---  pridat extra button k OverlayUI
---  u REDO a UNDO menu itemu kontrolovat project.redo.length, apod.
---  u "ask" dialogu ohledne ulozenych dat kontrolovat, jestli je projekt zmenen
+--  do localStorage ukladat posledni otevrenou slozku s projekty
+??  dispatchovat i Window akce
+    - u closeWindow se ptat, jestli (project.saved === true), pripadne zrusit "ask" dialog
+--  pridat extra button do Props u OverlayUI
 --  klavesove zkratky:
     - Menu:
         - CTRL+N >> New project

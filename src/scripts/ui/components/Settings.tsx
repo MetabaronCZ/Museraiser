@@ -31,7 +31,7 @@ export const SettingsUI: React.SFC = () => {
                         id="projects-max"
                         options={options}
                         value={recentProjects.max.toString()}
-                        onChange={value => setMaxRecentFiles(dispatch, value)}
+                        onChange={value => dispatch(setMaxRecentFiles(value))}
                     />
                 </SettingsItemUI>
             </SettingsItemListUI>

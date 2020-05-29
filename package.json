@@ -70,6 +70,7 @@
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "tslib": "^2.0.0",
     "uuid": "^8.1.0"
   }

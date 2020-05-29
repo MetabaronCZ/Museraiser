@@ -15,6 +15,6 @@ export const getSettingsButtons = (dispatch: AppDispatch): ButtonItem[] => ([
         id: 'SETTINGS',
         title: TXT.settings.title,
         ico: TXT.settings.ico,
-        onClick: () => openOverlay(dispatch, 'SETTINGS')
+        onClick: () => dispatch(openOverlay('SETTINGS'))
     }
 ]);

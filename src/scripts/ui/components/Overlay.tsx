@@ -25,7 +25,7 @@ export const OverlayUI: React.SFC<Props> = ({ title, back = true, children }) =>
             {back && (
                 <Button
                     text={TXT.overlay.back}
-                    onClick={() => closeOverlay(dispatch)}
+                    onClick={() => dispatch(closeOverlay())}
                 />
             )}
         </div>

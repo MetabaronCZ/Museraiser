@@ -3,8 +3,8 @@ import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 import { TXT } from 'data/texts';
 
 import { Logger } from 'modules/logger';
+import { AppThunk } from 'modules/store';
 import { ask, selectFile } from 'modules/dialog';
-import type { AppDispatch } from 'modules/store';
 import { closeOverlay, openOverlay } from 'modules/overlay';
 import { ProjectFile, createProjectFile } from 'modules/project/file';
 
@@ -49,46 +49,52 @@ const checkCurrentProject = (project: ProjectDataState, cb: () => void): void =>
     });
 };
 
-export const setProject = (dispatch: AppDispatch, data: ProjectData): void => {
+export const setProject = (data: ProjectData): AppThunk => dispatch => {
     dispatch(Project.actions.set(data));
-    closeOverlay(dispatch);
+    dispatch(closeOverlay());
 };
 
-export const createProject = (dispatch: AppDispatch, project: ProjectDataState): void => {
+export const createProject = (): AppThunk => (dispatch, getState) => {
+    const { project } = getState();
+
     checkCurrentProject(project, () => {
-        openOverlay(dispatch, 'CREATE');
+        dispatch(openOverlay('CREATE'));
     });
 };
 
-export const openProject = (dispatch: AppDispatch, path: string): void => {
+export const openProject = (path: string): AppThunk => dispatch => {
     if (!path) {
         return;
     }
-    // TODO: fs.readFile >> setProject(dispatch, data)
+    // TODO: fs.readFile >> dispatch(setProject(data))
     Logger.log('OPEN PROJECT', path);
 };
 
-export const selectProject = (dispatch: AppDispatch, project: ProjectDataState): void => {
+export const selectProject = (): AppThunk => (dispatch, getState) => {
+    const { project } = getState();
+
     checkCurrentProject(project, () => {
         selectFile('PROJECT').then(file => {
-            openProject(dispatch, file);
+            dispatch(openProject(file));
         });
     });
 };
 
-export const saveProject = (dispatch: AppDispatch): void => {
+export const saveProject = (): AppThunk => () => {
     Logger.log('SAVE PROJECT');
 };
 
-export const undoProject = (dispatch: AppDispatch): void => {
+export const undoProject = (): AppThunk => () => {
     Logger.log('UNDO PROJECT');
 };
 
-export const redoProject = (dispatch: AppDispatch): void => {
+export const redoProject = (): AppThunk => () => {
     Logger.log('REDO PROJECT');
 };
 
-export const closeProject = (dispatch: AppDispatch, project: ProjectDataState): void => {
+export const closeProject = (): AppThunk => (dispatch, getState) => {
+    const { project } = getState();
+
     checkCurrentProject(project, () => {
         dispatch(Project.actions.set(null));
     });

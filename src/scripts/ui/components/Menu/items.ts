@@ -32,41 +32,41 @@ export const getMenuItems = (dispatch: AppDispatch, project: ProjectDataState): 
         text: create.text,
         title: create.title,
         disabled: false,
-        onClick: click(() => createProject(dispatch, project))
+        onClick: click(() => dispatch(createProject()))
     },
     {
         id: 'OPEN',
         text: open.text,
         title: open.title,
         disabled: false,
-        onClick: click(() => selectProject(dispatch, project))
+        onClick: click(() => dispatch(selectProject()))
     },
     {
         id: 'SAVE',
         text: save.text,
         title: save.title,
         disabled: (!project || project.saved),
-        onClick: click(() => saveProject(dispatch))
+        onClick: click(() => dispatch(saveProject()))
     },
     {
         id: 'UNDO',
         text: undo.text,
         title: undo.title,
         disabled: (!project || !project.undo.length),
-        onClick: click(() => undoProject(dispatch))
+        onClick: click(() => dispatch(undoProject()))
     },
     {
         id: 'REDO',
         text: redo.text,
         title: redo.title,
         disabled: (!project || !project.redo.length),
-        onClick: click(() => redoProject(dispatch))
+        onClick: click(() => dispatch(redoProject()))
     },
     {
         id: 'CLOSE',
         text: close.text,
         title: close.title,
         disabled: !project,
-        onClick: click(() => closeProject(dispatch, project))
+        onClick: click(() => dispatch(closeProject()))
     }
 ];

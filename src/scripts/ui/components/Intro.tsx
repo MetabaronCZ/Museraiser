@@ -17,11 +17,11 @@ export const IntroUI: React.SFC = () => {
     return (
         <OverlayUI title={TXT.intro.title} back={false}>
             <List>
-                <LinkButton onClick={() => openOverlay(dispatch, 'CREATE')}>
+                <LinkButton onClick={() => dispatch(openOverlay('CREATE'))}>
                     {TXT.intro.create}
                 </LinkButton>
 
-                <LinkButton onClick={() => selectProject(dispatch, null)}>
+                <LinkButton onClick={() => dispatch(selectProject())}>
                     {TXT.intro.open}
                 </LinkButton>
             </List>

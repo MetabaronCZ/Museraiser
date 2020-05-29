@@ -19,7 +19,7 @@ export const CreateUI: React.SFC = () => {
 
             <Button
                 text={TXT.create.new}
-                onClick={() => setProject(dispatch, project)}
+                onClick={() => dispatch(setProject(project))}
             />
         </OverlayUI>
     );

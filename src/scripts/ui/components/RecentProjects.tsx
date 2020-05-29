@@ -19,7 +19,7 @@ export const RecentProjectsUI: React.SFC = () => {
     const hasProjects = (files.length > 0);
 
     const clearButton = (
-        <LinkButton onClick={() => clearRecentProjects(dispatch)}>
+        <LinkButton onClick={() => dispatch(clearRecentProjects())}>
             {TXT.recentProjects.clear.title}
         </LinkButton>
     );
@@ -42,7 +42,7 @@ export const RecentProjectsUI: React.SFC = () => {
                                     <div className="RecentProjects-item-title">
                                         <LinkButton
                                             title={path}
-                                            onClick={() => openProject(dispatch, path)}
+                                            onClick={() => dispatch(openProject(path))}
                                             limited
                                         >
                                             {title}
@@ -52,7 +52,7 @@ export const RecentProjectsUI: React.SFC = () => {
                                     <div className="RecentProjects-item-actions">
                                         <LinkButton
                                             title={TXT.recentProjects.remove.title}
-                                            onClick={() => removeRecentProject(dispatch, path)}
+                                            onClick={() => dispatch(removeRecentProject(path))}
                                         >
                                             {TXT.recentProjects.remove.ico}
                                         </LinkButton>

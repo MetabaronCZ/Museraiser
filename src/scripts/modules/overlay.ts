@@ -1,5 +1,5 @@
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
-import type { AppDispatch } from 'modules/store';
+import { AppThunk } from 'modules/store';
 
 export type OverlayID = null | 'CREATE' | 'SETTINGS';
 
@@ -15,10 +15,10 @@ export const Overlay = createSlice<OverlayID, OverlayReducers>({
     }
 });
 
-export const openOverlay = (dispatch: AppDispatch, id: OverlayID): void => {
+export const openOverlay = (id: OverlayID): AppThunk => dispatch => {
     dispatch(Overlay.actions.set(id));
 };
 
-export const closeOverlay = (dispatch: AppDispatch): void => {
+export const closeOverlay = (): AppThunk => dispatch => {
     dispatch(Overlay.actions.set(null));
 };

@@ -5,8 +5,8 @@ import { TXT } from 'data/texts';
 import { RECENT_PROJECTS_MAX, RECENT_PROJECTS_VALUES } from 'data/config';
 
 import { ask } from 'modules/dialog';
+import { AppThunk } from 'modules/store';
 import { getFileStats } from 'modules/file';
-import type { AppDispatch } from 'modules/store';
 import { loadFromStorage, saveToStorage } from 'modules/storage';
 
 const STORAGE_KEY = 'RECENT_PROJECTS';
@@ -85,7 +85,7 @@ export const RecentProjects = createSlice<RecentProjectData, RecentProjectReduce
     }
 });
 
-export const removeRecentProject = (dispatch: AppDispatch, path: string): void => {
+export const removeRecentProject = (path: string): AppThunk => dispatch => {
     ask(TXT.recentProjects.remove.ask).then(result => {
         if (result) {
             dispatch(RecentProjects.actions.remove(path));
@@ -93,7 +93,7 @@ export const removeRecentProject = (dispatch: AppDispatch, path: string): void =
     });
 };
 
-export const clearRecentProjects = (dispatch: AppDispatch): void => {
+export const clearRecentProjects = (): AppThunk => dispatch => {
     ask(TXT.recentProjects.clear.ask).then(result => {
         if (result) {
             dispatch(RecentProjects.actions.clear());
@@ -101,7 +101,7 @@ export const clearRecentProjects = (dispatch: AppDispatch): void => {
     });
 };
 
-export const setMaxRecentFiles = (dispatch: AppDispatch, value: string): void => {
+export const setMaxRecentFiles = (value: string): AppThunk => dispatch => {
     const max = parseInt(value, 10) as RecentProjectMaxValue;
     dispatch(RecentProjects.actions.setMax(max));
 };
