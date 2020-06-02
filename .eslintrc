@@ -8,6 +8,7 @@
         "semi": "error",
         "yoda": "off",
         "max-len": "off",
+        "eol-last": "error",
         "no-bitwise": "off",
         "no-iterator": "off",
         "no-continue": "off",
@@ -15,8 +16,10 @@
         "no-console": "error",
         "arrow-body-style": "off",
         "space-infix-ops": "error",
+        "no-multi-spaces": "error",
         "no-param-reassign": "off",
         "quotes": ["error", "single"],
+        "no-trailing-spaces": "error",
         "no-restricted-syntax": "off",
         "object-curly-newline": "off",
         "prefer-destructuring": "off",
@@ -25,7 +28,8 @@
         "arrow-parens": ["error", "as-needed"],
         "linebreak-style": ["error", "windows"],
         "lines-between-class-members": "off",
-        "indent": ["error", 4, { "SwitchCase": 1 }]
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "no-multiple-empty-lines": ["error", { "max": 1 }]
     },
     "overrides": [
         {
