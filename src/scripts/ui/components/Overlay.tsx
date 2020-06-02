@@ -8,26 +8,43 @@ import { closeOverlay } from 'modules/overlay';
 
 import { Button } from 'ui/common/Button';
 import { Heading } from 'ui/common/Heading';
+import { ButtonList } from 'ui/common/ButtonList';
+
+type OnClick = () => void;
 
 interface Props {
     readonly title: string;
     readonly back?: boolean;
+    readonly buttons?: React.ReactNode[];
 }
 
-export const OverlayUI: React.SFC<Props> = ({ title, back = true, children }) => {
+const getBackButton = (onClick: OnClick): React.ReactNode => (
+    <Button
+        text={TXT.overlay.back}
+        onClick={onClick}
+    />
+);
+
+export const OverlayUI: React.SFC<Props> = ({ title, back = true, buttons = [], children }) => {
     const dispatch = useDispatch<AppDispatch>();
+    
+    if (back) {
+        const backButton = getBackButton(() => dispatch(closeOverlay()));
+        buttons.unshift(backButton);
+    }
     return (
         <div className="Overlay">
             <Heading size="large" text={title} />
 
             {children}
 
-            {back && (
-                <Button
-                    text={TXT.overlay.back}
-                    onClick={() => dispatch(closeOverlay())}
-                />
-            )}
+            <ButtonList>
+                {buttons.map((btn, i) => (
+                    <React.Fragment key={i}>
+                        {btn}
+                    </React.Fragment>
+                ))}
+            </ButtonList>
         </div>
     );
 };

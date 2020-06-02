@@ -1,0 +1,18 @@
+.ButtonList {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+
+    &-item {
+        flex: 1;
+        text-align: center;
+
+        &:first-child {
+            text-align: left;
+        }
+
+        &:last-child {
+            text-align: right;
+        }
+    }
+}

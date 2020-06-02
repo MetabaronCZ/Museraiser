@@ -1,16 +1,14 @@
 import fs from 'fs';
-import { Logger } from 'modules/logger';
 
-export const getFileStats = (path: string): fs.Stats | null => {
+export const readFile = (path: string): string => {
+    return fs.readFileSync(path, 'utf8');
+};
+
+export const fileExists = (path: string): boolean => {
     try {
-        const stats = fs.statSync(path);
-
-        if (stats.isFile()) {
-            return stats;
-        }
+        fs.accessSync(path);
+        return true;
     } catch (err) {
-        // invalid file
-        Logger.error(`Invalid file "${path}":`, err);
+        return false;
     }
-    return null;
 };

@@ -1,7 +1,6 @@
 --  do localStorage ukladat posledni otevrenou slozku s projekty
 ??  dispatchovat i Window akce
     - u closeWindow se ptat, jestli (project.saved === true), pripadne zrusit "ask" dialog
---  pridat extra button do Props u OverlayUI
 --  klavesove zkratky:
     - Menu:
         - CTRL+N >> New project

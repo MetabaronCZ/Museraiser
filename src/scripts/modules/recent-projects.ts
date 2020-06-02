@@ -6,7 +6,7 @@ import { RECENT_PROJECTS_MAX, RECENT_PROJECTS_VALUES } from 'data/config';
 
 import { ask } from 'modules/dialog';
 import { AppThunk } from 'modules/store';
-import { getFileStats } from 'modules/file';
+import { fileExists } from 'modules/file';
 import { loadFromStorage, saveToStorage } from 'modules/storage';
 
 const STORAGE_KEY = 'RECENT_PROJECTS';
@@ -29,15 +29,11 @@ type RecentProjectReducers = {
     readonly setMax: CaseReducer<RecentProjectData, PayloadAction<RecentProjectMaxValue>>;
 };
 
-const projectExists = (path: string): boolean => {
-    return !!getFileStats(path);
-};
-
 const load = (): RecentProjectData => {
     const defaults = createRecentProjectData();
 
     const data = loadFromStorage<RecentProjectData>(STORAGE_KEY, defaults);
-    data.files = data.files.filter(path => projectExists(path));
+    data.files = data.files.filter(path => fileExists(path));
     data.files = data.files.slice(0, data.max);
 
     return data;
@@ -55,7 +51,7 @@ export const RecentProjects = createSlice<RecentProjectData, RecentProjectReduce
             const path = action.payload;
             let { files } = draft;
 
-            if (projectExists(path)) {
+            if (fileExists(path)) {
                 files = files.filter(p => p !== path); // remove duplicite
                 files.unshift(path); // add new recent file
                 draft.files = files.slice(0, draft.max); // limit file count
