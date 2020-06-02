@@ -7,17 +7,21 @@ import { RECENT_PROJECTS_MAX, RECENT_PROJECTS_VALUES } from 'data/config';
 import { ask } from 'modules/dialog';
 import { AppThunk } from 'modules/store';
 import { fileExists } from 'modules/file';
+import { getDefaultProjectPath } from 'modules/window';
 import { loadFromStorage, saveToStorage } from 'modules/storage';
 
 const STORAGE_KEY = 'RECENT_PROJECTS';
+const PROJECT_PATH = getDefaultProjectPath();
 
 export type RecentProjectMaxValue = typeof RECENT_PROJECTS_VALUES[number];
 
 export interface RecentProjectData {
+    dir: string;
     max: number;
-    files: string[]
+    files: string[];
 }
 const createRecentProjectData = (): RecentProjectData => ({
+    dir: PROJECT_PATH,
     max: RECENT_PROJECTS_MAX,
     files: []
 });
@@ -27,6 +31,7 @@ type RecentProjectReducers = {
     readonly remove: CaseReducer<RecentProjectData, PayloadAction<string>>;
     readonly clear: CaseReducer<RecentProjectData, PayloadAction>;
     readonly setMax: CaseReducer<RecentProjectData, PayloadAction<RecentProjectMaxValue>>;
+    readonly setDir: CaseReducer<RecentProjectData, PayloadAction<string>>;
 };
 
 const load = (): RecentProjectData => {
@@ -77,6 +82,11 @@ export const RecentProjects = createSlice<RecentProjectData, RecentProjectReduce
                 save(draft);
             }
             return draft;
+        }),
+        setDir: (state, action) => produce(state, draft => {
+            draft.dir = action.payload;
+            save(draft);
+            return draft;
         })
     }
 });
@@ -100,4 +110,8 @@ export const clearRecentProjects = (): AppThunk => dispatch => {
 export const setMaxRecentFiles = (value: string): AppThunk => dispatch => {
     const max = parseInt(value, 10) as RecentProjectMaxValue;
     dispatch(RecentProjects.actions.setMax(max));
+};
+
+export const setRecentFilesDirectory = (dir: string): AppThunk => dispatch => {
+    dispatch(RecentProjects.actions.setDir(dir));
 };

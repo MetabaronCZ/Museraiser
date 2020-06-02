@@ -1,12 +1,15 @@
+import p from 'path';
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
 import { TXT } from 'data/texts';
 
 import { Logger } from 'modules/logger';
+import { readFile } from 'modules/file';
 import { AppThunk } from 'modules/store';
-import { ask, selectFile } from 'modules/dialog';
 import { closeOverlay, openOverlay } from 'modules/overlay';
-import { ProjectFile, createProjectFile } from 'modules/project/file';
+import { ask, selectFile, showError } from 'modules/dialog';
+import { ProjectFile, createProjectFrom } from 'modules/project/file';
+import { setRecentFilesDirectory } from 'modules/recent-projects';
 
 export interface ProjectData {
     readonly file: ProjectFile;
@@ -14,8 +17,8 @@ export interface ProjectData {
     readonly redo: ProjectFile[];
     saved: boolean;
 }
-export const createProjectData = (): ProjectData => ({
-    file: createProjectFile(),
+export const createProjectData = (file: ProjectFile): ProjectData => ({
+    file,
     saved: false,
     undo: [],
     redo: []
@@ -24,7 +27,7 @@ export const createProjectData = (): ProjectData => ({
 export type ProjectDataState = ProjectData | null;
 
 type ProjectReducers = {
-    readonly set: CaseReducer<ProjectDataState, PayloadAction<ProjectDataState>>;
+    readonly set: CaseReducer<ProjectDataState, PayloadAction<ProjectFile | null>>;
 };
 
 export const Project = createSlice<ProjectDataState, ProjectReducers>({
@@ -32,7 +35,12 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
     initialState: null,
     reducers: {
         set: (state, action) => {
-            return action.payload;
+            const file = action.payload;
+
+            if (!file) {
+                return null;
+            }
+            return createProjectData(file);
         }
     }
 });
@@ -49,7 +57,7 @@ const checkCurrentProject = (project: ProjectDataState, cb: () => void): void =>
     });
 };
 
-export const setProject = (data: ProjectData): AppThunk => dispatch => {
+export const setProject = (data: ProjectFile): AppThunk => dispatch => {
     dispatch(Project.actions.set(data));
     dispatch(closeOverlay());
 };
@@ -66,15 +74,30 @@ export const openProject = (path: string): AppThunk => dispatch => {
     if (!path) {
         return;
     }
-    // TODO: fs.readFile >> dispatch(setProject(data))
-    Logger.log('OPEN PROJECT', path);
+    try {
+        const file = readFile(path);
+        const data = JSON.parse(file);
+
+        const project = createProjectFrom(data);
+        dispatch(setProject(project));
+
+        const dir = p.dirname(path);
+        dispatch(setRecentFilesDirectory(dir));
+
+    } catch (err) {
+        Logger.log(err);
+
+        const { title, message } = TXT.project.selectError;
+        showError(title, message);
+    }
 };
 
 export const selectProject = (): AppThunk => (dispatch, getState) => {
-    const { project } = getState();
+    const { project, recentProjects } = getState();
+    const lastDir = recentProjects.dir;
 
     checkCurrentProject(project, () => {
-        selectFile('PROJECT').then(file => {
+        selectFile(lastDir, 'PROJECT').then(file => {
             dispatch(openProject(file));
         });
     });

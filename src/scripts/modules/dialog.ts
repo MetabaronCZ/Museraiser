@@ -3,8 +3,8 @@ import { remote, FileFilter } from 'electron';
 import { TXT } from 'data/texts';
 import { PROJECT_FILE_EXT } from 'data/config';
 
-const defPositive = TXT.dialogue.positive;
-const defNegative = TXT.dialogue.negative;
+const defPositive = TXT.dialog.positive;
+const defNegative = TXT.dialog.negative;
 
 type AskDialog = Promise<boolean>;
 type FileDialog = Promise<string>;
@@ -31,9 +31,10 @@ export const ask = (text: string, positive = defPositive, negative = defNegative
     });
 };
 
-export const selectFile = (filter: AppFilter): FileDialog => {
+export const selectFile = (path: string, filter: AppFilter): FileDialog => {
     return new Promise((resolve, reject) => {
         const dialog = remote.dialog.showOpenDialog({
+            defaultPath: path,
             properties: ['openFile'],
             filters: filters[filter]
         });
@@ -42,4 +43,8 @@ export const selectFile = (filter: AppFilter): FileDialog => {
             .then(result => resolve(result.filePaths[0]))
             .catch(reject);
     });
+};
+
+export const showError = (title: string, msg: string): void => {
+    remote.dialog.showErrorBox(title, msg);
 };

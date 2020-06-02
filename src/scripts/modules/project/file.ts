@@ -1,5 +1,5 @@
-import { Tracks, createTracks } from 'modules/project/track';
-import { MasterData, createMasterData } from 'modules/project/master';
+import { Tracks, createTracks, createTracksFrom } from 'modules/project/track';
+import { MasterData, createMasterData, createMasterFrom } from 'modules/project/master';
 
 export interface ProjectFile {
     readonly created: number;
@@ -17,5 +17,15 @@ export const createProjectFile = (): ProjectFile => {
         modified: now,
         tracks: createTracks(),
         master: createMasterData()
+    };
+};
+
+export const createProjectFrom = (data: any): ProjectFile => {
+    return {
+        name: `${data.name}`,
+        created: parseInt(data.created, 10),
+        modified: parseInt(data.modified, 10),
+        tracks: createTracksFrom(data.tracks),
+        master: createMasterFrom(data.master)
     };
 };

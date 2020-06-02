@@ -1,5 +1,5 @@
-import { SampleData } from 'modules/project/sample';
-import { PatternData } from 'modules/project/pattern';
+import { SampleData, createSampleFrom } from 'modules/project/sample';
+import { PatternData, createPatternsFrom } from 'modules/project/pattern';
 
 export interface TrackData {
     readonly patterns: PatternData[];
@@ -10,6 +10,12 @@ const createTrack = (id: string): TrackData => ({
     name: `Track ${id}`,
     sample: null,
     patterns: []
+});
+
+const createTrackFrom = (data: any): TrackData => ({
+    name: `${data.name}`,
+    sample: createSampleFrom(data.sample),
+    patterns: createPatternsFrom(data.patterns)
 });
 
 export interface Tracks {
@@ -48,4 +54,23 @@ export const createTracks = (): Tracks => ({
     T14: createTrack('14'),
     T15: createTrack('15'),
     T16: createTrack('16')
+});
+
+export const createTracksFrom = (data: any): Tracks => ({
+    T01: createTrackFrom(data.T01),
+    T02: createTrackFrom(data.T02),
+    T03: createTrackFrom(data.T03),
+    T04: createTrackFrom(data.T04),
+    T05: createTrackFrom(data.T05),
+    T06: createTrackFrom(data.T06),
+    T07: createTrackFrom(data.T07),
+    T08: createTrackFrom(data.T08),
+    T09: createTrackFrom(data.T09),
+    T10: createTrackFrom(data.T10),
+    T11: createTrackFrom(data.T11),
+    T12: createTrackFrom(data.T12),
+    T13: createTrackFrom(data.T13),
+    T14: createTrackFrom(data.T14),
+    T15: createTrackFrom(data.T15),
+    T16: createTrackFrom(data.T16)
 });

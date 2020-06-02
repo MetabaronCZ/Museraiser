@@ -1,4 +1,6 @@
---  do localStorage ukladat posledni otevrenou slozku s projekty
+--  serializace AudioBufferu u SampleData
+    + vytvoreni AudioBufferu z ulozenych dat
+    + upravit i v "createSampleFrom"
 ??  dispatchovat i Window akce
     - u closeWindow se ptat, jestli (project.saved === true), pripadne zrusit "ask" dialog
 --  klavesove zkratky:

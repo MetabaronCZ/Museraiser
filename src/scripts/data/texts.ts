@@ -1,5 +1,5 @@
 export const TXT = {
-    dialogue: {
+    dialog: {
         positive: 'Yes',
         negative: 'No'
     },
@@ -76,6 +76,10 @@ export const TXT = {
         ico: '⚙'
     },
     project: {
+        selectError: {
+            title: 'Invalid file',
+            message: 'Selected file is not a valid project!'
+        },
         closeAsk: 'Do you want to close current project? Unsaved data will be lost!'
     }
 };

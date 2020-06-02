@@ -4,7 +4,8 @@ import { useDispatch } from 'react-redux';
 import { TXT } from 'data/texts';
 
 import { AppDispatch } from 'modules/store';
-import { setProject, createProjectData } from 'modules/project';
+import { setProject } from 'modules/project';
+import { createProjectFile } from 'modules/project/file';
 
 import { Button } from 'ui/common/Button';
 import { Paragraph } from 'ui/common/Paragraph';
@@ -21,7 +22,7 @@ const getCreateButton = (onClick: OnClick): React.ReactNode => (
 
 export const CreateUI: React.SFC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const project = createProjectData();
+    const project = createProjectFile();
     const createButton = getCreateButton(() => dispatch(setProject(project)));
     return (
         <OverlayUI title={TXT.create.title} buttons={[createButton]}>
