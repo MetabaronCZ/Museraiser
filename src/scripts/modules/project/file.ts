@@ -9,10 +9,10 @@ export interface ProjectFile {
     modified: number;
 }
 
-export const createProjectFile = (): ProjectFile => {
+export const createProjectFile = (name: string): ProjectFile => {
     const now = Date.now();
     return {
-        name: 'New project',
+        name,
         created: now,
         modified: now,
         tracks: createTracks(),

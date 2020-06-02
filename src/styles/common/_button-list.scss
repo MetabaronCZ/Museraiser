@@ -4,15 +4,16 @@
     flex-direction: row;
 
     &-item {
+        display: flex;
         flex: 1;
-        text-align: center;
+        justify-content: center;
 
         &:first-child {
-            text-align: left;
+            justify-content: flex-start;
         }
 
         &:last-child {
-            text-align: right;
+            justify-content: flex-end;
         }
     }
 }

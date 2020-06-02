@@ -69,7 +69,9 @@ export const TXT = {
     },
     create: {
         title: 'Create project',
-        new: 'Create'
+        new: 'Create',
+        name: 'Project name',
+        sampleRate: 'Sample rate'
     },
     settings: {
         title: 'Settings',

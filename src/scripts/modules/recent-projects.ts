@@ -91,6 +91,10 @@ export const RecentProjects = createSlice<RecentProjectData, RecentProjectReduce
     }
 });
 
+export const addRecentProject = (path: string): AppThunk => dispatch => {
+    dispatch(RecentProjects.actions.add(path));
+};
+
 export const removeRecentProject = (path: string): AppThunk => dispatch => {
     ask(TXT.recentProjects.remove.ask).then(result => {
         if (result) {

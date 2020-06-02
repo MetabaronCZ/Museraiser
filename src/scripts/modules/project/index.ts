@@ -9,7 +9,7 @@ import { AppThunk } from 'modules/store';
 import { closeOverlay, openOverlay } from 'modules/overlay';
 import { ask, selectFile, showError } from 'modules/dialog';
 import { ProjectFile, createProjectFrom } from 'modules/project/file';
-import { setRecentFilesDirectory } from 'modules/recent-projects';
+import { setRecentFilesDirectory, addRecentProject } from 'modules/recent-projects';
 
 export interface ProjectData {
     readonly file: ProjectFile;
@@ -80,6 +80,8 @@ export const openProject = (path: string): AppThunk => dispatch => {
 
         const project = createProjectFrom(data);
         dispatch(setProject(project));
+
+        dispatch(addRecentProject(path));
 
         const dir = p.dirname(path);
         dispatch(setRecentFilesDirectory(dir));

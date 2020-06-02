@@ -4,12 +4,12 @@ interface Props {
     readonly children: React.ReactElement | React.ReactNode[];
 }
 
-export const SettingsItemListUI: React.SFC<Props> = ({ children }) => {
+export const Form: React.SFC<Props> = ({ children }) => {
     children = (Array.isArray(children) ? children : [children]);
     return (
-        <ul className="SettingsItemList">
+        <ul className="Form">
             {children.map((item, i) => (
-                <li className="SettingsItemList-item" key={i}>
+                <li className="Form-item" key={i}>
                     {item}
                 </li>
             ))}

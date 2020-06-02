@@ -21,3 +21,19 @@
         color: $color-neutral;
     }
 }
+
+%form-field {
+    display: block;
+    width: 100%;
+    height: $line-height-default;
+    border: $border-default;
+
+    &:hover,
+    &:focus {
+        /* */
+    }
+
+    &:disabled {
+        /* */
+    }
+}

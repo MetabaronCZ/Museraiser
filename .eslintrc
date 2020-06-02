@@ -1,26 +1,11 @@
 {
-    "extends": [
-        "plugin:react/recommended",
-        "plugin:react-hooks/recommended",
-        "plugin:@typescript-eslint/recommended"
-    ],
+    "extends": "eslint:recommended",
     "env": {
-        "browser": true,
         "node": true,
         "es6": true
     },
-    "parserOptions": {
-        "project": "./tsconfig.json",
-        "ecmaFeatures": {
-            "jsx": true
-        }
-    },
-    "settings": {
-        "react": {
-            "version": "detect"
-        }
-    },
     "rules": {
+        "semi": "error",
         "yoda": "off",
         "max-len": "off",
         "no-bitwise": "off",
@@ -31,6 +16,7 @@
         "arrow-body-style": "off",
         "space-infix-ops": "error",
         "no-param-reassign": "off",
+        "quotes": ["error", "single"],
         "no-restricted-syntax": "off",
         "object-curly-newline": "off",
         "prefer-destructuring": "off",
@@ -39,22 +25,50 @@
         "arrow-parens": ["error", "as-needed"],
         "linebreak-style": ["error", "windows"],
         "lines-between-class-members": "off",
-
-        "react/sort-comp": "off",
-        "react/prop-types": "off",
-        "react/no-array-index-key": "off",
-        "react/jsx-indent": ["error", 4, { "checkAttributes": true, "indentLogicalExpressions": true }],
-        "react/jsx-key": "error",
-        "react/jsx-indent-props": ["error", 4],
-        "react/jsx-one-expression-per-line": "off",
-
-        "@typescript-eslint/semi": "error",
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-empty-interface": "off",
-        "@typescript-eslint/member-delimiter-style": "error",
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-        "@typescript-eslint/indent": ["error", 4, { "SwitchCase": 1 }],
-        "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
-        "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }]
-    }
+        "indent": ["error", 4, { "SwitchCase": 1 }]
+    },
+    "overrides": [
+        {
+            "files": ["*.ts", "*.tsx"],
+            "extends": [
+                "plugin:react/recommended",
+                "plugin:react-hooks/recommended",
+                "plugin:@typescript-eslint/recommended"
+            ],
+            "env": {
+                "browser": true,
+                "node": true,
+                "es6": true
+            },
+            "parserOptions": {
+                "project": "./tsconfig.json",
+                "ecmaFeatures": {
+                    "jsx": true
+                }
+            },
+            "settings": {
+                "react": {
+                    "version": "detect"
+                }
+            },
+            "rules": {
+                "react/sort-comp": "off",
+                "react/prop-types": "off",
+                "react/no-array-index-key": "off",
+                "react/jsx-indent": ["error", 4, { "checkAttributes": true, "indentLogicalExpressions": true }],
+                "react/jsx-key": "error",
+                "react/jsx-indent-props": ["error", 4],
+                "react/jsx-one-expression-per-line": "off",
+        
+                "@typescript-eslint/semi": "error",
+                "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/no-empty-interface": "off",
+                "@typescript-eslint/member-delimiter-style": "error",
+                "@typescript-eslint/explicit-module-boundary-types": "off",
+                "@typescript-eslint/indent": ["error", 4, { "SwitchCase": 1 }],
+                "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
+                "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }]
+            }
+        }
+    ]
 }

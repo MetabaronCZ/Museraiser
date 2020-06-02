@@ -1,18 +1,3 @@
 .FormSelect {
-    height: $line-height-default;
-    min-width: 5*$vu;
-    border: $border-default;
-
-    option {
-        @extend %text-body;
-    }
-
-    &:hover,
-    &:focus {
-        /* */
-    }
-
-    &:disabled {
-        /* */
-    }
+    @extend %form-field;
 }
