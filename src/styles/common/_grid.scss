@@ -1,0 +1,21 @@
+.Grid {
+    margin-bottom: 2*$vu;
+
+    &-row {
+        display: flex;
+        flex-direction: row;
+
+        &-column {
+            @extend %text-body;
+            flex: 1;
+
+            &.Grid-row-column--center {
+                text-align: center;
+            }
+
+            &.Grid-row-column--right {
+                text-align: right;
+            }
+        }
+    }
+}

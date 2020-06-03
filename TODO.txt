@@ -1,3 +1,1 @@
 --  nahradit systemove dialogy za notifikacni UI komponentu
---  klavesove zkratky:
-    - napsat je za title menu itemu

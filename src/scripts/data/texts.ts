@@ -30,27 +30,33 @@ export const TXT = {
     menu: {
         create: {
             text: 'New',
-            title: 'Create new project'
+            title: 'Create new project',
+            shortcut: 'CTRL+N'
         },
         open: {
             text: 'Open',
-            title: 'Open project'
+            title: 'Open project',
+            shortcut: 'CTRL+O'
         },
         save: {
             text: 'Save',
-            title: 'Save current project'
+            title: 'Save current project',
+            shortcut: 'CTRL+S'
         },
         undo: {
             text: 'Undo',
-            title: 'Undo operation'
+            title: 'Undo operation',
+            shortcut: 'CTRL+Z'
         },
         redo: {
             text: 'Redo',
-            title: 'Redo operation'
+            title: 'Redo operation',
+            shortcut: 'CTRL+SHIFT+Z'
         },
         close: {
             text: 'Close',
-            title: 'Close current project'
+            title: 'Close current project',
+            shortcut: 'CTRL+W'
         }
     },
     recentProjects: {

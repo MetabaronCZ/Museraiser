@@ -30,42 +30,42 @@ export const getMenuItems = (dispatch: AppDispatch, project: ProjectDataState): 
     {
         id: 'CREATE',
         text: create.text,
-        title: create.title,
+        title: `${create.title} (${create.shortcut})`,
         disabled: false,
         onClick: click(() => dispatch(createProject()))
     },
     {
         id: 'OPEN',
         text: open.text,
-        title: open.title,
+        title: `${open.title} (${open.shortcut})`,
         disabled: false,
         onClick: click(() => dispatch(selectProject()))
     },
     {
         id: 'SAVE',
         text: save.text,
-        title: save.title,
+        title: `${save.title} (${save.shortcut})`,
         disabled: (!project || project.saved),
         onClick: click(() => dispatch(saveProject()))
     },
     {
         id: 'UNDO',
         text: undo.text,
-        title: undo.title,
+        title: `${undo.title} (${undo.shortcut})`,
         disabled: (!project || !project.undo.length),
         onClick: click(() => dispatch(undoProject()))
     },
     {
         id: 'REDO',
         text: redo.text,
-        title: redo.title,
+        title: `${redo.title} (${redo.shortcut})`,
         disabled: (!project || !project.redo.length),
         onClick: click(() => dispatch(redoProject()))
     },
     {
         id: 'CLOSE',
         text: close.text,
-        title: close.title,
+        title: `${close.title} (${close.shortcut})`,
         disabled: !project,
         onClick: click(() => dispatch(closeProject()))
     }
