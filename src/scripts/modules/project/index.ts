@@ -82,11 +82,13 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
         }),
         soloTrack: (state, action) => produce(state, draft => {
             if (draft) {
+                const track = draft.file.tracks[action.payload];
+                const solo = track.solo;
+
                 for (const track of Object.values(draft.file.tracks)) {
                     track.solo = false;
                 }
-                const track = draft.file.tracks[action.payload];
-                track.solo = !track.solo;
+                track.solo = !solo;
                 track.mute = false;
             }
             return edit(draft);
