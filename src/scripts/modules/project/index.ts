@@ -50,17 +50,24 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
         setName: (state, action) => produce(state, draft => {
             if (draft) {
                 draft.file.name = action.payload;
+                edit(draft);
             }
             return draft;
         }),
         setTempo: (state, action) => produce(state, draft => {
             if (draft) {
                 draft.file.tempo = action.payload;
+                edit(draft);
             }
             return draft;
         })
     }
 });
+
+const edit = (draft: ProjectData): void => {
+    draft.saved = false;
+    draft.file.modified = Date.now();
+};
 
 const checkCurrentProject = (project: ProjectDataState, cb: () => void): void => {
     if (!project || project.saved) {
