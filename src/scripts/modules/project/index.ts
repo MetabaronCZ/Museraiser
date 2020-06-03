@@ -89,6 +89,7 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
 
                 if (prev) {
                     draft.file = prev;
+                    draft.saved = false;
 
                     if (state) {
                         draft.redo.unshift(state.file);
@@ -104,6 +105,7 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
 
                 if (next) {
                     draft.file = next;
+                    draft.saved = false;
 
                     if (state) {
                         draft.undo.unshift(state.file);

@@ -26,17 +26,8 @@ export const SettingsUI: React.SFC = () => {
     const dispatch = useDispatch<AppDispatch>();
     return (
         <OverlayUI title={TXT.settings.title}>
-            <Heading size="small" text={TXT.recentProjects.title} />
-
             <Form>
-                <FormField id="projects" label={TXT.recentProjects.max}>
-                    <FormSelect
-                        id="projects"
-                        options={options}
-                        value={recentProjects.max.toString()}
-                        onChange={value => dispatch(setMaxRecentFiles(value))}
-                    />
-                </FormField>
+                <Heading size="small" text={TXT.project.title} />
 
                 <FormField id="undo" label={TXT.project.undo.title}>
                     <FormNumber
@@ -57,6 +48,17 @@ export const SettingsUI: React.SFC = () => {
                         value={redo}
                         step={1}
                         onChange={value => dispatch(setRedo(value))}
+                    />
+                </FormField>
+
+                <Heading size="small" text={TXT.recentProjects.title} />
+
+                <FormField id="projects" label={TXT.recentProjects.max}>
+                    <FormSelect
+                        id="projects"
+                        options={options}
+                        value={recentProjects.max.toString()}
+                        onChange={value => dispatch(setMaxRecentFiles(value))}
                     />
                 </FormField>
             </Form>
