@@ -1,3 +1,5 @@
+import { VOLUME } from 'data/config';
+
 import {
     SampleData, SampleSnapshot, parseSample, serializeSample
 } from 'modules/project/sample';
@@ -11,6 +13,7 @@ export interface TrackData {
     name: string;
     solo: boolean;
     mute: boolean;
+    volume: number;
     sample: SampleData | null;
 }
 
@@ -18,15 +21,17 @@ interface TrackSnapshot {
     readonly name: string;
     readonly solo: boolean;
     readonly mute: boolean;
+    readonly volume: number;
     readonly patterns: PatternSnapshot[];
     readonly sample: SampleSnapshot | null;
 }
 
 const createTrack = (nr: string): TrackData => ({
     name: `Track ${nr}`,
-    sample: null,
     solo: false,
     mute: false,
+    sample: null,
+    volume: VOLUME.DEFAULT,
     patterns: []
 });
 
@@ -66,6 +71,7 @@ const parseTrack = (data: any): TrackData => ({
     solo: !!data.solo,
     mute: !!data.mute,
     sample: parseSample(data.sample),
+    volume: parseInt(data.volume, 10),
     patterns: parsePatterns(data.patterns)
 });
 

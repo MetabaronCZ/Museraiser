@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { TXT } from 'data/texts';
-import { PROJECT_FILE_NAME, PROJECT_TEMPO } from 'data/config';
+import { PROJECT } from 'data/config';
 
 import { AppDispatch } from 'modules/store';
 import { setProject } from 'modules/project';
@@ -23,8 +23,8 @@ const getCreateButton = (dispatch: AppDispatch, name: string, tempo: number): Re
 );
 
 export const ProjectCreateUI: React.SFC = () => {
-    const [name, setName] = useState<string>(PROJECT_FILE_NAME);
-    const [tempo, setTempo] = useState<number>(PROJECT_TEMPO);
+    const [name, setName] = useState<string>(PROJECT.FILE.NAME);
+    const [tempo, setTempo] = useState<number>(PROJECT.TEMPO.DEFAULT);
 
     const dispatch = useDispatch<AppDispatch>();
     const createButton = getCreateButton(dispatch, name, tempo);

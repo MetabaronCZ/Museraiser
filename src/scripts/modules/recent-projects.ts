@@ -2,7 +2,7 @@ import produce from 'immer';
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
 import { TXT } from 'data/texts';
-import { RECENT_PROJECTS_MAX, RECENT_PROJECTS_VALUES } from 'data/config';
+import { RECENT_PROJECTS } from 'data/config';
 
 import { Dialog } from 'modules/dialog';
 import { AppThunk } from 'modules/store';
@@ -13,7 +13,7 @@ import { loadFromStorage, saveToStorage } from 'modules/storage';
 const STORAGE_KEY = 'RECENT_PROJECTS';
 const PROJECT_PATH = getDefaultProjectPath();
 
-export type RecentProjectMaxValue = typeof RECENT_PROJECTS_VALUES[number];
+export type RecentProjectMaxValue = typeof RECENT_PROJECTS.VALUES[number];
 
 export interface RecentProjectData {
     dir: string;
@@ -22,7 +22,7 @@ export interface RecentProjectData {
 }
 const createRecentProjectData = (): RecentProjectData => ({
     dir: PROJECT_PATH,
-    max: RECENT_PROJECTS_MAX,
+    max: RECENT_PROJECTS.MAX,
     files: []
 });
 
@@ -77,7 +77,7 @@ export const RecentProjects = createSlice<RecentProjectData, RecentProjectReduce
         setMax: (state, action) => produce(state, draft => {
             const max = action.payload;
 
-            if (RECENT_PROJECTS_VALUES.includes(max)) {
+            if (RECENT_PROJECTS.VALUES.includes(max)) {
                 draft.max = max;
                 save(draft);
             }

@@ -1,7 +1,4 @@
-import {
-    PROJECT_NAME_MIN, PROJECT_NAME_MAX,
-    PROJECT_TEMPO_MIN, PROJECT_TEMPO_MAX
-} from 'data/config';
+import { PROJECT } from 'data/config';
 
 import {
     Tracks, TracksSnapshot, createTracks, parseTracks, serializeTracks
@@ -42,11 +39,11 @@ export const createProjectFile = (name: string, tempo: number): ProjectFile => {
 };
 
 export const isValidProjectName = (name: string): boolean => {
-    return name.length >= PROJECT_NAME_MIN && name.length <= PROJECT_NAME_MAX;
+    return name.length >= PROJECT.NAME.MIN && name.length <= PROJECT.NAME.MAX;
 };
 
 export const isValidProjectTempo = (tempo: number): boolean => {
-    return tempo >= PROJECT_TEMPO_MIN && tempo <= PROJECT_TEMPO_MAX;
+    return tempo >= PROJECT.TEMPO.MIN && tempo <= PROJECT.TEMPO.MAX;
 };
 
 export const parseProject = (data: any): ProjectFile => {

@@ -2,7 +2,7 @@ import p from 'path';
 import { remote, FileFilter } from 'electron';
 
 import { TXT } from 'data/texts';
-import { PROJECT_FILE_EXT } from 'data/config';
+import { PROJECT } from 'data/config';
 
 const defPositive = TXT.dialog.positive;
 const defNegative = TXT.dialog.negative;
@@ -16,7 +16,7 @@ type AppFilters = {
     readonly [type in AppFilter]: FileFilter[];
 };
 const filters: AppFilters = {
-    PROJECT: [{ name: 'Project files', extensions: [PROJECT_FILE_EXT] }]
+    PROJECT: [{ name: 'Project files', extensions: [PROJECT.FILE.EXT] }]
 };
 
 export const Dialog = {

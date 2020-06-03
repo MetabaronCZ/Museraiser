@@ -1,7 +1,4 @@
-import {
-    PROJECT_NAME_MIN, PROJECT_NAME_MAX,
-    PROJECT_TEMPO_MIN, PROJECT_TEMPO_MAX
-} from 'data/config';
+import { PROJECT } from 'data/config';
 
 export const TXT = {
     dialog: {
@@ -99,11 +96,11 @@ export const TXT = {
         },
         setNameError: {
             title: 'Invalid project name',
-            message: `Project name should be between ${PROJECT_NAME_MIN} and ${PROJECT_NAME_MAX} characters!`
+            message: `Project name should be between ${PROJECT.NAME.MIN} and ${PROJECT.NAME.MAX} characters!`
         },
         setTempoError: {
             title: 'Invalid project tempo',
-            message: `Project tempo value should be between ${PROJECT_TEMPO_MIN} and ${PROJECT_TEMPO_MAX}!`
+            message: `Project tempo value should be between ${PROJECT.TEMPO.MIN} and ${PROJECT.TEMPO.MAX}!`
         },
         closeAsk: 'Do you want to close current project? Unsaved data will be lost!',
         fields: {

@@ -1,11 +1,7 @@
 import React from 'react';
 
 import { TXT } from 'data/texts';
-import {
-    PROJECT_SAMPLE_RATE,
-    PROJECT_NAME_MIN, PROJECT_NAME_MAX,
-    PROJECT_TEMPO_MIN, PROJECT_TEMPO_MAX
-} from 'data/config';
+import { PROJECT } from 'data/config';
 
 import { Form } from 'ui/common/Form';
 import { FormField } from 'ui/common/FormField';
@@ -25,8 +21,8 @@ export const ProjectFormUI: React.SFC<Props> = ({ name, tempo, onName, onTempo }
             <FormInput
                 id="name"
                 value={name}
-                min={PROJECT_NAME_MIN}
-                max={PROJECT_NAME_MAX}
+                min={PROJECT.NAME.MIN}
+                max={PROJECT.NAME.MAX}
                 onChange={onName}
             />
         </FormField>
@@ -35,15 +31,15 @@ export const ProjectFormUI: React.SFC<Props> = ({ name, tempo, onName, onTempo }
             <FormNumber
                 id="tempo"
                 value={tempo}
-                min={PROJECT_TEMPO_MIN}
-                max={PROJECT_TEMPO_MAX}
+                min={PROJECT.TEMPO.MIN}
+                max={PROJECT.TEMPO.MAX}
                 step={1}
                 onChange={onTempo}
             />
         </FormField>
 
         <FormField id="sample-rate" label={TXT.project.fields.sampleRate}>
-            {PROJECT_SAMPLE_RATE} Hz
+            {PROJECT.SAMPLE.RATE} Hz
         </FormField>
     </Form>
 );

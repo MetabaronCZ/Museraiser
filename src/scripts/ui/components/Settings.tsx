@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { TXT } from 'data/texts';
-import { RECENT_PROJECTS_VALUES } from 'data/config';
+import { RECENT_PROJECTS } from 'data/config';
 
 import { AppState, AppDispatch } from 'modules/store';
 import { setMaxRecentFiles, RecentProjectData } from 'modules/recent-projects';
@@ -13,7 +13,7 @@ import { FormField } from 'ui/common/FormField';
 import { OverlayUI } from 'ui/components/Overlay';
 import { FormSelect, createSelectOptions } from 'ui/common/FormSelect';
 
-const options = createSelectOptions(Array.from(RECENT_PROJECTS_VALUES), value => ({
+const options = createSelectOptions(Array.from(RECENT_PROJECTS.VALUES), value => ({
     label: value.toString(),
     value: value.toString()
 }));
