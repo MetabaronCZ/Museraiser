@@ -107,6 +107,12 @@ export const TXT = {
             name: 'Project name',
             tempo: 'Tempo',
             sampleRate: 'Sample rate'
+        },
+        undo: {
+            title: 'Number of undo steps'
+        },
+        redo: {
+            title: 'Number of redo steps'
         }
     },
     track: {

@@ -3,6 +3,19 @@ declare const __ENVIRONMENT__: string;
 export const IS_DEV = ('dev' === __ENVIRONMENT__);
 /* eslint-enable no-underscore-dangle */
 
+export const APP = Object.freeze({
+    UNDO: {
+        DEFAULT: 20,
+        MIN: 0,
+        MAX: 100
+    },
+    REDO: {
+        DEFAULT: 20,
+        MIN: 0,
+        MAX: 100
+    }
+});
+
 export const PROJECT = Object.freeze({
     FILE: {
         EXT: 'museproj',

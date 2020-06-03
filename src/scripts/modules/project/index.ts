@@ -21,14 +21,18 @@ import { editMasterVolume } from 'modules/project/master';
 export interface ProjectData {
     readonly file: ProjectFile;
     readonly path: string | null;
-    readonly undo: ProjectFile[];
-    readonly redo: ProjectFile[];
+    readonly maxUndo: number;
+    readonly maxRedo: number;
+    undo: ProjectFile[];
+    redo: ProjectFile[];
     saved: boolean;
 }
-export const createProjectData = (file: ProjectFile, path: string | null): ProjectData => ({
-    file,
-    path,
-    saved: !!path,
+const createProjectData = (data: ProjectSettings): ProjectData => ({
+    file: data.file,
+    path: data.path,
+    saved: !!data.path,
+    maxUndo: data.undo,
+    maxRedo: data.redo,
     undo: [],
     redo: []
 });
@@ -38,6 +42,8 @@ export type ProjectDataState = ProjectData | null;
 interface ProjectSettings {
     readonly file: ProjectFile;
     readonly path: string | null;
+    readonly undo: number;
+    readonly redo: number;
 }
 
 interface TrackVolumeSettings {
@@ -48,6 +54,8 @@ interface TrackVolumeSettings {
 type ProjectReducers = {
     readonly set: CaseReducer<ProjectDataState, PayloadAction<ProjectSettings | null>>;
     readonly save: CaseReducer<ProjectDataState, PayloadAction<string>>;
+    readonly undo: CaseReducer<ProjectDataState, PayloadAction>;
+    readonly redo: CaseReducer<ProjectDataState, PayloadAction>;
     readonly setName: CaseReducer<ProjectDataState, PayloadAction<string>>;
     readonly setTempo: CaseReducer<ProjectDataState, PayloadAction<number>>;
     readonly soloTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
@@ -66,8 +74,7 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
             if (!data) {
                 return null;
             }
-            const { file, path } = data;
-            return createProjectData(file, path);
+            return createProjectData(data);
         },
         save: (state, action) => produce(state, draft => {
             if (draft) {
@@ -76,52 +83,90 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
             }
             return draft;
         }),
+        undo: state => produce(state, draft => {
+            if (draft) {
+                const prev = draft.undo.shift();
+
+                if (prev) {
+                    draft.file = prev;
+
+                    if (state) {
+                        draft.redo.unshift(state.file);
+                        draft.redo = draft.redo.slice(0, draft.maxRedo);
+                    }
+                }
+            }
+            return draft;
+        }),
+        redo: state => produce(state, draft => {
+            if (draft) {
+                const next = draft.redo.shift();
+
+                if (next) {
+                    draft.file = next;
+
+                    if (state) {
+                        draft.undo.unshift(state.file);
+                        draft.undo = draft.undo.slice(0, draft.maxUndo);
+                    }
+                }
+            }
+            return draft;
+        }),
         setName: (state, action) => produce(state, draft => {
             if (draft) {
                 draft.file.name = action.payload;
             }
-            return edit(draft);
+            return edit(state, draft);
         }),
         setTempo: (state, action) => produce(state, draft => {
             if (draft) {
                 draft.file.tempo = action.payload;
             }
-            return edit(draft);
+            return edit(state, draft);
         }),
         soloTrack: (state, action) => produce(state, draft => {
             if (draft) {
                 soloTrack(draft.file.tracks, action.payload);
             }
-            return edit(draft);
+            return edit(state, draft);
         }),
         muteTrack: (state, action) => produce(state, draft => {
             if (draft) {
                 muteTrack(draft.file.tracks, action.payload);
             }
-            return edit(draft);
+            return edit(state, draft);
         }),
         setMasterVolume: (state, action) => produce(state, draft => {
             if (draft) {
                 editMasterVolume(draft.file.master, action.payload);
             }
-            return edit(draft);
+            return edit(state, draft);
         }),
         setTrackVolume: (state, action) => produce(state, draft => {
             if (draft) {
                 const { track, volume } = action.payload;
                 editTrackVolume(draft.file.tracks, track, volume);
             }
-            return edit(draft);
+            return edit(state, draft);
         })
     }
 });
 
-const edit = (draft: ProjectDataState): ProjectDataState => {
+const edit = (state: ProjectDataState, draft: ProjectDataState): ProjectDataState => {
     if (!draft) {
         return draft;
     }
     draft.saved = false;
     draft.file.modified = Date.now();
+
+    // handle project history
+    draft.redo = [];
+
+    if (state) {
+        draft.undo.unshift(state.file);
+        draft.undo = draft.undo.slice(0, draft.maxUndo);
+    }
     return draft;
 };
 
@@ -137,11 +182,13 @@ const checkProjectSaved = (project: ProjectDataState, cb: () => void): void => {
     });
 };
 
-export const setProject = (data: ProjectFile, path: string | null): AppThunk => dispatch => {
+export const setProject = (data: ProjectFile, path: string | null): AppThunk => (dispatch, getState) => {
+    const { undo, redo } = getState().app;
+
     dispatch(Project.actions.set({
-        file: data,
-        path
+        file: data, path, undo, redo
     }));
+
     dispatch(closeOverlay());
 };
 
@@ -234,12 +281,12 @@ export const selectProject = (): AppThunk => (dispatch, getState) => {
     });
 };
 
-export const undoProject = (): AppThunk => () => {
-    Logger.log('UNDO PROJECT');
+export const undoProject = (): AppThunk => dispatch => {
+    dispatch(Project.actions.undo());
 };
 
-export const redoProject = (): AppThunk => () => {
-    Logger.log('REDO PROJECT');
+export const redoProject = (): AppThunk => dispatch => {
+    dispatch(Project.actions.redo());
 };
 
 export const closeProject = (): AppThunk => (dispatch, getState) => {
