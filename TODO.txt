@@ -1,1 +1,5 @@
+    TODO
+-----------------------------------------------------------
 --  nahradit systemove dialogy za notifikacni UI komponentu
+--  UNDO
+--  REDO

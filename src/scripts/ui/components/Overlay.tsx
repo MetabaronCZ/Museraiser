@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { Key } from 'data/keys';
 import { TXT } from 'data/texts';
 
+import { bindKey } from 'modules/keymap';
 import { AppDispatch } from 'modules/store';
 import { closeOverlay } from 'modules/overlay';
 
@@ -39,12 +41,7 @@ export const OverlayUI: React.SFC<Props> = ({ title, back = true, buttons = [], 
             return;
         }
         const close = (e: KeyboardEvent): void => {
-            const key = e.keyCode || e.which;
-
-            if (27 === key) {
-                dispatch(closeOverlay());
-                document.removeEventListener('keydown', close);
-            }
+            bindKey(e, '-', '-', Key.ESC, () => dispatch(closeOverlay()));
         };
         document.addEventListener('keydown', close);
 

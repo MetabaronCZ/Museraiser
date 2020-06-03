@@ -6,16 +6,17 @@ import { TXT } from 'data/texts';
 import { Dialog } from 'modules/dialog';
 import { Logger } from 'modules/logger';
 import { getDirame } from 'modules/app';
-import { TrackID } from 'modules/project/track';
 import { readFile, saveFile } from 'modules/file';
 import { AppThunk, AppDispatch } from 'modules/store';
 import { closeOverlay, openOverlay } from 'modules/overlay';
 import { setRecentFilesDirectory, addRecentProject } from 'modules/recent-projects';
+import { TrackID, muteTrack, soloTrack, editTrackVolume } from 'modules/project/track';
 import {
     ProjectFile,
     isValidProjectName, isValidProjectTempo,
     parseProject, serializeProject
 } from 'modules/project/file';
+import { editMasterVolume } from 'modules/project/master';
 
 export interface ProjectData {
     readonly file: ProjectFile;
@@ -39,6 +40,11 @@ interface ProjectSettings {
     readonly path: string | null;
 }
 
+interface TrackVolumeSettings {
+    readonly track: TrackID;
+    readonly volume: number;
+}
+
 type ProjectReducers = {
     readonly set: CaseReducer<ProjectDataState, PayloadAction<ProjectSettings | null>>;
     readonly save: CaseReducer<ProjectDataState, PayloadAction<string>>;
@@ -46,6 +52,8 @@ type ProjectReducers = {
     readonly setTempo: CaseReducer<ProjectDataState, PayloadAction<number>>;
     readonly soloTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
     readonly muteTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
+    readonly setMasterVolume: CaseReducer<ProjectDataState, PayloadAction<number>>;
+    readonly setTrackVolume: CaseReducer<ProjectDataState, PayloadAction<TrackVolumeSettings>>;
 };
 
 export const Project = createSlice<ProjectDataState, ProjectReducers>({
@@ -82,22 +90,26 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
         }),
         soloTrack: (state, action) => produce(state, draft => {
             if (draft) {
-                const track = draft.file.tracks[action.payload];
-                const solo = track.solo;
-
-                for (const track of Object.values(draft.file.tracks)) {
-                    track.solo = false;
-                }
-                track.solo = !solo;
-                track.mute = false;
+                soloTrack(draft.file.tracks, action.payload);
             }
             return edit(draft);
         }),
         muteTrack: (state, action) => produce(state, draft => {
             if (draft) {
-                const track = draft.file.tracks[action.payload];
-                track.mute = !track.mute;
-                track.solo = false;
+                muteTrack(draft.file.tracks, action.payload);
+            }
+            return edit(draft);
+        }),
+        setMasterVolume: (state, action) => produce(state, draft => {
+            if (draft) {
+                editMasterVolume(draft.file.master, action.payload);
+            }
+            return edit(draft);
+        }),
+        setTrackVolume: (state, action) => produce(state, draft => {
+            if (draft) {
+                const { track, volume } = action.payload;
+                editTrackVolume(draft.file.tracks, track, volume);
             }
             return edit(draft);
         })
@@ -113,7 +125,7 @@ const edit = (draft: ProjectDataState): ProjectDataState => {
     return draft;
 };
 
-const checkCurrentProject = (project: ProjectDataState, cb: () => void): void => {
+const checkProjectSaved = (project: ProjectDataState, cb: () => void): void => {
     if (!project || project.saved) {
         cb();
         return;
@@ -136,7 +148,7 @@ export const setProject = (data: ProjectFile, path: string | null): AppThunk => 
 export const createProject = (): AppThunk => (dispatch, getState) => {
     const { project } = getState();
 
-    checkCurrentProject(project, () => {
+    checkProjectSaved(project, () => {
         dispatch(openOverlay('CREATE'));
     });
 };
@@ -215,7 +227,7 @@ export const selectProject = (): AppThunk => (dispatch, getState) => {
     const { project, recentProjects } = getState();
     const lastDir = recentProjects.dir;
 
-    checkCurrentProject(project, () => {
+    checkProjectSaved(project, () => {
         Dialog.openFile(lastDir, 'PROJECT').then(file => {
             dispatch(openProject(file));
         });
@@ -233,7 +245,7 @@ export const redoProject = (): AppThunk => () => {
 export const closeProject = (): AppThunk => (dispatch, getState) => {
     const { project } = getState();
 
-    checkCurrentProject(project, () => {
+    checkProjectSaved(project, () => {
         dispatch(Project.actions.set(null));
     });
 };
@@ -254,10 +266,18 @@ export const setProjectTempo = (tempo: number): AppThunk => dispatch => {
     }
 };
 
-export const soloTrack = (id: TrackID): AppThunk => dispatch => {
+export const soloProjectTrack = (id: TrackID): AppThunk => dispatch => {
     dispatch(Project.actions.soloTrack(id));
 };
 
-export const muteTrack = (id: TrackID): AppThunk => dispatch => {
+export const muteProjectTrack = (id: TrackID): AppThunk => dispatch => {
     dispatch(Project.actions.muteTrack(id));
+};
+
+export const setMasterVolume = (volume: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setMasterVolume(volume));
+};
+
+export const setTrackVolume = (track: TrackID, volume: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setTrackVolume({ track, volume }));
 };

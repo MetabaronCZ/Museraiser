@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { Key } from 'data/keys';
+
+import { bindKey } from 'modules/keymap';
 import { closeWindow } from 'modules/app';
 import { AppDispatch } from 'modules/store';
 import {
@@ -14,42 +17,13 @@ export const Keybindings: React.SFC = () => {
 
     useEffect(() => {
         const bind = (e: KeyboardEvent): void => {
-            e.preventDefault();
-
-            const key = e.keyCode || e.which;
-            const isShift = e.shiftKey;
-            const isCtrl = e.ctrlKey;
-
-            switch (key) {
-                case 78: // CTRL+N
-                    if (isCtrl) dispatch(createProject());
-                    return;
-                case 79: // CTRL+O
-                    if (isCtrl) dispatch(selectProject());
-                    return;
-                case 83: // CTRL+S
-                    if (isCtrl) dispatch(saveProject());
-                    return;
-                case 90:
-                    if (isCtrl) {
-                        if (!isShift) {
-                            // CTRL+Z
-                            dispatch(undoProject());
-                        } else {
-                            // CTRL+SHIFT+Z
-                            dispatch(redoProject());
-                        }
-                    }
-                    return;
-                case 87: // CTRL+W
-                    if (isCtrl) dispatch(closeProject());
-                    return;
-                case 81: // CTRL+Q
-                    if (isCtrl) closeWindow();
-                    return;
-                default:
-                    // pass
-            }
+            bindKey(e, 'CTRL', '-', Key.N, () => dispatch(createProject()));
+            bindKey(e, 'CTRL', '-', Key.O, () => dispatch(selectProject()));
+            bindKey(e, 'CTRL', '-', Key.S, () => dispatch(saveProject()));
+            bindKey(e, 'CTRL', '-', Key.Z, () => dispatch(undoProject()));
+            bindKey(e, 'CTRL', 'SHIFT', Key.Z, () => dispatch(redoProject()));
+            bindKey(e, 'CTRL', '-', Key.W, () => dispatch(closeProject()));
+            bindKey(e, 'CTRL', '-', Key.Q, () => closeWindow());
         };
         document.addEventListener('keydown', bind);
 

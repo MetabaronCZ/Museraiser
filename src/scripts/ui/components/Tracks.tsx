@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 import { TXT } from 'data/texts';
 
 import { AppDispatch } from 'modules/store';
-import { soloTrack, muteTrack } from 'modules/project';
 import { TrackData, TrackID, Tracks } from 'modules/project/track';
+import { soloProjectTrack, muteProjectTrack } from 'modules/project';
 
 import { LinkButton } from 'ui/common/LinkButton';
 
@@ -27,7 +27,7 @@ export const TracksUI: React.SFC<Props> = ({ tracks }) => {
 
                     <LinkButton
                         title={TXT.track.solo.title}
-                        onClick={() => dispatch(soloTrack(id as TrackID))}
+                        onClick={() => dispatch(soloProjectTrack(id as TrackID))}
                     >
                         <span style={{ background: track.solo ? 'red' : 'lightgrey' }}>
                             {TXT.track.solo.ico}
@@ -38,7 +38,7 @@ export const TracksUI: React.SFC<Props> = ({ tracks }) => {
 
                     <LinkButton
                         title={TXT.track.mute.title}
-                        onClick={() => dispatch(muteTrack(id as TrackID))}
+                        onClick={() => dispatch(muteProjectTrack(id as TrackID))}
                     >
                         <span style={{ background: track.mute ? 'red' : 'lightgrey' }}>
                             {TXT.track.mute.ico}

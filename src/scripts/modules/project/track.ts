@@ -1,5 +1,6 @@
 import { VOLUME } from 'data/config';
 
+import { sanitizeVolume } from 'modules/project/volume';
 import {
     SampleData, SampleSnapshot, parseSample, serializeSample
 } from 'modules/project/sample';
@@ -118,3 +119,26 @@ export const serializeTracks = (tracks: Tracks): TracksSnapshot => ({
     T15: serializeTrack(tracks.T15),
     T16: serializeTrack(tracks.T16)
 });
+
+export const muteTrack = (tracks: Tracks, id: TrackID): void => {
+    const track = tracks[id];
+    track.mute = !track.mute;
+    track.solo = false;
+};
+
+export const soloTrack = (tracks: Tracks, id: TrackID): void => {
+    const track = tracks[id];
+    const solo = track.solo;
+
+    for (const track of Object.values(tracks)) {
+        track.solo = false;
+    }
+    track.solo = !solo;
+    track.mute = false;
+};
+
+export const editTrackVolume = (tracks: Tracks, id: TrackID, volume: number): void => {
+    const track = tracks[id];
+    const value = sanitizeVolume(volume);
+    track.volume = value;
+};
