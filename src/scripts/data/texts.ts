@@ -101,5 +101,16 @@ export const TXT = {
             tempo: 'Tempo',
             sampleRate: 'Sample rate'
         }
+    },
+    track: {
+        title: 'Track',
+        solo: {
+            title: 'Solo',
+            ico: 'S'
+        },
+        mute: {
+            title: 'Mute',
+            ico: 'M'
+        }
     }
 };

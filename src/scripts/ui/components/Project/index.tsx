@@ -8,7 +8,7 @@ import { ProjectDataState } from 'modules/project';
 import { Button } from 'ui/common/Button';
 import { Heading } from 'ui/common/Heading';
 import { IntroUI } from 'ui/components/Intro';
-import { TrackData } from 'modules/project/track';
+import { TracksUI } from 'ui/components/Tracks';
 import { ButtonList } from 'ui/common/ButtonList';
 
 export const ProjectUI: React.SFC = () => {
@@ -23,20 +23,7 @@ export const ProjectUI: React.SFC = () => {
         <div className="Project">
             <div className="Project-main">
                 <Heading text={name} />
-
-                <ul className="List">
-                    {Object.entries<TrackData>(tracks).map(([id, track]) => (
-                        <li className="List-item" key={id}>
-                            {track.name}
-                            {' '}
-                            ({track.sample ? track.sample.name : null})
-                            {' '}
-                            <pre style={{ display: 'inline' }}>
-                                {JSON.stringify(track.patterns, null, '\t')}
-                            </pre>
-                        </li>
-                    ))}
-                </ul>
+                <TracksUI tracks={tracks} />
 
                 <ButtonList>
                     <Button text="Master" onClick={() => undefined} />
@@ -47,7 +34,7 @@ export const ProjectUI: React.SFC = () => {
             </div>
 
             <div className="Project-detail">
-                Detail...
+                Piano roll / Sample edit / Master / ???
             </div>
         </div>
     );

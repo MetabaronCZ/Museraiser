@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { TXT } from 'data/texts';
@@ -32,6 +32,27 @@ export const OverlayUI: React.SFC<Props> = ({ title, back = true, buttons = [], 
         const backButton = getBackButton(() => dispatch(closeOverlay()));
         buttons.unshift(backButton);
     }
+
+    // close overlay when ESC pressed
+    useEffect(() => {
+        if (!back) {
+            return;
+        }
+        const close = (e: KeyboardEvent): void => {
+            const key = e.keyCode || e.which;
+
+            if (27 === key) {
+                dispatch(closeOverlay());
+                document.removeEventListener('keydown', close);
+            }
+        };
+        document.addEventListener('keydown', close);
+
+        return () => {
+            document.removeEventListener('keydown', close);
+        };
+    });
+
     return (
         <div className="Overlay">
             <Heading size="large" text={title} />

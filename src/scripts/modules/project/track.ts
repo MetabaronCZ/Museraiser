@@ -4,21 +4,27 @@ import { PatternData, createPatternsFrom } from 'modules/project/pattern';
 export interface TrackData {
     readonly patterns: PatternData[];
     name: string;
+    solo: boolean;
+    mute: boolean;
     sample: SampleData | null;
 }
-const createTrack = (id: string): TrackData => ({
-    name: `Track ${id}`,
+const createTrack = (nr: string): TrackData => ({
+    name: `Track ${nr}`,
     sample: null,
+    solo: false,
+    mute: false,
     patterns: []
 });
 
 const createTrackFrom = (data: any): TrackData => ({
     name: `${data.name}`,
+    solo: !!data.solo,
+    mute: !!data.mute,
     sample: createSampleFrom(data.sample),
     patterns: createPatternsFrom(data.patterns)
 });
 
-type TrackID =
+export type TrackID =
     'T01' | 'T02' | 'T03' | 'T04' | 'T05' | 'T06' | 'T07' | 'T08' |
     'T09' | 'T10' | 'T11' | 'T12' | 'T13' | 'T14' | 'T15' | 'T16';
 

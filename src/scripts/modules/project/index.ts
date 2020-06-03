@@ -7,6 +7,7 @@ import { TXT } from 'data/texts';
 import { Logger } from 'modules/logger';
 import { readFile } from 'modules/file';
 import { AppThunk } from 'modules/store';
+import { TrackID } from 'modules/project/track';
 import { closeOverlay, openOverlay } from 'modules/overlay';
 import { ask, selectFile, showError } from 'modules/dialog';
 import { setRecentFilesDirectory, addRecentProject } from 'modules/recent-projects';
@@ -33,6 +34,8 @@ type ProjectReducers = {
     readonly set: CaseReducer<ProjectDataState, PayloadAction<ProjectFile | null>>;
     readonly setName: CaseReducer<ProjectDataState, PayloadAction<string>>;
     readonly setTempo: CaseReducer<ProjectDataState, PayloadAction<number>>;
+    readonly soloTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
+    readonly muteTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
 };
 
 export const Project = createSlice<ProjectDataState, ProjectReducers>({
@@ -57,6 +60,27 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
         setTempo: (state, action) => produce(state, draft => {
             if (draft) {
                 draft.file.tempo = action.payload;
+                edit(draft);
+            }
+            return draft;
+        }),
+        soloTrack: (state, action) => produce(state, draft => {
+            if (draft) {
+                for (const track of Object.values(draft.file.tracks)) {
+                    track.solo = false;
+                }
+                const track = draft.file.tracks[action.payload];
+                track.solo = !track.solo;
+                track.mute = false;
+                edit(draft);
+            }
+            return draft;
+        }),
+        muteTrack: (state, action) => produce(state, draft => {
+            if (draft) {
+                const track = draft.file.tracks[action.payload];
+                track.mute = !track.mute;
+                track.solo = false;
                 edit(draft);
             }
             return draft;
@@ -163,4 +187,12 @@ export const setProjectTempo = (tempo: number): AppThunk => dispatch => {
     } else {
         dispatch(Project.actions.setTempo(tempo));
     }
+};
+
+export const soloTrack = (id: TrackID): AppThunk => dispatch => {
+    dispatch(Project.actions.soloTrack(id));
+};
+
+export const muteTrack = (id: TrackID): AppThunk => dispatch => {
+    dispatch(Project.actions.muteTrack(id));
 };
