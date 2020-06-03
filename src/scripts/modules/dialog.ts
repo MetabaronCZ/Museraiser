@@ -24,6 +24,7 @@ export const Dialog = {
         return new Promise((resolve, reject) => {
             const dialog = remote.dialog.showMessageBox({
                 message: text,
+                title: TXT.app.title,
                 buttons: [negative, positive]
             });
 
@@ -49,7 +50,6 @@ export const Dialog = {
         return new Promise((resolve, reject) => {
             const dialog = remote.dialog.showSaveDialog({
                 defaultPath: p.resolve(path, title || ''),
-                title,
                 filters: filters[filter]
             });
 

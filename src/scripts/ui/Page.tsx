@@ -7,11 +7,14 @@ import { RouterUI } from 'ui/Router';
 import { Logo } from 'ui/components/Logo';
 import { Menu } from 'ui/components/Menu';
 import { Copyright } from 'ui/components/Copyright';
+import { Keybindings } from 'ui/components/Keybindings';
 import { WindowActions } from 'ui/components/WindowActions';
 import { SettingsActions } from 'ui/components/SettingsActions';
 
 export const PageUI: React.SFC = () => (
     <Provider store={store}>
+        <Keybindings />
+
         <div className="Page">
             <header className="Page-header">
                 <div className="Page-header-item">
