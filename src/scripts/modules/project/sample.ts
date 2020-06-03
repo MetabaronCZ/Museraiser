@@ -3,7 +3,7 @@ export interface SampleData {
     name: string;
 }
 
-interface SampleBuffer {
+export interface SampleSnapshot {
     readonly name: string;
     readonly rate: number;
     readonly data: [number[], number[]];
@@ -14,28 +14,10 @@ export const createSample = (name: string, buffer: AudioBuffer): SampleData => (
     buffer
 });
 
-export const createSampleFrom = (data: any): SampleData | null => {
-    if (!data) {
+export const parseSample = (sample: any): SampleData | null => {
+    if (!sample) {
         return null;
     }
-    return parseSample(data);
-};
-
-export const serializeSample = (data: SampleData): SampleBuffer => {
-    const { name, buffer } = data;
-    const L = new Float32Array(buffer.length);
-    const R = new Float32Array(buffer.length);
-    buffer.copyFromChannel(L, 0);
-    buffer.copyFromChannel(R, 1);
-
-    return {
-        name,
-        rate: buffer.sampleRate,
-        data: [Array.from(L), Array.from(R)]
-    };
-};
-
-export const parseSample = (sample: SampleBuffer): SampleData => {
     const { name, rate, data } = sample;
 
     const buffer = new AudioBuffer({
@@ -50,4 +32,21 @@ export const parseSample = (sample: SampleBuffer): SampleData => {
     buffer.copyToChannel(R, 1);
 
     return createSample(name, buffer);
+};
+
+export const serializeSample = (data: SampleData | null): SampleSnapshot | null => {
+    if (!data) {
+        return null;
+    }
+    const { name, buffer } = data;
+    const L = new Float32Array(buffer.length);
+    const R = new Float32Array(buffer.length);
+    buffer.copyFromChannel(L, 0);
+    buffer.copyFromChannel(R, 1);
+
+    return {
+        name,
+        rate: buffer.sampleRate,
+        data: [Array.from(L), Array.from(R)]
+    };
 };

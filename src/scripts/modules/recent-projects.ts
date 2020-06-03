@@ -4,10 +4,10 @@ import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 import { TXT } from 'data/texts';
 import { RECENT_PROJECTS_MAX, RECENT_PROJECTS_VALUES } from 'data/config';
 
-import { ask } from 'modules/dialog';
+import { Dialog } from 'modules/dialog';
 import { AppThunk } from 'modules/store';
 import { fileExists } from 'modules/file';
-import { getDefaultProjectPath } from 'modules/window';
+import { getDefaultProjectPath } from 'modules/app';
 import { loadFromStorage, saveToStorage } from 'modules/storage';
 
 const STORAGE_KEY = 'RECENT_PROJECTS';
@@ -96,7 +96,7 @@ export const addRecentProject = (path: string): AppThunk => dispatch => {
 };
 
 export const removeRecentProject = (path: string): AppThunk => dispatch => {
-    ask(TXT.recentProjects.remove.ask).then(result => {
+    Dialog.ask(TXT.recentProjects.remove.ask).then(result => {
         if (result) {
             dispatch(RecentProjects.actions.remove(path));
         }
@@ -104,7 +104,7 @@ export const removeRecentProject = (path: string): AppThunk => dispatch => {
 };
 
 export const clearRecentProjects = (): AppThunk => dispatch => {
-    ask(TXT.recentProjects.clear.ask).then(result => {
+    Dialog.ask(TXT.recentProjects.clear.ask).then(result => {
         if (result) {
             dispatch(RecentProjects.actions.clear());
         }

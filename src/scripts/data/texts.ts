@@ -87,6 +87,10 @@ export const TXT = {
             title: 'Invalid file',
             message: 'Selected file is not a valid project!'
         },
+        saveError: {
+            title: 'Save aborted',
+            message: 'Project file cannot be saved! File is used by another program or project data are invalid.'
+        },
         setNameError: {
             title: 'Invalid project name',
             message: `Project name should be between ${PROJECT_NAME_MIN} and ${PROJECT_NAME_MAX} characters!`

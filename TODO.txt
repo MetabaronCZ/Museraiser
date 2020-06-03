@@ -1,6 +1,4 @@
---  u closeWindow se ptat, jestli (project.saved === true), pripadne zrusit "ask" dialog
 --  nahradit systemove dialogy za notifikacni UI komponentu
-
 --  klavesove zkratky:
     - Menu:
         - CTRL+N >> New project

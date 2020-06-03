@@ -17,7 +17,7 @@ const getCreateButton = (dispatch: AppDispatch, name: string, tempo: number): Re
         text={TXT.create.new}
         onClick={() => {
             const project = createProjectFile(name, tempo);
-            dispatch(setProject(project));
+            dispatch(setProject(project, null));
         }}
     />
 );

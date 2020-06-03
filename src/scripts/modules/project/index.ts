@@ -1,37 +1,47 @@
-import p from 'path';
 import produce from 'immer';
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
 import { TXT } from 'data/texts';
 
+import { Dialog } from 'modules/dialog';
 import { Logger } from 'modules/logger';
-import { readFile } from 'modules/file';
-import { AppThunk } from 'modules/store';
+import { getDirame } from 'modules/app';
 import { TrackID } from 'modules/project/track';
+import { readFile, saveFile } from 'modules/file';
+import { AppThunk, AppDispatch } from 'modules/store';
 import { closeOverlay, openOverlay } from 'modules/overlay';
-import { ask, selectFile, showError } from 'modules/dialog';
 import { setRecentFilesDirectory, addRecentProject } from 'modules/recent-projects';
 import {
-    ProjectFile, createProjectFrom, isValidProjectName, isValidProjectTempo
+    ProjectFile,
+    isValidProjectName, isValidProjectTempo,
+    parseProject, serializeProject
 } from 'modules/project/file';
 
 export interface ProjectData {
     readonly file: ProjectFile;
+    readonly path: string | null;
     readonly undo: ProjectFile[];
     readonly redo: ProjectFile[];
     saved: boolean;
 }
-export const createProjectData = (file: ProjectFile): ProjectData => ({
+export const createProjectData = (file: ProjectFile, path: string | null): ProjectData => ({
     file,
-    saved: false,
+    path,
+    saved: !!path,
     undo: [],
     redo: []
 });
 
 export type ProjectDataState = ProjectData | null;
 
+interface ProjectSettings {
+    readonly file: ProjectFile;
+    readonly path: string | null;
+}
+
 type ProjectReducers = {
-    readonly set: CaseReducer<ProjectDataState, PayloadAction<ProjectFile | null>>;
+    readonly set: CaseReducer<ProjectDataState, PayloadAction<ProjectSettings | null>>;
+    readonly save: CaseReducer<ProjectDataState, PayloadAction<string>>;
     readonly setName: CaseReducer<ProjectDataState, PayloadAction<string>>;
     readonly setTempo: CaseReducer<ProjectDataState, PayloadAction<number>>;
     readonly soloTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
@@ -43,26 +53,32 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
     initialState: null,
     reducers: {
         set: (state, action) => {
-            const file = action.payload;
+            const data = action.payload;
 
-            if (!file) {
+            if (!data) {
                 return null;
             }
-            return createProjectData(file);
+            const { file, path } = data;
+            return createProjectData(file, path);
         },
+        save: (state, action) => produce(state, draft => {
+            if (draft) {
+                draft.path = action.payload;
+                draft.saved = true;
+            }
+            return draft;
+        }),
         setName: (state, action) => produce(state, draft => {
             if (draft) {
                 draft.file.name = action.payload;
-                edit(draft);
             }
-            return draft;
+            return edit(draft);
         }),
         setTempo: (state, action) => produce(state, draft => {
             if (draft) {
                 draft.file.tempo = action.payload;
-                edit(draft);
             }
-            return draft;
+            return edit(draft);
         }),
         soloTrack: (state, action) => produce(state, draft => {
             if (draft) {
@@ -72,25 +88,27 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
                 const track = draft.file.tracks[action.payload];
                 track.solo = !track.solo;
                 track.mute = false;
-                edit(draft);
             }
-            return draft;
+            return edit(draft);
         }),
         muteTrack: (state, action) => produce(state, draft => {
             if (draft) {
                 const track = draft.file.tracks[action.payload];
                 track.mute = !track.mute;
                 track.solo = false;
-                edit(draft);
             }
-            return draft;
+            return edit(draft);
         })
     }
 });
 
-const edit = (draft: ProjectData): void => {
+const edit = (draft: ProjectDataState): ProjectDataState => {
+    if (!draft) {
+        return draft;
+    }
     draft.saved = false;
     draft.file.modified = Date.now();
+    return draft;
 };
 
 const checkCurrentProject = (project: ProjectDataState, cb: () => void): void => {
@@ -98,15 +116,18 @@ const checkCurrentProject = (project: ProjectDataState, cb: () => void): void =>
         cb();
         return;
     }
-    ask(TXT.project.closeAsk).then(result => {
+    Dialog.ask(TXT.project.closeAsk).then(result => {
         if (result) {
             cb();
         }
     });
 };
 
-export const setProject = (data: ProjectFile): AppThunk => dispatch => {
-    dispatch(Project.actions.set(data));
+export const setProject = (data: ProjectFile, path: string | null): AppThunk => dispatch => {
+    dispatch(Project.actions.set({
+        file: data,
+        path
+    }));
     dispatch(closeOverlay());
 };
 
@@ -126,20 +147,66 @@ export const openProject = (path: string): AppThunk => dispatch => {
         const file = readFile(path);
         const data = JSON.parse(file);
 
-        const project = createProjectFrom(data);
-        dispatch(setProject(project));
+        const project = parseProject(data);
+        dispatch(setProject(project, path));
 
         dispatch(addRecentProject(path));
 
-        const dir = p.dirname(path);
+        const dir = getDirame(path);
         dispatch(setRecentFilesDirectory(dir));
 
     } catch (err) {
         Logger.log(err);
 
         const { title, message } = TXT.project.selectError;
-        showError(title, message);
+        Dialog.showError(title, message);
     }
+};
+
+const save = (dispatch: AppDispatch, file: ProjectFile, path: string): void => {
+    const data = serializeProject(file);
+
+    try {
+        const save = JSON.stringify(data);
+        saveFile(path, save);
+
+        dispatch(Project.actions.save(path));
+
+    } catch (err) {
+        Logger.log(err);
+
+        const { title, message } = TXT.project.saveError;
+        Dialog.showError(title, message);
+    }
+};
+
+export const saveProject = (): AppThunk => (dispatch, getState) => {
+    const { project, recentProjects } = getState();
+
+    if (!project) {
+        return;
+    }
+    const { file, path } = project;
+
+    // save project to its location
+    if (path) {
+        save(dispatch, file, path);
+        return;
+    }
+    const lastDir = recentProjects.dir;
+
+    // user selects save destination for created project
+    Dialog.saveFile(lastDir, 'PROJECT', file.name).then(userPath => {
+        if (!userPath) {
+            return;
+        }
+        save(dispatch, file, userPath);
+
+        dispatch(addRecentProject(userPath));
+
+        const dir = getDirame(userPath);
+        dispatch(setRecentFilesDirectory(dir));
+    });
 };
 
 export const selectProject = (): AppThunk => (dispatch, getState) => {
@@ -147,14 +214,10 @@ export const selectProject = (): AppThunk => (dispatch, getState) => {
     const lastDir = recentProjects.dir;
 
     checkCurrentProject(project, () => {
-        selectFile(lastDir, 'PROJECT').then(file => {
+        Dialog.openFile(lastDir, 'PROJECT').then(file => {
             dispatch(openProject(file));
         });
     });
-};
-
-export const saveProject = (): AppThunk => () => {
-    Logger.log('SAVE PROJECT');
 };
 
 export const undoProject = (): AppThunk => () => {
@@ -175,7 +238,7 @@ export const closeProject = (): AppThunk => (dispatch, getState) => {
 
 export const setProjectName = (name: string): AppThunk => dispatch => {
     if (!isValidProjectName(name)) {
-        showError(TXT.project.setNameError.title, TXT.project.setNameError.message);
+        Dialog.showError(TXT.project.setNameError.title, TXT.project.setNameError.message);
     } else {
         dispatch(Project.actions.setName(name));
     }
@@ -183,7 +246,7 @@ export const setProjectName = (name: string): AppThunk => dispatch => {
 
 export const setProjectTempo = (tempo: number): AppThunk => dispatch => {
     if (!isValidProjectTempo(tempo)) {
-        showError(TXT.project.setTempoError.title, TXT.project.setTempoError.message);
+        Dialog.showError(TXT.project.setTempoError.title, TXT.project.setTempoError.message);
     } else {
         dispatch(Project.actions.setTempo(tempo));
     }

@@ -1,10 +1,15 @@
+import p from 'path';
 import { remote } from 'electron';
 
 import { TXT } from 'data/texts';
-import { ask } from 'modules/dialog';
+import { Dialog } from 'modules/dialog';
 
 export const getDefaultProjectPath = (): string => {
     return remote.app.getPath('documents');
+};
+
+export const getDirame = (path: string): string => {
+    return p.dirname(path);
 };
 
 export const minimizeWindow = (): void => {
@@ -22,7 +27,7 @@ export const maximizeWindow = (): void => {
 };
 
 export const closeWindow = (): void => {
-    ask(TXT.app.close.question).then(result => {
+    Dialog.ask(TXT.app.close.question).then(result => {
         if (result) {
             remote.getCurrentWindow().close();
         }
