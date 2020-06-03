@@ -6,9 +6,10 @@ import { OverlayID } from 'modules/overlay';
 import { ProjectDataState } from 'modules/project';
 
 import { IntroUI } from 'ui/components/Intro';
-import { CreateUI } from 'ui/components/Create';
 import { ProjectUI } from 'ui/components/Project';
 import { SettingsUI } from 'ui/components/Settings';
+import { ProjectEditUI } from 'ui/components/ProjectEdit';
+import { ProjectCreateUI } from 'ui/components/ProjectCreate';
 
 export const RouterUI: React.SFC = () => {
     const overlay = useSelector<AppState, OverlayID>(state => state.overlay);
@@ -16,7 +17,9 @@ export const RouterUI: React.SFC = () => {
 
     switch (overlay) {
         case 'CREATE':
-            return <CreateUI />;
+            return <ProjectCreateUI />;
+        case 'PROJECT':
+            return <ProjectEditUI />;
         case 'SETTINGS':
             return <SettingsUI />;
         default:

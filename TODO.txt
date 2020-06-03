@@ -1,9 +1,5 @@
---  serializace AudioBufferu u SampleData
-    + vytvoreni AudioBufferu z ulozenych dat
-    + upravit i v "createSampleFrom"
 --  u closeWindow se ptat, jestli (project.saved === true), pripadne zrusit "ask" dialog
 --  nahradit systemove dialogy za notifikacni UI komponentu
-??  dispatchovat i Window akce
 
 --  klavesove zkratky:
     - Menu:

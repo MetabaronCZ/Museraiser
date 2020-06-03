@@ -1,4 +1,5 @@
 import p from 'path';
+import produce from 'immer';
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
 import { TXT } from 'data/texts';
@@ -8,8 +9,10 @@ import { readFile } from 'modules/file';
 import { AppThunk } from 'modules/store';
 import { closeOverlay, openOverlay } from 'modules/overlay';
 import { ask, selectFile, showError } from 'modules/dialog';
-import { ProjectFile, createProjectFrom } from 'modules/project/file';
 import { setRecentFilesDirectory, addRecentProject } from 'modules/recent-projects';
+import {
+    ProjectFile, createProjectFrom, isValidProjectName, isValidProjectTempo
+} from 'modules/project/file';
 
 export interface ProjectData {
     readonly file: ProjectFile;
@@ -28,6 +31,8 @@ export type ProjectDataState = ProjectData | null;
 
 type ProjectReducers = {
     readonly set: CaseReducer<ProjectDataState, PayloadAction<ProjectFile | null>>;
+    readonly setName: CaseReducer<ProjectDataState, PayloadAction<string>>;
+    readonly setTempo: CaseReducer<ProjectDataState, PayloadAction<number>>;
 };
 
 export const Project = createSlice<ProjectDataState, ProjectReducers>({
@@ -41,7 +46,19 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
                 return null;
             }
             return createProjectData(file);
-        }
+        },
+        setName: (state, action) => produce(state, draft => {
+            if (draft) {
+                draft.file.name = action.payload;
+            }
+            return draft;
+        }),
+        setTempo: (state, action) => produce(state, draft => {
+            if (draft) {
+                draft.file.tempo = action.payload;
+            }
+            return draft;
+        })
     }
 });
 
@@ -123,4 +140,20 @@ export const closeProject = (): AppThunk => (dispatch, getState) => {
     checkCurrentProject(project, () => {
         dispatch(Project.actions.set(null));
     });
+};
+
+export const setProjectName = (name: string): AppThunk => dispatch => {
+    if (!isValidProjectName(name)) {
+        showError(TXT.project.setNameError.title, TXT.project.setNameError.message);
+    } else {
+        dispatch(Project.actions.setName(name));
+    }
+};
+
+export const setProjectTempo = (tempo: number): AppThunk => dispatch => {
+    if (!isValidProjectTempo(tempo)) {
+        showError(TXT.project.setTempoError.title, TXT.project.setTempoError.message);
+    } else {
+        dispatch(Project.actions.setTempo(tempo));
+    }
 };

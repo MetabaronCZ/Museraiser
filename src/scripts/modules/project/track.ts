@@ -18,24 +18,13 @@ const createTrackFrom = (data: any): TrackData => ({
     patterns: createPatternsFrom(data.patterns)
 });
 
-export interface Tracks {
-    readonly T01: TrackData;
-    readonly T02: TrackData;
-    readonly T03: TrackData;
-    readonly T04: TrackData;
-    readonly T05: TrackData;
-    readonly T06: TrackData;
-    readonly T07: TrackData;
-    readonly T08: TrackData;
-    readonly T09: TrackData;
-    readonly T10: TrackData;
-    readonly T11: TrackData;
-    readonly T12: TrackData;
-    readonly T13: TrackData;
-    readonly T14: TrackData;
-    readonly T15: TrackData;
-    readonly T16: TrackData;
-}
+type TrackID =
+    'T01' | 'T02' | 'T03' | 'T04' | 'T05' | 'T06' | 'T07' | 'T08' |
+    'T09' | 'T10' | 'T11' | 'T12' | 'T13' | 'T14' | 'T15' | 'T16';
+
+export type Tracks = {
+    readonly [id in TrackID]: TrackData;
+};
 
 export const createTracks = (): Tracks => ({
     T01: createTrack('01'),

@@ -27,7 +27,7 @@ const getBackButton = (onClick: OnClick): React.ReactNode => (
 
 export const OverlayUI: React.SFC<Props> = ({ title, back = true, buttons = [], children }) => {
     const dispatch = useDispatch<AppDispatch>();
-    
+
     if (back) {
         const backButton = getBackButton(() => dispatch(closeOverlay()));
         buttons.unshift(backButton);
@@ -38,7 +38,7 @@ export const OverlayUI: React.SFC<Props> = ({ title, back = true, buttons = [], 
 
             {children}
 
-            <ButtonList>
+            <ButtonList type="stretched">
                 {buttons.map((btn, i) => (
                     <React.Fragment key={i}>
                         {btn}

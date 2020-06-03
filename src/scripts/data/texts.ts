@@ -1,3 +1,8 @@
+import {
+    PROJECT_NAME_MIN, PROJECT_NAME_MAX,
+    PROJECT_TEMPO_MIN, PROJECT_TEMPO_MAX
+} from 'data/config';
+
 export const TXT = {
     dialog: {
         positive: 'Yes',
@@ -69,19 +74,32 @@ export const TXT = {
     },
     create: {
         title: 'Create project',
-        new: 'Create',
-        name: 'Project name',
-        sampleRate: 'Sample rate'
+        new: 'Create'
     },
     settings: {
         title: 'Settings',
         ico: '⚙'
     },
     project: {
+        title: 'Project',
+        ico: '♪',
         selectError: {
             title: 'Invalid file',
             message: 'Selected file is not a valid project!'
         },
-        closeAsk: 'Do you want to close current project? Unsaved data will be lost!'
+        setNameError: {
+            title: 'Invalid project name',
+            message: `Project name should be between ${PROJECT_NAME_MIN} and ${PROJECT_NAME_MAX} characters!`
+        },
+        setTempoError: {
+            title: 'Invalid project tempo',
+            message: `Project tempo value should be between ${PROJECT_TEMPO_MIN} and ${PROJECT_TEMPO_MAX}!`
+        },
+        closeAsk: 'Do you want to close current project? Unsaved data will be lost!',
+        fields: {
+            name: 'Project name',
+            tempo: 'Tempo',
+            sampleRate: 'Sample rate'
+        }
     }
 };

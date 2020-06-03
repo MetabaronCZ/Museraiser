@@ -1,7 +1,7 @@
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk } from 'modules/store';
 
-export type OverlayID = null | 'CREATE' | 'SETTINGS';
+export type OverlayID = null | 'CREATE' | 'PROJECT' | 'SETTINGS';
 
 type OverlayReducers = {
     readonly set: CaseReducer<OverlayID, PayloadAction<OverlayID>>;
