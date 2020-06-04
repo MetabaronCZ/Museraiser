@@ -1,3 +1,6 @@
 TODO
 -----------------------------------------------------------
+--  pridat: project.author, project.description
+    ? udelat autora prednastavitelneho v Settings
 --  nahradit systemove dialogy za notifikacni UI komponentu
+--  ukladat pozici a rozmery okna
