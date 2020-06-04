@@ -1,0 +1,5 @@
+.FormTextarea {
+    @extend %form-field, %text-body;
+    height: calc(#{6*$vu} + #{$border-size});
+    resize: none;
+}

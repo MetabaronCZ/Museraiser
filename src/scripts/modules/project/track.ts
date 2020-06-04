@@ -14,6 +14,7 @@ export interface TrackData {
     name: string;
     solo: boolean;
     mute: boolean;
+    pan: number;
     volume: number;
     sample: SampleData | null;
 }
@@ -22,6 +23,7 @@ interface TrackSnapshot {
     readonly name: string;
     readonly solo: boolean;
     readonly mute: boolean;
+    readonly pan: number;
     readonly volume: number;
     readonly patterns: PatternSnapshot[];
     readonly sample: SampleSnapshot | null;
@@ -32,6 +34,7 @@ const createTrack = (nr: string): TrackData => ({
     solo: false,
     mute: false,
     sample: null,
+    pan: 0,
     volume: VOLUME.DEFAULT,
     patterns: []
 });
@@ -71,6 +74,7 @@ const parseTrack = (data: any): TrackData => ({
     name: `${data.name}`,
     solo: !!data.solo,
     mute: !!data.mute,
+    pan: parseInt(data.pan, 10),
     sample: parseSample(data.sample),
     volume: parseInt(data.volume, 10),
     patterns: parsePatterns(data.patterns)

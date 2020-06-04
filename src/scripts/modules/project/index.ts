@@ -8,15 +8,15 @@ import { Logger } from 'modules/logger';
 import { getDirame } from 'modules/app';
 import { readFile, saveFile } from 'modules/file';
 import { AppThunk, AppDispatch } from 'modules/store';
+import { editMasterVolume } from 'modules/project/master';
 import { closeOverlay, openOverlay } from 'modules/overlay';
 import { setRecentFilesDirectory, addRecentProject } from 'modules/recent-projects';
 import { TrackID, muteTrack, soloTrack, editTrackVolume } from 'modules/project/track';
 import {
-    ProjectFile,
+    ProjectFile, parseProject, serializeProject,
     isValidProjectName, isValidProjectTempo,
-    parseProject, serializeProject
+    isValidProjectAuthor, isValidProjectDescription
 } from 'modules/project/file';
-import { editMasterVolume } from 'modules/project/master';
 
 export interface ProjectData {
     readonly file: ProjectFile;
@@ -58,6 +58,8 @@ type ProjectReducers = {
     readonly redo: CaseReducer<ProjectDataState, PayloadAction>;
     readonly setName: CaseReducer<ProjectDataState, PayloadAction<string>>;
     readonly setTempo: CaseReducer<ProjectDataState, PayloadAction<number>>;
+    readonly setAuthor: CaseReducer<ProjectDataState, PayloadAction<string>>;
+    readonly setDescription: CaseReducer<ProjectDataState, PayloadAction<string>>;
     readonly soloTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
     readonly muteTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
     readonly setMasterVolume: CaseReducer<ProjectDataState, PayloadAction<number>>;
@@ -124,6 +126,18 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
         setTempo: (state, action) => produce(state, draft => {
             if (draft) {
                 draft.file.tempo = action.payload;
+            }
+            return edit(state, draft);
+        }),
+        setAuthor: (state, action) => produce(state, draft => {
+            if (draft) {
+                draft.file.author = action.payload;
+            }
+            return edit(state, draft);
+        }),
+        setDescription: (state, action) => produce(state, draft => {
+            if (draft) {
+                draft.file.description = action.payload;
             }
             return edit(state, draft);
         }),
@@ -295,13 +309,17 @@ export const closeProject = (): AppThunk => (dispatch, getState) => {
     const { project } = getState();
 
     checkProjectSaved(project, () => {
+        dispatch(closeOverlay());
         dispatch(Project.actions.set(null));
     });
 };
 
 export const setProjectName = (name: string): AppThunk => dispatch => {
     if (!isValidProjectName(name)) {
-        Dialog.showError(TXT.project.setNameError.title, TXT.project.setNameError.message);
+        Dialog.showError(
+            TXT.project.setNameError.title,
+            TXT.project.setNameError.message
+        );
     } else {
         dispatch(Project.actions.setName(name));
     }
@@ -309,9 +327,34 @@ export const setProjectName = (name: string): AppThunk => dispatch => {
 
 export const setProjectTempo = (tempo: number): AppThunk => dispatch => {
     if (!isValidProjectTempo(tempo)) {
-        Dialog.showError(TXT.project.setTempoError.title, TXT.project.setTempoError.message);
+        Dialog.showError(
+            TXT.project.setTempoError.title,
+            TXT.project.setTempoError.message
+        );
     } else {
         dispatch(Project.actions.setTempo(tempo));
+    }
+};
+
+export const setProjectAuthor = (author: string): AppThunk => dispatch => {
+    if (!isValidProjectAuthor(author)) {
+        Dialog.showError(
+            TXT.project.setAuthorError.title,
+            TXT.project.setAuthorError.message
+        );
+    } else {
+        dispatch(Project.actions.setAuthor(author));
+    }
+};
+
+export const setProjectDescription = (desc: string): AppThunk => dispatch => {
+    if (!isValidProjectDescription(desc)) {
+        Dialog.showError(
+            TXT.project.setDescriptionError.title,
+            TXT.project.setDescriptionError.message
+        );
+    } else {
+        dispatch(Project.actions.setDescription(desc));
     }
 };
 

@@ -1,6 +1,20 @@
 TODO
 -----------------------------------------------------------
---  pridat: project.author, project.description
-    ? udelat autora prednastavitelneho v Settings
+??  udelat autora prednastavitelneho v Settings
 --  nahradit systemove dialogy za notifikacni UI komponentu
 --  ukladat pozici a rozmery okna
+--  k samplum pridat:
+    - Filter (cutoff, resonance); +envelope (ADSR LOWPASS cutoff); +LFO (=phase)
+        - 2 filtry (LOWPASS, HIGHPASS) za sebou
+    - Amplitude (gain); +envelope (ADSR); +LFO (=tremolo)
+    - Pan; +LFO
+    - Pitch; +LFO (=vibrato)
+    ? u ENVELOPE mit moznost:
+        - POLY - spusti ADSR pri spusteni noty (default mod)
+        - MONO - ADSR bezi porad a pri spusteni noty se jen aplikuje aktualni hodnota
+        - RETRIG - jako MONO, ale ADSR se spousti pri spusteni noty
+    ? u LFO mit moznost:
+        - SHAPE - sine, sawtooth, triangle, apod.
+        - RATE - rychlost oscilace
+        - AMOUNT - "hlasitost" - uroven modulace
+        - SYNC - synchronizovat s tempem

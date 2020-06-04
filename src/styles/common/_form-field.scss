@@ -12,4 +12,16 @@
         flex: 1;
         padding-left: 2*$vu;
     }
+
+    &.FormField--wide {
+        flex-direction: column;
+
+        .FormField-label {
+            width: 100%;
+        }
+    
+        .FormField-field {
+            padding-left: 0;
+        }
+    }
 }

@@ -19,7 +19,9 @@ export const APP = Object.freeze({
 export const PROJECT = Object.freeze({
     FILE: {
         EXT: 'museproj',
-        NAME: 'New project'
+        NAME: 'New project',
+        AUTHOR: '',
+        DESCRIPTION: ''
     },
     SAMPLE: {
         RATE: 44100
@@ -27,6 +29,14 @@ export const PROJECT = Object.freeze({
     NAME: {
         MIN: 1,
         MAX: 24
+    },
+    AUTHOR: {
+        MIN: 0,
+        MAX: 24
+    },
+    DESCRIPTION: {
+        MIN: 0,
+        MAX: 150
     },
     TEMPO: {
         DEFAULT: 128,

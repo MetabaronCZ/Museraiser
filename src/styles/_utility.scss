@@ -19,6 +19,11 @@
 
     &:disabled {
         color: $color-neutral;
+
+        &:hover,
+        &:focus {
+            background: transparent;
+        }
     }
 }
 
@@ -27,11 +32,12 @@
     width: 100%;
     padding: 0 ($vu/2);
     height: $line-height-default;
-    border: $border-default;
+    border: $border-light;
+    outline: none;
 
     &:hover,
     &:focus {
-        /* */
+        border-color: $color-neutral;
     }
 
     &:disabled {
