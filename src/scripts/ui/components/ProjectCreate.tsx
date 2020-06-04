@@ -12,15 +12,10 @@ import { Button } from 'ui/common/Button';
 import { OverlayUI } from 'ui/components/Overlay';
 import { ProjectFormUI } from 'ui/components/ProjectForm';
 
-const getCreateButton = (dispatch: AppDispatch, name: string, author: string, desc: string, tempo: number): React.ReactNode => (
-    <Button
-        text={TXT.create.new}
-        onClick={() => {
-            const project = createProjectFile(name, author, desc, tempo);
-            dispatch(setProject(project, null));
-        }}
-    />
-);
+const create = (dispatch: AppDispatch, name: string, author: string, desc: string, tempo: number) => (): void => {
+    const project = createProjectFile(name, author, desc, tempo);
+    dispatch(setProject(project, null));
+};
 
 export const ProjectCreateUI: React.SFC = () => {
     const defaultAuthor = useSelector<AppState, string>(state => state.app.author);
@@ -30,9 +25,11 @@ export const ProjectCreateUI: React.SFC = () => {
     const [author, setAuthor] = useState<string>(defaultAuthor);
     const [tempo, setTempo] = useState<number>(PROJECT.TEMPO.DEFAULT);
     const [desc, setDescription] = useState<string>(PROJECT.FILE.DESCRIPTION);
+    const createProject = create(dispatch, name, author, desc, tempo);
 
-    const createButton = getCreateButton(dispatch, name, author, desc, tempo);
-
+    const createButton = (
+        <Button text={TXT.create.new} onClick={createProject} />
+    );
     return (
         <OverlayUI title={TXT.create.title} buttons={[createButton]}>
             <ProjectFormUI

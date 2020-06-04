@@ -201,8 +201,6 @@ const checkProjectSaved = (project: ProjectDataState, cb: () => void): void => {
 export const setProject = (data: ProjectFile, path: string | null): AppThunk => (dispatch, getState) => {
     const { undo, redo } = getState().app;
     dispatch(Project.actions.set({ file: data, path, undo, redo }));
-
-    dispatch(setAuthor(data.author));
     dispatch(closeOverlay());
 };
 
@@ -277,6 +275,7 @@ export const saveProject = (): AppThunk => (dispatch, getState) => {
         }
         save(dispatch, file, userPath);
 
+        dispatch(setAuthor(file.author));
         dispatch(addRecentProject(userPath));
 
         const dir = getDirame(userPath);

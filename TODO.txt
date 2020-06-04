@@ -1,6 +1,5 @@
 TODO
 -----------------------------------------------------------
-??  udelat autora prednastavitelneho v Settings
 --  nahradit systemove dialogy za notifikacni UI komponentu
 --  ukladat pozici a rozmery okna
 --  k samplum pridat:
