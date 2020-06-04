@@ -4,7 +4,7 @@ import { remote } from 'electron';
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
 import { TXT } from 'data/texts';
-import { APP } from 'data/config';
+import { APP, PROJECT } from 'data/config';
 
 import { Dialog } from 'modules/dialog';
 import { AppThunk } from 'modules/store';
@@ -15,11 +15,13 @@ const STORAGE_KEY = 'APP';
 export interface AppData{
     readonly undo: number;
     readonly redo: number;
+    readonly author: string;
 }
 
 const createAppData = (): AppData => ({
     undo: APP.UNDO.DEFAULT,
-    redo: APP.REDO.DEFAULT
+    redo: APP.REDO.DEFAULT,
+    author: PROJECT.FILE.AUTHOR
 });
 
 const load = (): AppData => {
@@ -34,6 +36,7 @@ const save = (state: AppData): void => {
 type AppReducers = {
     readonly setUndo: CaseReducer<AppData, PayloadAction<number>>;
     readonly setRedo: CaseReducer<AppData, PayloadAction<number>>;
+    readonly setAuthor: CaseReducer<AppData, PayloadAction<string>>;
 };
 
 export const App = createSlice<AppData, AppReducers>({
@@ -47,6 +50,11 @@ export const App = createSlice<AppData, AppReducers>({
         }),
         setRedo: (state, action) => produce(state, draft => {
             draft.redo = action.payload;
+            save(draft);
+            return draft;
+        }),
+        setAuthor: (state, action) => produce(state, draft => {
+            draft.author = action.payload;
             save(draft);
             return draft;
         })
@@ -65,6 +73,10 @@ export const setRedo = (redo: number): AppThunk => dispatch => {
     redo = Math.max(redo, APP.REDO.MIN);
     redo = Math.min(redo, APP.REDO.MAX);
     dispatch(App.actions.setRedo(redo));
+};
+
+export const setAuthor = (author: string): AppThunk => dispatch => {
+    dispatch(App.actions.setAuthor(author));
 };
 
 export const getDefaultProjectPath = (): string => {

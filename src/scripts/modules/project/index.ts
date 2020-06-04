@@ -5,7 +5,7 @@ import { TXT } from 'data/texts';
 
 import { Dialog } from 'modules/dialog';
 import { Logger } from 'modules/logger';
-import { getDirame } from 'modules/app';
+import { getDirame, setAuthor } from 'modules/app';
 import { readFile, saveFile } from 'modules/file';
 import { AppThunk, AppDispatch } from 'modules/store';
 import { editMasterVolume } from 'modules/project/master';
@@ -200,11 +200,9 @@ const checkProjectSaved = (project: ProjectDataState, cb: () => void): void => {
 
 export const setProject = (data: ProjectFile, path: string | null): AppThunk => (dispatch, getState) => {
     const { undo, redo } = getState().app;
+    dispatch(Project.actions.set({ file: data, path, undo, redo }));
 
-    dispatch(Project.actions.set({
-        file: data, path, undo, redo
-    }));
-
+    dispatch(setAuthor(data.author));
     dispatch(closeOverlay());
 };
 
