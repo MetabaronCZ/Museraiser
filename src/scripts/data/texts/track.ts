@@ -17,9 +17,9 @@ export const trackTexts = {
     delay: 'Delay',
     reverb: 'Reverb',
     volume: 'Volume',
+    notSelected: 'No track selected',
     setNameError: {
         title: 'Invalid track name',
         message: `Track name should be between ${TRACK.NAME.MIN} and ${TRACK.NAME.MAX} characters!`
-    },
-    notSelected: 'No track selected'
+    }
 };

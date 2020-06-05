@@ -11,5 +11,9 @@
             @extend %text-body;
             flex: 1;
         }
+
+        &.is-selected {
+            background: $color-light;
+        }
     }
 }

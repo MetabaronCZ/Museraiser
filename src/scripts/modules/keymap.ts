@@ -3,7 +3,7 @@ export type KeyID =
     'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' |
     'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z';
 
-export const bindKey = (e: KeyboardEvent, ctrl: 'CTRL' | '-', shift: 'SHIFT' | '-', key: number, cb: () => void): void => {
+export const bindKey = (e: KeyboardEvent, ctrl: 'CTRL' | '-', shift: 'SHIFT' | '-', key: number, cb?: () => void): void => {
     const keyCode = e.keyCode || e.which;
     if (
         (
@@ -17,6 +17,13 @@ export const bindKey = (e: KeyboardEvent, ctrl: 'CTRL' | '-', shift: 'SHIFT' | '
         && (key === keyCode)
     ) {
         e.preventDefault();
-        cb();
+
+        if (cb) {
+            cb();
+        }
     }
+};
+
+export const unbindKey = (e: KeyboardEvent, ctrl: 'CTRL' | '-', shift: 'SHIFT' | '-', key: number): void => {
+    bindKey(e, ctrl, shift, key);
 };

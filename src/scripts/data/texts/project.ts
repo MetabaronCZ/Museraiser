@@ -15,18 +15,6 @@ export const projectTexts = {
         title: 'Invalid project name',
         message: `Project name should be between ${PROJECT.NAME.MIN} and ${PROJECT.NAME.MAX} characters!`
     },
-    setAuthorError: {
-        title: 'Invalid author name',
-        message: `Author name should be between ${PROJECT.AUTHOR.MIN} and ${PROJECT.AUTHOR.MAX} characters!`
-    },
-    setDescriptionError: {
-        title: 'Invalid project description',
-        message: `Description should be between ${PROJECT.DESCRIPTION.MIN} and ${PROJECT.DESCRIPTION.MAX} characters!`
-    },
-    setTempoError: {
-        title: 'Invalid project tempo',
-        message: `Project tempo value should be between ${PROJECT.TEMPO.MIN} and ${PROJECT.TEMPO.MAX}!`
-    },
     closeAsk: 'Do you want to close current project? Unsaved data will be lost!',
     fields: {
         name: 'Project name',

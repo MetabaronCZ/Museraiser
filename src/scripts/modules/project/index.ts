@@ -16,20 +16,23 @@ import { setRecentFilesDirectory, addRecentProject } from 'modules/recent-projec
 
 import {
     TrackID, muteTrack, soloTrack,
-    editTrackVolume, editTrackPan, editTrackDelay, editTrackReverb, isValidTracktName
+    editTrackName, editTrackVolume, editTrackPan, editTrackDelay, editTrackReverb
 } from 'modules/project/track';
 
 import {
     ProjectFile, parseProject, serializeProject,
-    isValidProjectName, isValidProjectTempo,
-    isValidProjectAuthor, isValidProjectDescription
+    setTempo,
+    editProjectName,
+    editProjectAuthor,
+    editProjectDescription
 } from 'modules/project/file';
 
 export interface ProjectData {
-    readonly file: ProjectFile;
-    readonly path: string | null;
+    readonly file: ProjectFile; // actual project file
+    readonly path: string | null; // project file path
     readonly maxUndo: number;
     readonly maxRedo: number;
+    track: TrackID | null; // selected track
     undo: ProjectFile[];
     redo: ProjectFile[];
     saved: boolean;
@@ -40,6 +43,7 @@ const createProjectData = (data: ProjectSettings): ProjectData => ({
     saved: !!data.path,
     maxUndo: data.undo,
     maxRedo: data.redo,
+    track: null,
     undo: [],
     redo: []
 });
@@ -67,6 +71,7 @@ type ProjectReducers = {
     readonly setTempo: CaseReducer<ProjectDataState, PayloadAction<number>>;
     readonly setAuthor: CaseReducer<ProjectDataState, PayloadAction<string>>;
     readonly setDescription: CaseReducer<ProjectDataState, PayloadAction<string>>;
+    readonly selectTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID | null>>;
     readonly setTrackName: CaseReducer<ProjectDataState, PayloadAction<TrackValue<string>>>;
     readonly soloTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
     readonly muteTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
@@ -133,32 +138,31 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
         }),
         setName: (state, action) => produce(state, draft => {
             if (draft) {
-                draft.file.name = action.payload;
+                editProjectName(draft.file, action.payload);
             }
             return edit(state, draft);
         }),
         setTempo: (state, action) => produce(state, draft => {
             if (draft) {
-                draft.file.tempo = action.payload;
+                setTempo(draft.file, action.payload);
             }
             return edit(state, draft);
         }),
         setAuthor: (state, action) => produce(state, draft => {
             if (draft) {
-                draft.file.author = action.payload;
+                editProjectAuthor(draft.file, action.payload);
             }
             return edit(state, draft);
         }),
         setDescription: (state, action) => produce(state, draft => {
             if (draft) {
-                draft.file.description = action.payload;
+                editProjectDescription(draft.file, action.payload);
             }
             return edit(state, draft);
         }),
-        setTrackName: (state, action) => produce(state, draft => {
+        selectTrack: (state, action) => produce(state, draft => {
             if (draft) {
-                const { track, value } = action.payload;
-                draft.file.tracks[track], value;
+                draft.track = action.payload;
             }
             return edit(state, draft);
         }),
@@ -171,6 +175,13 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
         muteTrack: (state, action) => produce(state, draft => {
             if (draft) {
                 muteTrack(draft.file.tracks, action.payload);
+            }
+            return edit(state, draft);
+        }),
+        setTrackName: (state, action) => produce(state, draft => {
+            if (draft) {
+                const { track, value } = action.payload;
+                editTrackName(draft.file.tracks, track, value);
             }
             return edit(state, draft);
         }),
@@ -372,58 +383,27 @@ export const closeProject = (): AppThunk => (dispatch, getState) => {
 };
 
 export const setProjectName = (name: string): AppThunk => dispatch => {
-    if (!isValidProjectName(name)) {
-        Dialog.showError(
-            TXT.project.setNameError.title,
-            TXT.project.setNameError.message
-        );
-    } else {
-        dispatch(Project.actions.setName(name));
-    }
+    dispatch(Project.actions.setName(name));
 };
 
 export const setProjectTempo = (tempo: number): AppThunk => dispatch => {
-    if (!isValidProjectTempo(tempo)) {
-        Dialog.showError(
-            TXT.project.setTempoError.title,
-            TXT.project.setTempoError.message
-        );
-    } else {
-        dispatch(Project.actions.setTempo(tempo));
-    }
+    dispatch(Project.actions.setTempo(tempo));
 };
 
 export const setProjectAuthor = (author: string): AppThunk => dispatch => {
-    if (!isValidProjectAuthor(author)) {
-        Dialog.showError(
-            TXT.project.setAuthorError.title,
-            TXT.project.setAuthorError.message
-        );
-    } else {
-        dispatch(Project.actions.setAuthor(author));
-    }
+    dispatch(Project.actions.setAuthor(author));
 };
 
 export const setProjectDescription = (desc: string): AppThunk => dispatch => {
-    if (!isValidProjectDescription(desc)) {
-        Dialog.showError(
-            TXT.project.setDescriptionError.title,
-            TXT.project.setDescriptionError.message
-        );
-    } else {
-        dispatch(Project.actions.setDescription(desc));
-    }
+    dispatch(Project.actions.setDescription(desc));
+};
+
+export const selectTrack = (id: TrackID | null): AppThunk => dispatch => {
+    dispatch(Project.actions.selectTrack(id));
 };
 
 export const setTrackName = (track: TrackID, name: string): AppThunk => dispatch => {
-    if (!isValidTracktName(name)) {
-        Dialog.showError(
-            TXT.track.setNameError.title,
-            TXT.track.setNameError.message
-        );
-    } else {
-        dispatch(Project.actions.setTrackName({ track, value: name }));
-    }
+    dispatch(Project.actions.setTrackName({ track, value: name }));
 };
 
 export const soloProjectTrack = (id: TrackID): AppThunk => dispatch => {

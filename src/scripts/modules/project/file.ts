@@ -1,3 +1,4 @@
+import { limitNumber } from 'core/number';
 import { PROJECT } from 'data/config';
 
 import {
@@ -7,6 +8,8 @@ import {
 import {
     MasterData, MasterSnapshot, createMasterData, parseMasterData, serializeMasterData
 } from 'modules/project/master';
+
+const { NAME, AUTHOR, DESCRIPTION, TEMPO } = PROJECT;
 
 export interface ProjectFile {
     readonly created: number;
@@ -44,22 +47,6 @@ export const createProjectFile = (name: string, author: string, desc: string, te
     };
 };
 
-export const isValidProjectName = (name: string): boolean => {
-    return name.length >= PROJECT.NAME.MIN && name.length <= PROJECT.NAME.MAX;
-};
-
-export const isValidProjectTempo = (tempo: number): boolean => {
-    return tempo >= PROJECT.TEMPO.MIN && tempo <= PROJECT.TEMPO.MAX;
-};
-
-export const isValidProjectAuthor = (author: string): boolean => {
-    return author.length >= PROJECT.AUTHOR.MIN && author.length <= PROJECT.AUTHOR.MAX;
-};
-
-export const isValidProjectDescription = (desc: string): boolean => {
-    return desc.length >= PROJECT.DESCRIPTION.MIN && desc.length <= PROJECT.DESCRIPTION.MAX;
-};
-
 export const parseProject = (data: any): ProjectFile => {
     return {
         name: `${data.name}`,
@@ -78,3 +65,23 @@ export const serializeProject = (file: ProjectFile): ProjectSnapshot => ({
     master: serializeMasterData(file.master),
     tracks: serializeTracks(file.tracks)
 });
+
+export const editProjectName = (file: ProjectFile, name: string): void => {
+    name = name.substring(0, NAME.MAX);
+    file.name = name;
+};
+
+export const editProjectAuthor = (file: ProjectFile, author: string): void => {
+    author = author.substring(0, AUTHOR.MAX);
+    file.author = author;
+};
+
+export const editProjectDescription = (file: ProjectFile, desc: string): void => {
+    desc = desc.substring(0, DESCRIPTION.MAX);
+    file.description = desc;
+};
+
+export const setTempo = (file: ProjectFile, tempo: number): void => {
+    tempo = limitNumber(tempo, TEMPO.MIN, TEMPO.MIN);
+    file.tempo = tempo;
+};

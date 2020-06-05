@@ -134,10 +134,6 @@ export const serializeTracks = (tracks: Tracks): TracksSnapshot => ({
     T16: serializeTrack(tracks.T16)
 });
 
-export const isValidTracktName = (name: string): boolean => {
-    return name.length >= NAME.MIN && name.length <= NAME.MAX;
-};
-
 export const muteTrack = (tracks: Tracks, id: TrackID): void => {
     const track = tracks[id];
     track.mute = !track.mute;
@@ -153,6 +149,11 @@ export const soloTrack = (tracks: Tracks, id: TrackID): void => {
     }
     track.solo = !solo;
     track.mute = false;
+};
+
+export const editTrackName = (tracks: Tracks, id: TrackID, name: string): void => {
+    name = name.substring(0, NAME.MAX);
+    tracks[id].name = name;
 };
 
 export const editTrackVolume = (tracks: Tracks, id: TrackID, volume: number): void => {

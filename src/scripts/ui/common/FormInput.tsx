@@ -7,15 +7,18 @@ interface Props {
     readonly value: string;
     readonly min?: number;
     readonly max?: number;
-    readonly onChange: OnChange;
+    readonly onBlur?: OnChange;
+    readonly onChange?: OnChange;
 }
 
-const change = (cb: OnChange) => (e: React.SyntheticEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget;
-    cb(value);
+const change = (cb?: OnChange) => (e: React.SyntheticEvent<HTMLInputElement>) => {
+    if (cb) {
+        const { value } = e.currentTarget;
+        cb(value);
+    }
 };
 
-export const FormInput: React.SFC<Props> = ({ id, value, min, max, onChange }) => (
+export const FormInput: React.SFC<Props> = ({ id, value, min, max, onChange, onBlur }) => (
     <input
         id={id}
         className="FormInput"
@@ -24,6 +27,7 @@ export const FormInput: React.SFC<Props> = ({ id, value, min, max, onChange }) =
         value={value}
         minLength={min}
         maxLength={max}
+        onBlur={change(onBlur)}
         onChange={change(onChange)}
     />
 );

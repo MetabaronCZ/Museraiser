@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 import { useDispatch } from 'react-redux';
 
 import { TRACK } from 'data/config';
@@ -17,6 +18,7 @@ type OnChange = (value: number) => void;
 
 interface Props {
     readonly tracks: Tracks;
+    readonly selected: TrackID | null;
 }
 
 const getInput = (id: string, value: number, min: number, max: number, onChange: OnChange): React.ReactNode => (
@@ -30,7 +32,7 @@ const getInput = (id: string, value: number, min: number, max: number, onChange:
     />
 );
 
-export const TracksMasterUI: React.SFC<Props> = ({ tracks }) => {
+export const TracksMasterUI: React.SFC<Props> = ({ tracks, selected }) => {
     const dispatch = useDispatch<AppDispatch>();
     return (
         <ul className="TracksMaster">
@@ -38,7 +40,12 @@ export const TracksMasterUI: React.SFC<Props> = ({ tracks }) => {
                 const { volume, pan, delay, reverb } = track;
                 const tID = id as TrackID;
                 return (
-                    <li className="TracksMaster-item" key={id}>
+                    <li
+                        className={cn('TracksMaster-item', {
+                            'is-selected': tID === selected
+                        })}
+                        key={id}
+                    >
                         <div className="TracksMaster-item-column">
                             V:&nbsp;{getInput('VOLUME', volume, VOLUME.MIN, VOLUME.MAX, value => dispatch(setTrackVolume(tID, value)))}&nbsp;%
                         </div>

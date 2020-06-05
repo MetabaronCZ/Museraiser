@@ -25,12 +25,11 @@ export const ProjectUI: React.SFC = () => {
         <div className="Project">
             <div className="Project-tracks">
                 <Heading text={`${TXT.project.title}: ${name}`} />
-                <TracksUI tracks={tracks} />
+                <TracksUI tracks={tracks} selected={project.track} />
             </div>
 
             <div className="Project-footer">
                 <div className="Project-footer-track">
-                    <Heading size="small" text={TXT.track.title} />
                     <TrackUI />
                 </div>
 
