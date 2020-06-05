@@ -1,0 +1,28 @@
+.Sequencer {
+    list-style-type: none;
+
+    &-track {
+        display: flex;
+        flex-direction: row;
+        height: 2*$vu;
+        margin-bottom: 1px;
+
+        &-bar {
+            flex: 1;
+            background: $color-light;
+            margin-right: 1px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        &.is-selected {
+            /* */
+
+            .Sequencer-track-bar {
+                background: $color-neutral;
+            }
+        }
+    }
+}

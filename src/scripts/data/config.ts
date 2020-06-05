@@ -103,3 +103,10 @@ export const MASTER = Object.freeze({
         }
     }
 });
+
+export const SEQUENCER = Object.freeze({
+    BAR: {
+        MIN: 16,
+        MAX: 999
+    }
+});

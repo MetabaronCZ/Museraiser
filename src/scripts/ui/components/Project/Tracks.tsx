@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Tracks, TrackID } from 'modules/project/track';
 
+import { SequencerUI } from 'ui/components/Project/Sequencer';
 import { TracksMasterUI } from 'ui/components/Project/TracksMaster';
 import { TracksControlUI } from 'ui/components/Project/TracksControl';
 
@@ -17,7 +18,7 @@ export const TracksUI: React.SFC<Props> = ({ tracks, selected }) => (
         </div>
 
         <div className="Tracks-grid">
-            ...grid
+            <SequencerUI tracks={tracks} selected={selected} />
         </div>
 
         <div className="Tracks-master">
