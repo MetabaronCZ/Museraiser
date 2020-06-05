@@ -1,0 +1,18 @@
+.TracksControl {
+    list-style-type: none;
+
+    &-item {
+        @extend %text-body;
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 1px;
+
+        &-column {
+            /* */
+
+            &:first-child {
+                flex: 1;
+            }
+        }
+    }
+}

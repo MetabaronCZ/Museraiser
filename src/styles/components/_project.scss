@@ -3,11 +3,28 @@
     flex-direction: column;
     height: 100%;
 
-    &-main {
+    &-tracks {
+        padding-bottom: 2*$vu;
         margin-bottom: 2*$vu;
+        border-bottom: $border-light;
     }
 
-    &-detail {
+    &-footer {
+        display: flex;
+        flex-direction: row;
         flex: 1;
+
+        &-track {
+            width: $left-column-width;
+        }
+
+        &-content {
+            flex: 1;
+            padding: 2*$vu;
+        }
+
+        &-master {
+            width: $right-column-width;
+        }
     }
 }

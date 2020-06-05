@@ -1,3 +1,5 @@
+import { ReverbID } from 'modules/project/reverb';
+
 /* eslint-disable no-underscore-dangle */
 declare const __ENVIRONMENT__: string;
 export const IS_DEV = ('dev' === __ENVIRONMENT__);
@@ -14,6 +16,11 @@ export const APP = Object.freeze({
         MIN: 0,
         MAX: 100
     }
+});
+
+export const RECENT_PROJECTS = Object.freeze({
+    MAX: 15,
+    VALUES: [0, 5, 10, 15, 20, 30, 50, 100] as const
 });
 
 export const PROJECT = Object.freeze({
@@ -45,13 +52,54 @@ export const PROJECT = Object.freeze({
     }
 });
 
-export const RECENT_PROJECTS = Object.freeze({
-    MAX: 15,
-    VALUES: [0, 5, 10, 15, 20, 30, 50, 100] as const
+export const TRACK = Object.freeze({
+    NAME: {
+        MIN: 1,
+        MAX: 16
+    },
+    VOLUME: {
+        DEFAULT: 90,
+        MIN: 0,
+        MAX: 100
+    },
+    PAN: {
+        DEFAULT: 0,
+        MIN: -100,
+        MAX: +100
+    },
+    DELAY: {
+        DEFAULT: 0,
+        MIN: 0,
+        MAX: 100
+    },
+    REVERB: {
+        DEFAULT: 0,
+        MIN: 0,
+        MAX: 100
+    }
 });
 
-export const VOLUME = Object.freeze({
-    DEFAULT: 100,
-    MIN: 0,
-    MAX: 127
+export const MASTER = Object.freeze({
+    VOLUME: {
+        DEFAULT: 90,
+        MIN: 0,
+        MAX: 100
+    },
+    DELAY: {
+        AMOUNT: {
+            DEFAULT: 0,
+            MIN: 0,
+            MAX: 100
+        },
+        RATE: {
+            DEFAULT: 0,
+            MIN: 0,
+            MAX: 10
+        }
+    },
+    REVERB: {
+        TYPE: {
+            DEFAULT: 'ROOM' as ReverbID
+        }
+    }
 });

@@ -35,7 +35,6 @@ export const SettingsUI: React.SFC = () => {
                         min={APP.UNDO.MIN}
                         max={APP.UNDO.MAX}
                         value={undo}
-                        step={1}
                         onChange={value => dispatch(setUndo(value))}
                     />
                 </FormField>
@@ -46,7 +45,6 @@ export const SettingsUI: React.SFC = () => {
                         min={APP.REDO.MIN}
                         max={APP.REDO.MAX}
                         value={redo}
-                        step={1}
                         onChange={value => dispatch(setRedo(value))}
                     />
                 </FormField>

@@ -9,6 +9,8 @@ import { FormInput } from 'ui/common/FormInput';
 import { FormNumber } from 'ui/common/FormNumber';
 import { FormTextarea } from 'ui/common/FormTextarea';
 
+const { NAME, AUTHOR, DESCRIPTION, TEMPO, SAMPLE } = PROJECT;
+
 interface Props {
     readonly name: string;
     readonly tempo: number;
@@ -29,8 +31,8 @@ export const ProjectFormUI: React.SFC<Props> = props => {
                 <FormInput
                     id="name"
                     value={name}
-                    min={PROJECT.NAME.MIN}
-                    max={PROJECT.NAME.MAX}
+                    min={NAME.MIN}
+                    max={NAME.MAX}
                     onChange={onName}
                 />
             </FormField>
@@ -39,8 +41,8 @@ export const ProjectFormUI: React.SFC<Props> = props => {
                 <FormInput
                     id="author"
                     value={author}
-                    min={PROJECT.AUTHOR.MIN}
-                    max={PROJECT.AUTHOR.MAX}
+                    min={AUTHOR.MIN}
+                    max={AUTHOR.MAX}
                     onChange={onAuthor}
                 />
             </FormField>
@@ -49,23 +51,22 @@ export const ProjectFormUI: React.SFC<Props> = props => {
                 <FormNumber
                     id="tempo"
                     value={tempo}
-                    min={PROJECT.TEMPO.MIN}
-                    max={PROJECT.TEMPO.MAX}
-                    step={1}
+                    min={TEMPO.MIN}
+                    max={TEMPO.MAX}
                     onChange={onTempo}
                 />
             </FormField>
 
             <FormField id="sample-rate" label={TXT.project.fields.sampleRate}>
-                {PROJECT.SAMPLE.RATE} Hz
+                {SAMPLE.RATE} Hz
             </FormField>
 
             <FormField id="description" label={TXT.project.fields.description} wide>
                 <FormTextarea
                     id="description"
                     value={description}
-                    min={PROJECT.DESCRIPTION.MIN}
-                    max={PROJECT.DESCRIPTION.MAX}
+                    min={DESCRIPTION.MIN}
+                    max={DESCRIPTION.MAX}
                     onChange={onDescription}
                 />
             </FormField>

@@ -1,0 +1,15 @@
+.TracksMaster {
+    list-style-type: none;
+
+    &-item {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 1px;
+
+        &-column {
+            @extend %text-body;
+            flex: 1;
+        }
+    }
+}

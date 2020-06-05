@@ -5,13 +5,20 @@ import { TXT } from 'data/texts';
 
 import { Dialog } from 'modules/dialog';
 import { Logger } from 'modules/logger';
-import { getDirame, setAuthor } from 'modules/app';
 import { readFile, saveFile } from 'modules/file';
+import { getDirame, setAuthor } from 'modules/app';
 import { AppThunk, AppDispatch } from 'modules/store';
 import { editMasterVolume } from 'modules/project/master';
 import { closeOverlay, openOverlay } from 'modules/overlay';
+import { ReverbID, setReverbType } from 'modules/project/reverb';
+import { setDelayAmount, setDelayRate } from 'modules/project/delay';
 import { setRecentFilesDirectory, addRecentProject } from 'modules/recent-projects';
-import { TrackID, muteTrack, soloTrack, editTrackVolume } from 'modules/project/track';
+
+import {
+    TrackID, muteTrack, soloTrack,
+    editTrackVolume, editTrackPan, editTrackDelay, editTrackReverb, isValidTracktName
+} from 'modules/project/track';
+
 import {
     ProjectFile, parseProject, serializeProject,
     isValidProjectName, isValidProjectTempo,
@@ -46,9 +53,9 @@ interface ProjectSettings {
     readonly redo: number;
 }
 
-interface TrackVolumeSettings {
+interface TrackValue<T> {
     readonly track: TrackID;
-    readonly volume: number;
+    readonly value: T;
 }
 
 type ProjectReducers = {
@@ -60,10 +67,17 @@ type ProjectReducers = {
     readonly setTempo: CaseReducer<ProjectDataState, PayloadAction<number>>;
     readonly setAuthor: CaseReducer<ProjectDataState, PayloadAction<string>>;
     readonly setDescription: CaseReducer<ProjectDataState, PayloadAction<string>>;
+    readonly setTrackName: CaseReducer<ProjectDataState, PayloadAction<TrackValue<string>>>;
     readonly soloTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
     readonly muteTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
+    readonly setTrackPan: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
+    readonly setTrackDelay: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
+    readonly setTrackReverb: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
+    readonly setTrackVolume: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
     readonly setMasterVolume: CaseReducer<ProjectDataState, PayloadAction<number>>;
-    readonly setTrackVolume: CaseReducer<ProjectDataState, PayloadAction<TrackVolumeSettings>>;
+    readonly setMasterReverbType: CaseReducer<ProjectDataState, PayloadAction<ReverbID>>;
+    readonly setMasterDelayAmount: CaseReducer<ProjectDataState, PayloadAction<number>>;
+    readonly setMasterDelayRate: CaseReducer<ProjectDataState, PayloadAction<number>>;
 };
 
 export const Project = createSlice<ProjectDataState, ProjectReducers>({
@@ -141,6 +155,13 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
             }
             return edit(state, draft);
         }),
+        setTrackName: (state, action) => produce(state, draft => {
+            if (draft) {
+                const { track, value } = action.payload;
+                draft.file.tracks[track], value;
+            }
+            return edit(state, draft);
+        }),
         soloTrack: (state, action) => produce(state, draft => {
             if (draft) {
                 soloTrack(draft.file.tracks, action.payload);
@@ -153,16 +174,55 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
             }
             return edit(state, draft);
         }),
+        setTrackPan: (state, action) => produce(state, draft => {
+            if (draft) {
+                const { track, value } = action.payload;
+                editTrackPan(draft.file.tracks, track, value);
+            }
+            return edit(state, draft);
+        }),
+        setTrackDelay: (state, action) => produce(state, draft => {
+            if (draft) {
+                const { track, value } = action.payload;
+                editTrackDelay(draft.file.tracks, track, value);
+            }
+            return edit(state, draft);
+        }),
+        setTrackReverb: (state, action) => produce(state, draft => {
+            if (draft) {
+                const { track, value } = action.payload;
+                editTrackReverb(draft.file.tracks, track, value);
+            }
+            return edit(state, draft);
+        }),
+        setTrackVolume: (state, action) => produce(state, draft => {
+            if (draft) {
+                const { track, value } = action.payload;
+                editTrackVolume(draft.file.tracks, track, value);
+            }
+            return edit(state, draft);
+        }),
         setMasterVolume: (state, action) => produce(state, draft => {
             if (draft) {
                 editMasterVolume(draft.file.master, action.payload);
             }
             return edit(state, draft);
         }),
-        setTrackVolume: (state, action) => produce(state, draft => {
+        setMasterReverbType: (state, action) => produce(state, draft => {
             if (draft) {
-                const { track, volume } = action.payload;
-                editTrackVolume(draft.file.tracks, track, volume);
+                setReverbType(draft.file.master.reverb, action.payload);
+            }
+            return edit(state, draft);
+        }),
+        setMasterDelayAmount: (state, action) => produce(state, draft => {
+            if (draft) {
+                setDelayAmount(draft.file.master.delay, action.payload);
+            }
+            return edit(state, draft);
+        }),
+        setMasterDelayRate: (state, action) => produce(state, draft => {
+            if (draft) {
+                setDelayRate(draft.file.master.delay, action.payload);
             }
             return edit(state, draft);
         })
@@ -355,6 +415,17 @@ export const setProjectDescription = (desc: string): AppThunk => dispatch => {
     }
 };
 
+export const setTrackName = (track: TrackID, name: string): AppThunk => dispatch => {
+    if (!isValidTracktName(name)) {
+        Dialog.showError(
+            TXT.track.setNameError.title,
+            TXT.track.setNameError.message
+        );
+    } else {
+        dispatch(Project.actions.setTrackName({ track, value: name }));
+    }
+};
+
 export const soloProjectTrack = (id: TrackID): AppThunk => dispatch => {
     dispatch(Project.actions.soloTrack(id));
 };
@@ -363,10 +434,34 @@ export const muteProjectTrack = (id: TrackID): AppThunk => dispatch => {
     dispatch(Project.actions.muteTrack(id));
 };
 
+export const setTrackPan = (track: TrackID, pan: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setTrackPan({ track, value: pan }));
+};
+
+export const setTrackDelay = (track: TrackID, delay: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setTrackDelay({ track, value: delay }));
+};
+
+export const setTrackReverb = (track: TrackID, reverb: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setTrackReverb({ track, value: reverb }));
+};
+
+export const setTrackVolume = (track: TrackID, volume: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setTrackVolume({ track, value: volume }));
+};
+
 export const setMasterVolume = (volume: number): AppThunk => dispatch => {
     dispatch(Project.actions.setMasterVolume(volume));
 };
 
-export const setTrackVolume = (track: TrackID, volume: number): AppThunk => dispatch => {
-    dispatch(Project.actions.setTrackVolume({ track, volume }));
+export const setMasterReverbType = (type: ReverbID): AppThunk => dispatch => {
+    dispatch(Project.actions.setMasterReverbType(type));
+};
+
+export const setMasterDelayAmount = (amount: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setMasterDelayAmount(amount));
+};
+
+export const setMasterDelayRate = (rate: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setMasterDelayRate(rate));
 };

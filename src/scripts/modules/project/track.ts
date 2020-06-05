@@ -1,6 +1,6 @@
-import { VOLUME } from 'data/config';
+import { limitNumber } from 'core/number';
+import { TRACK } from 'data/config';
 
-import { sanitizeVolume } from 'modules/project/volume';
 import {
     SampleData, SampleSnapshot, parseSample, serializeSample
 } from 'modules/project/sample';
@@ -9,12 +9,16 @@ import {
     PatternData, PatternSnapshot, parsePatterns, serializePatterns
 } from 'modules/project/pattern';
 
+const { NAME, VOLUME, REVERB, DELAY, PAN } = TRACK;
+
 export interface TrackData {
     readonly patterns: PatternData[];
     name: string;
     solo: boolean;
     mute: boolean;
     pan: number;
+    delay: number;
+    reverb: number;
     volume: number;
     sample: SampleData | null;
 }
@@ -24,6 +28,8 @@ interface TrackSnapshot {
     readonly solo: boolean;
     readonly mute: boolean;
     readonly pan: number;
+    readonly delay: number;
+    readonly reverb: number;
     readonly volume: number;
     readonly patterns: PatternSnapshot[];
     readonly sample: SampleSnapshot | null;
@@ -34,7 +40,9 @@ const createTrack = (nr: string): TrackData => ({
     solo: false,
     mute: false,
     sample: null,
-    pan: 0,
+    pan: PAN.DEFAULT,
+    delay: DELAY.DEFAULT,
+    reverb: REVERB.DEFAULT,
     volume: VOLUME.DEFAULT,
     patterns: []
 });
@@ -75,8 +83,10 @@ const parseTrack = (data: any): TrackData => ({
     solo: !!data.solo,
     mute: !!data.mute,
     pan: parseInt(data.pan, 10),
-    sample: parseSample(data.sample),
+    delay: parseInt(data.delay, 10),
+    reverb: parseInt(data.reverb, 10),
     volume: parseInt(data.volume, 10),
+    sample: parseSample(data.sample),
     patterns: parsePatterns(data.patterns)
 });
 
@@ -124,6 +134,10 @@ export const serializeTracks = (tracks: Tracks): TracksSnapshot => ({
     T16: serializeTrack(tracks.T16)
 });
 
+export const isValidTracktName = (name: string): boolean => {
+    return name.length >= NAME.MIN && name.length <= NAME.MAX;
+};
+
 export const muteTrack = (tracks: Tracks, id: TrackID): void => {
     const track = tracks[id];
     track.mute = !track.mute;
@@ -142,7 +156,21 @@ export const soloTrack = (tracks: Tracks, id: TrackID): void => {
 };
 
 export const editTrackVolume = (tracks: Tracks, id: TrackID, volume: number): void => {
-    const track = tracks[id];
-    const value = sanitizeVolume(volume);
-    track.volume = value;
+    volume = limitNumber(volume, VOLUME.MIN, VOLUME.MAX);
+    tracks[id].volume = volume;
+};
+
+export const editTrackPan = (tracks: Tracks, id: TrackID, pan: number): void => {
+    pan = limitNumber(pan, PAN.MIN, PAN.MAX);
+    tracks[id].pan = pan;
+};
+
+export const editTrackReverb = (tracks: Tracks, id: TrackID, reverb: number): void => {
+    reverb = limitNumber(reverb, REVERB.MIN, REVERB.MAX);
+    tracks[id].reverb = reverb;
+};
+
+export const editTrackDelay = (tracks: Tracks, id: TrackID, delay: number): void => {
+    delay = limitNumber(delay, DELAY.MIN, DELAY.MAX);
+    tracks[id].delay = delay;
 };

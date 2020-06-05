@@ -1,3 +1,10 @@
 .FormInput {
     @extend %form-field, %text-body;
+
+    &.FormInput--mini {
+        display: inline-block;
+        width: 5*$vu;
+        padding: 0;
+        text-align: right;
+    }
 }

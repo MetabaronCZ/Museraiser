@@ -1,0 +1,18 @@
+.Tracks {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2*$vu;
+
+    &-control {
+        width: $left-column-width;
+    }
+
+    &-grid {
+        flex: 1;
+        padding: 0 2*$vu;
+    }
+
+    &-master {
+        width: $right-column-width;
+    }
+}

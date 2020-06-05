@@ -1,5 +1,6 @@
 TODO
 -----------------------------------------------------------
+--  kazda Track bude mit time signature
 --  nahradit systemove dialogy za notifikacni UI komponentu
 --  ukladat pozici a rozmery okna
 --  k samplum pridat:

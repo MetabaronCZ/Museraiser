@@ -7,9 +7,9 @@ import { AppDispatch } from 'modules/store';
 import { openOverlay } from 'modules/overlay';
 import { selectProject } from 'modules/project';
 
-import { Grid } from 'ui/components/Grid';
-import { GridRow } from 'ui/components/Grid/Row';
-import { GridColumn } from 'ui/components/Grid/Column';
+import { Grid } from 'ui/common/Grid';
+import { GridRow } from 'ui/common/Grid/Row';
+import { GridColumn } from 'ui/common/Grid/Column';
 
 import { OverlayUI } from 'ui/components/Overlay';
 import { LinkButton } from 'ui/common/LinkButton';

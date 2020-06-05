@@ -1,15 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import { TXT } from 'data/texts';
+
 import { Logger } from 'modules/logger';
 import { AppState } from 'modules/store';
 import { ProjectDataState } from 'modules/project';
 
-import { Button } from 'ui/common/Button';
 import { Heading } from 'ui/common/Heading';
 import { IntroUI } from 'ui/components/Intro';
-import { TracksUI } from 'ui/components/Tracks';
-import { ButtonList } from 'ui/common/ButtonList';
+import { TrackUI } from 'ui/components/Project/Track';
+import { MasterUI } from 'ui/components/Project/Master';
+import { TracksUI } from 'ui/components/Project/Tracks';
 
 export const ProjectUI: React.SFC = () => {
     const project = useSelector<AppState, ProjectDataState>(state => state.project);
@@ -18,23 +20,28 @@ export const ProjectUI: React.SFC = () => {
         Logger.error('Could not open project');
         return <IntroUI />;
     }
-    const { name, tracks } = project.file;
+    const { name, tracks, master } = project.file;
     return (
         <div className="Project">
-            <div className="Project-main">
-                <Heading text={name} />
+            <div className="Project-tracks">
+                <Heading text={`${TXT.project.title}: ${name}`} />
                 <TracksUI tracks={tracks} />
-
-                <ButtonList>
-                    <Button text="Master" onClick={() => undefined} />
-                    <Button text="Track" onClick={() => undefined} />
-                    <Button text="Pattern" onClick={() => undefined} />
-                    <Button text="Sample" onClick={() => undefined} />
-                </ButtonList>
             </div>
 
-            <div className="Project-detail">
-                Piano roll / Sample edit / Master / ???
+            <div className="Project-footer">
+                <div className="Project-footer-track">
+                    <Heading size="small" text={TXT.track.title} />
+                    <TrackUI />
+                </div>
+
+                <div className="Project-footer-content">
+                    Piano roll / Sample edit / ???
+                </div>
+
+                <div className="Project-footer-master">
+                    <Heading size="small" text={TXT.master.title} />
+                    <MasterUI master={master} />
+                </div>
             </div>
         </div>
     );
