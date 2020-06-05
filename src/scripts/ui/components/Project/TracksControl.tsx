@@ -6,7 +6,7 @@ import { TXT } from 'data/texts';
 
 import { AppDispatch } from 'modules/store';
 import { TrackData, TrackID, Tracks } from 'modules/project/track';
-import { soloProjectTrack, muteProjectTrack, selectTrack } from 'modules/project';
+import { soloProjectTrack, muteProjectTrack, selectTrack } from 'modules/project/actions';
 
 import { TrackButton } from 'ui/components/Project/TrackButton';
 

@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { TXT } from 'data/texts';
 
-import { openProject } from 'modules/project';
+import { openProject } from 'modules/project/actions';
 import { AppState, AppDispatch } from 'modules/store';
+import { RecentProjectData } from 'modules/recent-projects';
 import {
-    RecentProjectData, clearRecentProjects, removeRecentProject
-} from 'modules/recent-projects';
+    clearRecentProjects, removeRecentProject
+} from 'modules/recent-projects/actions';
 
 import { Heading } from 'ui/common/Heading';
 import { Paragraph } from 'ui/common/Paragraph';

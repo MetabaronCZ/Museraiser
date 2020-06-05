@@ -1,13 +1,10 @@
 import produce from 'immer';
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
-import { TXT } from 'data/texts';
 import { RECENT_PROJECTS } from 'data/config';
 
-import { Dialog } from 'modules/dialog';
-import { AppThunk } from 'modules/store';
 import { fileExists } from 'modules/file';
-import { getDefaultProjectPath } from 'modules/app';
+import { getDefaultProjectPath } from 'modules/app/actions';
 import { loadFromStorage, saveToStorage } from 'modules/storage';
 
 const STORAGE_KEY = 'RECENT_PROJECTS';
@@ -90,32 +87,3 @@ export const RecentProjects = createSlice<RecentProjectData, RecentProjectReduce
         })
     }
 });
-
-export const addRecentProject = (path: string): AppThunk => dispatch => {
-    dispatch(RecentProjects.actions.add(path));
-};
-
-export const removeRecentProject = (path: string): AppThunk => dispatch => {
-    Dialog.ask(TXT.recentProjects.remove.ask).then(result => {
-        if (result) {
-            dispatch(RecentProjects.actions.remove(path));
-        }
-    });
-};
-
-export const clearRecentProjects = (): AppThunk => dispatch => {
-    Dialog.ask(TXT.recentProjects.clear.ask).then(result => {
-        if (result) {
-            dispatch(RecentProjects.actions.clear());
-        }
-    });
-};
-
-export const setMaxRecentFiles = (value: string): AppThunk => dispatch => {
-    const max = parseInt(value, 10) as RecentProjectMaxValue;
-    dispatch(RecentProjects.actions.setMax(max));
-};
-
-export const setRecentFilesDirectory = (dir: string): AppThunk => dispatch => {
-    dispatch(RecentProjects.actions.setDir(dir));
-};

@@ -8,7 +8,7 @@ import { AppDispatch } from 'modules/store';
 import { TrackData, Tracks, TrackID } from 'modules/project/track';
 import {
     setTrackVolume, setTrackPan, setTrackDelay, setTrackReverb
-} from 'modules/project';
+} from 'modules/project/actions';
 
 import { FormNumber } from 'ui/common/FormNumber';
 

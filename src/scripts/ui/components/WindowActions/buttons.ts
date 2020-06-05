@@ -1,5 +1,5 @@
 import { TXT } from 'data/texts';
-import { minimizeWindow, maximizeWindow, closeWindow } from 'modules/app';
+import { minimizeWindow, maximizeWindow, closeWindow } from 'modules/app/actions';
 
 interface ButtonItem {
     readonly id: string;

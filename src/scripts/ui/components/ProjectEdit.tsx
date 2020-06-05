@@ -7,7 +7,7 @@ import { ProjectFile } from 'modules/project/file';
 import { AppDispatch, AppState } from 'modules/store';
 import {
     setProjectName, setProjectTempo, setProjectAuthor, setProjectDescription
-} from 'modules/project';
+} from 'modules/project/actions';
 
 import { OverlayUI } from 'ui/components/Overlay';
 import { ProjectFormUI } from 'ui/components/ProjectForm';

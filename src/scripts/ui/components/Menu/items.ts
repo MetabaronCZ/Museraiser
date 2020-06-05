@@ -3,10 +3,11 @@ import React from 'react';
 import { TXT } from 'data/texts';
 
 import { AppDispatch } from 'modules/store';
+import { ProjectDataState } from 'modules/project';
 import {
-    ProjectDataState,
-    closeProject, saveProject, selectProject, undoProject, redoProject, createProject
-} from 'modules/project';
+    closeProject, saveProject, selectProject,
+    undoProject, redoProject, createProject
+} from 'modules/project/actions';
 
 const { create, open, save, undo, redo, close } = TXT.menu;
 

@@ -11,7 +11,7 @@ import {
     setMasterVolume,
     setMasterDelayAmount, setMasterDelayRate,
     setMasterReverbType, setMasterReverbDepth
-} from 'modules/project';
+} from 'modules/project/actions';
 
 import { FormField } from 'ui/common/FormField';
 import { FormNumber } from 'ui/common/FormNumber';

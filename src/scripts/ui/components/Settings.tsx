@@ -4,9 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { TXT } from 'data/texts';
 import { APP, RECENT_PROJECTS } from 'data/config';
 
+import { AppData } from 'modules/app';
 import { AppState, AppDispatch } from 'modules/store';
-import { setUndo, setRedo, AppData } from 'modules/app';
-import { setMaxRecentFiles, RecentProjectData } from 'modules/recent-projects';
+import { setUndo, setRedo } from 'modules/app/actions';
+import { RecentProjectData } from 'modules/recent-projects';
+import { setMaxRecentFiles } from 'modules/recent-projects/actions';
 
 import { Heading } from 'ui/common/Heading';
 import { FormField } from 'ui/common/FormField';

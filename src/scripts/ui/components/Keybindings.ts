@@ -4,14 +4,13 @@ import { useDispatch } from 'react-redux';
 import { Key } from 'data/keys';
 import { IS_DEV } from 'data/config';
 
-import { closeWindow } from 'modules/app';
 import { AppDispatch } from 'modules/store';
+import { closeWindow } from 'modules/app/actions';
 import { bindKey, unbindKey } from 'modules/keymap';
 import {
     selectProject, createProject,
-    saveProject, undoProject, redoProject,
-    closeProject
-} from 'modules/project';
+    saveProject, undoProject, redoProject, closeProject
+} from 'modules/project/actions';
 
 export const Keybindings: React.SFC = () => {
     const dispatch = useDispatch<AppDispatch>();

@@ -5,7 +5,7 @@ import { TXT } from 'data/texts';
 import { TRACK } from 'data/config';
 
 import { AppDispatch } from 'modules/store';
-import { setTrackName } from 'modules/project';
+import { setTrackName } from 'modules/project/actions';
 import { getDefaultTrackName, TrackData } from 'modules/project/track';
 
 import { Heading } from 'ui/common/Heading';

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TXT } from 'data/texts';
 import { PROJECT } from 'data/config';
 
-import { setProject } from 'modules/project';
+import { setProject } from 'modules/project/actions';
 import { AppDispatch, AppState } from 'modules/store';
 import { createProjectFile } from 'modules/project/file';
 

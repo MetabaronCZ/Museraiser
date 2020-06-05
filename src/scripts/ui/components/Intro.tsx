@@ -5,7 +5,7 @@ import { TXT } from 'data/texts';
 
 import { AppDispatch } from 'modules/store';
 import { openOverlay } from 'modules/overlay';
-import { selectProject } from 'modules/project';
+import { selectProject } from 'modules/project/actions';
 
 import { Grid } from 'ui/common/Grid';
 import { GridRow } from 'ui/common/Grid/Row';
