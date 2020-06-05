@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 type OnChange = (value: string) => void;
 
@@ -31,6 +31,10 @@ const validate = (setValue: OnChange, cb: OnChange, min = 0, max = 100, defaultV
 
 export const FormInput: React.SFC<Props> = ({ id, value, min, max, defaultValue, onChange }) => {
     const [val, setValue] = useState<string>(value);
+
+    // reset value when input props changes
+    useEffect(() => setValue(value), [value]);
+
     return (
         <input
             id={id}

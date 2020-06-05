@@ -9,6 +9,7 @@ import { ProjectDataState } from 'modules/project';
 
 import { Heading } from 'ui/common/Heading';
 import { IntroUI } from 'ui/components/Intro';
+import { Paragraph } from 'ui/common/Paragraph';
 import { TrackUI } from 'ui/components/Project/Track';
 import { MasterUI } from 'ui/components/Project/Master';
 import { TracksUI } from 'ui/components/Project/Tracks';
@@ -21,6 +22,7 @@ export const ProjectUI: React.SFC = () => {
         return <IntroUI />;
     }
     const { name, tracks, master } = project.file;
+    const track = project.track ? tracks[project.track] : null;
     return (
         <div className="Project">
             <div className="Project-tracks">
@@ -30,11 +32,14 @@ export const ProjectUI: React.SFC = () => {
 
             <div className="Project-footer">
                 <div className="Project-footer-track">
-                    <TrackUI />
+                    <TrackUI track={track} />
                 </div>
 
                 <div className="Project-footer-content">
-                    Piano roll / Sample edit / ???
+                    <Heading size="small" text={TXT.pattern.title} />
+                    <Paragraph>
+                        Piano roll / Sample edit / ???
+                    </Paragraph>
                 </div>
 
                 <div className="Project-footer-master">

@@ -7,9 +7,8 @@
     border: 0;
 }
 
-%button {
-    @extend %button-reset, %text-heading-default;
-    line-height: $logo-height;
+%button-base {
+    @extend %button-reset;
     text-align: center;
 
     &:hover,
@@ -24,6 +23,29 @@
         &:focus {
             background: transparent;
         }
+    }
+}
+
+%button-heading {
+    @extend %button-base, %text-heading-default;
+    line-height: $logo-height;
+}
+
+%button-default {
+    @extend %button-base, %text-body;
+    padding: 0 2*$vu;
+    font-size: $font-size-default;
+    line-height: calc(#{$line-height-default} - #{2*$border-size});
+    color: $color-darkest;
+    border: $border-default;
+
+    &:hover,
+    &:focus {
+        border-color: $color-neutral;
+    }
+
+    &:disabled {
+        border-color: $color-neutral;
     }
 }
 

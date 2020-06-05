@@ -1,0 +1,10 @@
+.TrackButton {
+    @extend %button-default;
+    width: 100%;
+    padding: 0 ($vu/2);
+    text-align: left;
+
+    &.is-highlighted {
+        background: $color-red;
+    }
+}

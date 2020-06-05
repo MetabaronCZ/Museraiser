@@ -10,7 +10,7 @@
     }
 
     &-button {
-        @extend %button;
+        @extend %button-heading;
         width: 100%;
     }
 }

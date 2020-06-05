@@ -2,11 +2,13 @@ $font-size-small: 12px;
 $font-size-default: 14px;
 $font-size-large: 18px;
 $font-size-larger: 24px;
+$font-size-largest: 30px;
 
 $line-height-small: 2*$vu;
 $line-height-default: 2*$vu;
 $line-height-large: 2*$vu;
 $line-height-larger: 3*$vu;
+$line-height-largest: 3*$vu;
 
 %font-regular {
     font-family: "SourceSansPro-Regular";

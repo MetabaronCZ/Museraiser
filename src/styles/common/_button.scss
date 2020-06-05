@@ -1,18 +1,3 @@
 .Button {
-    @extend %button;
-    padding: 0 2*$vu;
-    font-size: $font-size-default;
-    line-height: calc(#{$line-height-default} - #{2*$border-size});
-    text-transform: none;
-    color: $color-darkest;
-    border: $border-default;
-
-    &:hover,
-    &:focus {
-        border-color: $color-neutral;
-    }
-
-    &:disabled {
-        border-color: $color-neutral;
-    }
+    @extend %button-default;
 }

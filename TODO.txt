@@ -1,6 +1,6 @@
 BUGS
 -----------------------------------------------------------
---  pri zmacknuti Enter v Track.name FormInputu se uzavre projekt
+--  ...
 
 
 TODO

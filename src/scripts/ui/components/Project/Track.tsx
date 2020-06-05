@@ -1,12 +1,12 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { TXT } from 'data/texts';
 import { TRACK } from 'data/config';
 
-import { AppDispatch, AppState } from 'modules/store';
-import { getDefaultTrackName } from 'modules/project/track';
-import { ProjectDataState, setTrackName } from 'modules/project';
+import { AppDispatch } from 'modules/store';
+import { setTrackName } from 'modules/project';
+import { getDefaultTrackName, TrackData } from 'modules/project/track';
 
 import { Form } from 'ui/common/Form';
 import { Heading } from 'ui/common/Heading';
@@ -18,12 +18,14 @@ import { PatternsUI } from 'ui/components/Project/Patterns';
 
 const { NAME } = TRACK;
 
-export const TrackUI: React.SFC = () => {
-    const dispatch = useDispatch<AppDispatch>();
-    const project = useSelector<AppState, ProjectDataState>(state => state.project);
-    const id = project ? project.track : null;
+interface Props {
+    readonly track: TrackData | null;
+}
 
-    if (!project || !id) {
+export const TrackUI: React.SFC<Props> = ({ track }) => {
+    const dispatch = useDispatch<AppDispatch>();
+
+    if (!track) {
         return (
             <>
                 <Heading size="small" text={TXT.track.title} />
@@ -31,7 +33,7 @@ export const TrackUI: React.SFC = () => {
             </>
         );
     }
-    const { name, sample, patterns } = project.file.tracks[id];
+    const { id, name, sample, patterns } = track;
     const defaultName = getDefaultTrackName(id);
     return (
         <Form>

@@ -8,8 +8,7 @@ import { AppDispatch } from 'modules/store';
 import { TrackData, TrackID, Tracks } from 'modules/project/track';
 import { soloProjectTrack, muteProjectTrack, selectTrack } from 'modules/project';
 
-import { LinkButton } from 'ui/common/LinkButton';
-import { Button } from 'ui/common/Button';
+import { TrackButton } from 'ui/components/Project/TrackButton';
 
 interface Props {
     readonly tracks: Tracks;
@@ -31,32 +30,28 @@ export const TracksControlUI: React.SFC<Props> = ({ tracks, selected }) => {
                         key={id}
                     >
                         <div className="TracksControl-item-column">
-                            <Button
+                            <TrackButton
                                 text={name}
                                 onClick={() => dispatch(selectTrack(tID))}
                             />
                         </div>
 
                         <div className="TracksControl-item-column">
-                            <LinkButton
+                            <TrackButton
+                                text={TXT.track.solo.ico}
                                 title={TXT.track.solo.title}
+                                highlighted={solo}
                                 onClick={() => dispatch(soloProjectTrack(tID))}
-                            >
-                                <span style={{ background: solo ? 'red' : 'lightgrey' }}>
-                                    {TXT.track.solo.ico}
-                                </span>
-                            </LinkButton>
+                            />
+                        </div>
 
-                            {' '}
-
-                            <LinkButton
+                        <div className="TracksControl-item-column">
+                            <TrackButton
+                                text={TXT.track.mute.ico}
                                 title={TXT.track.mute.title}
+                                highlighted={mute}
                                 onClick={() => dispatch(muteProjectTrack(tID))}
-                            >
-                                <span style={{ background: mute ? 'red' : 'lightgrey' }}>
-                                    {TXT.track.mute.ico}
-                                </span>
-                            </LinkButton>
+                            />
                         </div>
                     </li>
                 );

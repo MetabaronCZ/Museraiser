@@ -8,10 +8,14 @@
         margin-bottom: 1px;
 
         &-column {
-            /* */
+            padding-right: ($vu/2);
 
             &:first-child {
                 flex: 1;
+            }
+
+            &:last-child {
+                padding-right: 0;
             }
         }
 

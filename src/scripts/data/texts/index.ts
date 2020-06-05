@@ -30,6 +30,9 @@ export const TXT = {
         title: 'Settings',
         ico: '⚙'
     },
+    pattern: {
+        title: 'Pattern'
+    },
     project: projectTexts,
     track: trackTexts,
     master: masterTexts,

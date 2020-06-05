@@ -7,12 +7,12 @@ interface Props {
 export const Form: React.SFC<Props> = ({ children }) => {
     children = (Array.isArray(children) ? children : [children]);
     return (
-        <form className="Form">
+        <div className="Form">
             {children.map((item, i) => (
-                <fieldset className="Form-item" key={i}>
+                <div className="Form-item" key={i}>
                     {item}
-                </fieldset>
+                </div>
             ))}
-        </form>
+        </div>
     );
 };

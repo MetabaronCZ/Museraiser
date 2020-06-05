@@ -13,7 +13,15 @@ import {
 
 const { NAME, VOLUME, REVERB, DELAY, PAN } = TRACK;
 
+const trackIDs = [
+    'T01', 'T02', 'T03', 'T04', 'T05', 'T06', 'T07', 'T08',
+    'T09', 'T10', 'T11', 'T12', 'T13', 'T14', 'T15', 'T16'
+] as const;
+
+export type TrackID = typeof trackIDs[number];
+
 export interface TrackData {
+    readonly id: TrackID;
     readonly patterns: PatternData[];
     name: string;
     solo: boolean;
@@ -26,6 +34,7 @@ export interface TrackData {
 }
 
 interface TrackSnapshot {
+    readonly id: TrackID;
     readonly name: string;
     readonly solo: boolean;
     readonly mute: boolean;
@@ -42,6 +51,7 @@ export const getDefaultTrackName = (id: TrackID): string => {
 };
 
 const createTrack = (id: TrackID): TrackData => ({
+    id,
     name: getDefaultTrackName(id),
     solo: false,
     mute: false,
@@ -52,13 +62,6 @@ const createTrack = (id: TrackID): TrackData => ({
     volume: VOLUME.DEFAULT,
     patterns: []
 });
-
-const trackIDs = [
-    'T01', 'T02', 'T03', 'T04', 'T05', 'T06', 'T07', 'T08',
-    'T09', 'T10', 'T11', 'T12', 'T13', 'T14', 'T15', 'T16'
-] as const;
-
-export type TrackID = typeof trackIDs[number];
 
 export type Tracks = {
     readonly [id in TrackID]: TrackData;
@@ -78,6 +81,7 @@ export const createTracks = (): Tracks => {
 };
 
 const parseTrack = (data: any): TrackData => ({
+    id: `${data.id}` as TrackID,
     name: `${data.name}`,
     solo: !!data.solo,
     mute: !!data.mute,

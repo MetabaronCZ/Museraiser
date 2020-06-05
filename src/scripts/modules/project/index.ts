@@ -71,7 +71,7 @@ type ProjectReducers = {
     readonly setTempo: CaseReducer<ProjectDataState, PayloadAction<number>>;
     readonly setAuthor: CaseReducer<ProjectDataState, PayloadAction<string>>;
     readonly setDescription: CaseReducer<ProjectDataState, PayloadAction<string>>;
-    readonly selectTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID | null>>;
+    readonly selectTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
     readonly setTrackName: CaseReducer<ProjectDataState, PayloadAction<TrackValue<string>>>;
     readonly soloTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
     readonly muteTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
@@ -164,7 +164,7 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
             if (draft) {
                 draft.track = action.payload;
             }
-            return edit(state, draft);
+            return draft;
         }),
         soloTrack: (state, action) => produce(state, draft => {
             if (draft) {
@@ -398,7 +398,7 @@ export const setProjectDescription = (desc: string): AppThunk => dispatch => {
     dispatch(Project.actions.setDescription(desc));
 };
 
-export const selectTrack = (id: TrackID | null): AppThunk => dispatch => {
+export const selectTrack = (id: TrackID): AppThunk => dispatch => {
     dispatch(Project.actions.selectTrack(id));
 };
 
