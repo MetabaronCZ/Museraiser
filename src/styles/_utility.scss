@@ -27,7 +27,8 @@
 }
 
 %button-heading {
-    @extend %button-base, %text-heading-default;
+    @extend %button-base, %text-heading-large;
+    font-size: $font-size-large;
     line-height: $logo-height;
 }
 

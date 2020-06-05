@@ -3,7 +3,6 @@ import React from 'react';
 import { TXT } from 'data/texts';
 import { PROJECT } from 'data/config';
 
-import { Form } from 'ui/common/Form';
 import { FormField } from 'ui/common/FormField';
 import { FormInput } from 'ui/common/FormInput';
 import { FormNumber } from 'ui/common/FormNumber';
@@ -26,7 +25,7 @@ export const ProjectFormUI: React.SFC<Props> = props => {
     const { name, author, tempo, description } = props;
     const { onName, onAuthor, onTempo, onDescription } = props;
     return (
-        <Form>
+        <>
             <FormField id="name" label={TXT.project.fields.name}>
                 <FormInput
                     id="name"
@@ -71,6 +70,6 @@ export const ProjectFormUI: React.SFC<Props> = props => {
                     onChange={onDescription}
                 />
             </FormField>
-        </Form>
+        </>
     );
 };

@@ -1,0 +1,19 @@
+.TracksHeader {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: ($vu/2);
+
+    &-item {
+        @extend %text-heading-small;
+        flex: 1;
+        color: $color-lighter;
+        text-align: center;
+        background: $color-neutral;
+        margin-right: 1px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}

@@ -8,7 +8,6 @@ import { AppDispatch } from 'modules/store';
 import { setTrackName } from 'modules/project';
 import { getDefaultTrackName, TrackData } from 'modules/project/track';
 
-import { Form } from 'ui/common/Form';
 import { Heading } from 'ui/common/Heading';
 import { FormField } from 'ui/common/FormField';
 import { FormInput } from 'ui/common/FormInput';
@@ -28,7 +27,7 @@ export const TrackUI: React.SFC<Props> = ({ track }) => {
     if (!track) {
         return (
             <>
-                <Heading size="small" text={TXT.track.title} />
+                <Heading text={TXT.track.title} />
                 <Paragraph>{TXT.track.notSelected}</Paragraph>
             </>
         );
@@ -36,8 +35,8 @@ export const TrackUI: React.SFC<Props> = ({ track }) => {
     const { id, name, sample, patterns } = track;
     const defaultName = getDefaultTrackName(id);
     return (
-        <Form>
-            <Heading size="small" text={TXT.track.title} />
+        <>
+            <Heading text={TXT.track.title} />
             <FormField id="track-name" label={TXT.track.name} wide>
                 <FormInput
                     id="track-name"
@@ -49,11 +48,11 @@ export const TrackUI: React.SFC<Props> = ({ track }) => {
                 />
             </FormField>
 
-            <Heading size="small" text={TXT.track.sample} />
+            <Heading text={TXT.track.sample} />
             <SampleUI sample={sample} />
 
-            <Heading size="small" text={TXT.track.patterns} />
+            <Heading text={TXT.track.patterns} />
             <PatternsUI patterns={patterns} />
-        </Form>
+        </>
     );
 };

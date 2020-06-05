@@ -32,6 +32,7 @@ export const TracksControlUI: React.SFC<Props> = ({ tracks, selected }) => {
                         <div className="TracksControl-item-column">
                             <TrackButton
                                 text={name}
+                                category
                                 onClick={() => dispatch(selectTrack(tID))}
                             />
                         </div>

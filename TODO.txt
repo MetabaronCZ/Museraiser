@@ -5,9 +5,12 @@ BUGS
 
 TODO
 -----------------------------------------------------------
+--  pridat Reverb.depth do MasterData
 --  kazda Track bude mit time signature
 --  nahradit systemove dialogy za notifikacni UI komponentu
 --  ukladat pozici a rozmery okna
+--  funkce insertBarAfter a insertBarBefore do Sequencer headeru
+--  paging do Sequencer footeru
 --  k samplum pridat:
     - Filter (cutoff, resonance); +envelope (ADSR LOWPASS cutoff); +LFO (=phase)
         - 2 filtry (LOWPASS, HIGHPASS) za sebou

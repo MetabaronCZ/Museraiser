@@ -1,6 +1,7 @@
 .FormField {
     display: flex;
     flex-direction: row;
+    margin-bottom: $vu;
 
     &-label {
         @extend %text-body;

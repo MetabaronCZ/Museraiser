@@ -26,7 +26,6 @@ export const RecentProjectsUI: React.SFC = () => {
     return (
         <>
             <Heading
-                size="small"
                 text={TXT.recentProjects.title}
                 extra={hasProjects ? clearButton : null}
             />

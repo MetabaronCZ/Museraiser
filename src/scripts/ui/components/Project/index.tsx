@@ -26,7 +26,7 @@ export const ProjectUI: React.SFC = () => {
     return (
         <div className="Project">
             <div className="Project-tracks">
-                <Heading text={`${TXT.project.title}: ${name}`} />
+                <Heading size="large" text={`${TXT.project.title}: ${name}`} />
                 <TracksUI tracks={tracks} selected={project.track} />
             </div>
 
@@ -36,14 +36,14 @@ export const ProjectUI: React.SFC = () => {
                 </div>
 
                 <div className="Project-footer-content">
-                    <Heading size="small" text={TXT.pattern.title} />
+                    <Heading text={TXT.pattern.title} />
                     <Paragraph>
                         Piano roll / Sample edit / ???
                     </Paragraph>
                 </div>
 
                 <div className="Project-footer-master">
-                    <Heading size="small" text={TXT.master.title} />
+                    <Heading text={TXT.master.title} />
                     <MasterUI master={master} />
                 </div>
             </div>

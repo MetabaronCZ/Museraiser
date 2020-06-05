@@ -28,5 +28,6 @@ export const projectTexts = {
     },
     redo: {
         title: 'Number of redo steps'
-    }
+    },
+    tracks: 'Tracks'
 };

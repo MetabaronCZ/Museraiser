@@ -13,12 +13,12 @@
         vertical-align: middle;
     }
 
-    &--small {
+    &.Heading--small {
         @extend %text-heading-small;
         margin-bottom: $vu;
     }
 
-    &--large {
+    &.Heading--large {
         @extend %text-heading-large;
     }
 }

@@ -47,19 +47,19 @@ export const TracksMasterUI: React.SFC<Props> = ({ tracks, selected }) => {
                         key={id}
                     >
                         <div className="TracksMaster-item-column">
-                            V:&nbsp;{getInput('VOLUME', volume, VOLUME.MIN, VOLUME.MAX, value => dispatch(setTrackVolume(tID, value)))}&nbsp;%
+                            {getInput('VOLUME', volume, VOLUME.MIN, VOLUME.MAX, value => dispatch(setTrackVolume(tID, value)))}&nbsp;%
                         </div>
 
                         <div className="TracksMaster-item-column">
-                            P:&nbsp;{getInput('PAN', pan, PAN.MIN, PAN.MAX, value => dispatch(setTrackPan(tID, value)))}&nbsp;%
+                            {getInput('PAN', pan, PAN.MIN, PAN.MAX, value => dispatch(setTrackPan(tID, value)))}&nbsp;%
                         </div>
 
                         <div className="TracksMaster-item-column">
-                            D:&nbsp;{getInput('DELAY', delay, DELAY.MIN, DELAY.MAX, value => dispatch(setTrackDelay(tID, value)))}&nbsp;%
+                            {getInput('DELAY', delay, DELAY.MIN, DELAY.MAX, value => dispatch(setTrackDelay(tID, value)))}&nbsp;%
                         </div>
 
                         <div className="TracksMaster-item-column">
-                            R:&nbsp;{getInput('REVERB', reverb, REVERB.MIN, REVERB.MAX, value => dispatch(setTrackReverb(tID, value)))}&nbsp;%
+                            {getInput('REVERB', reverb, REVERB.MIN, REVERB.MAX, value => dispatch(setTrackReverb(tID, value)))}&nbsp;%
                         </div>
                     </li>
                 );

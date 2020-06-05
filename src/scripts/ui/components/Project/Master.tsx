@@ -11,7 +11,6 @@ import {
     setMasterVolume, setMasterDelayAmount, setMasterDelayRate, setMasterReverbType
 } from 'modules/project';
 
-import { Form } from 'ui/common/Form';
 import { FormField } from 'ui/common/FormField';
 import { FormNumber } from 'ui/common/FormNumber';
 import { FormSelect, createSelectOptions } from 'ui/common/FormSelect';
@@ -31,7 +30,7 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
     const { volume, delay, reverb } = master;
     const dispatch = useDispatch<AppDispatch>();
     return (
-        <Form>
+        <>
             <FormField id="volume" label={TXT.master.volume}>
                 <FormNumber
                     id="master-volume"
@@ -73,6 +72,6 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
                     onChange={value => dispatch(setMasterReverbType(value as ReverbID))}
                 />
             </FormField>
-        </Form>
+        </>
     );
 };

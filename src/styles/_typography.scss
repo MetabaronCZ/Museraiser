@@ -1,7 +1,7 @@
 $font-size-small: 12px;
 $font-size-default: 14px;
 $font-size-large: 18px;
-$font-size-larger: 24px;
+$font-size-larger: 20px;
 $font-size-largest: 30px;
 
 $line-height-small: 2*$vu;
@@ -44,7 +44,7 @@ $line-height-largest: 3*$vu;
 }
 
 %text-heading-default {
-    @extend %font-light;
+    @extend %font-bold;
     font-size: $font-size-large;
     line-height: $line-height-large;
     text-transform: uppercase;
