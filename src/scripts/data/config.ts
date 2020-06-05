@@ -26,7 +26,6 @@ export const RECENT_PROJECTS = Object.freeze({
 export const PROJECT = Object.freeze({
     FILE: {
         EXT: 'museproj',
-        NAME: 'New project',
         AUTHOR: '',
         DESCRIPTION: ''
     },
@@ -34,6 +33,7 @@ export const PROJECT = Object.freeze({
         RATE: 44100
     },
     NAME: {
+        DEFAULT: 'New project',
         MIN: 1,
         MAX: 24
     },

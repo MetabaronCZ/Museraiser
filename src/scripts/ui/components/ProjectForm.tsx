@@ -33,6 +33,7 @@ export const ProjectFormUI: React.SFC<Props> = props => {
                     value={name}
                     min={NAME.MIN}
                     max={NAME.MAX}
+                    defaultValue={NAME.DEFAULT}
                     onChange={onName}
                 />
             </FormField>

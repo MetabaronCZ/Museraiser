@@ -1,6 +1,5 @@
 BUGS
 -----------------------------------------------------------
---  Project.name jde vytvorit s prazdnym jmenem
 --  pri zmacknuti Enter v Track.name FormInputu se uzavre projekt
 
 

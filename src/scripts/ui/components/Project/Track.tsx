@@ -5,6 +5,7 @@ import { TXT } from 'data/texts';
 import { TRACK } from 'data/config';
 
 import { AppDispatch, AppState } from 'modules/store';
+import { getDefaultTrackName } from 'modules/project/track';
 import { ProjectDataState, setTrackName } from 'modules/project';
 
 import { Form } from 'ui/common/Form';
@@ -31,6 +32,7 @@ export const TrackUI: React.SFC = () => {
         );
     }
     const { name, sample, patterns } = project.file.tracks[id];
+    const defaultName = getDefaultTrackName(id);
     return (
         <Form>
             <Heading size="small" text={TXT.track.title} />
@@ -40,6 +42,7 @@ export const TrackUI: React.SFC = () => {
                     value={name}
                     min={NAME.MIN}
                     max={NAME.MAX}
+                    defaultValue={defaultName}
                     onChange={value => dispatch(setTrackName(id, value))}
                 />
             </FormField>

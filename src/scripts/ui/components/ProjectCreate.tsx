@@ -21,7 +21,7 @@ export const ProjectCreateUI: React.SFC = () => {
     const defaultAuthor = useSelector<AppState, string>(state => state.app.author);
     const dispatch = useDispatch<AppDispatch>();
 
-    const [name, setName] = useState<string>(PROJECT.FILE.NAME);
+    const [name, setName] = useState<string>(PROJECT.NAME.DEFAULT);
     const [author, setAuthor] = useState<string>(defaultAuthor);
     const [tempo, setTempo] = useState<number>(PROJECT.TEMPO.DEFAULT);
     const [desc, setDescription] = useState<string>(PROJECT.FILE.DESCRIPTION);

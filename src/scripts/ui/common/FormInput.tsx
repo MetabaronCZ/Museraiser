@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 type OnChange = (value: string) => void;
 
@@ -7,27 +7,41 @@ interface Props {
     readonly value: string;
     readonly min?: number;
     readonly max?: number;
-    readonly onBlur?: OnChange;
-    readonly onChange?: OnChange;
+    readonly defaultValue?: string;
+    readonly onChange: OnChange;
 }
 
-const change = (cb?: OnChange) => (e: React.SyntheticEvent<HTMLInputElement>) => {
-    if (cb) {
-        const { value } = e.currentTarget;
-        cb(value);
-    }
+const change = (cb: OnChange) => (e: React.SyntheticEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    cb(value);
 };
 
-export const FormInput: React.SFC<Props> = ({ id, value, min, max, onChange, onBlur }) => (
-    <input
-        id={id}
-        className="FormInput"
-        type="text"
-        name={id}
-        value={value}
-        minLength={min}
-        maxLength={max}
-        onBlur={change(onBlur)}
-        onChange={change(onChange)}
-    />
-);
+const validate = (setValue: OnChange, cb: OnChange, min = 0, max = 100, defaultValue = '-') => (e: React.SyntheticEvent<HTMLInputElement>) => {
+    let { value } = e.currentTarget;
+
+    if (value.length < min) {
+        value = defaultValue;
+    }
+    if (value.length > max) {
+        value = value.substring(0, max);
+    }
+    setValue(value);
+    cb(value);
+};
+
+export const FormInput: React.SFC<Props> = ({ id, value, min, max, defaultValue, onChange }) => {
+    const [val, setValue] = useState<string>(value);
+    return (
+        <input
+            id={id}
+            className="FormInput"
+            type="text"
+            name={id}
+            value={val}
+            minLength={min}
+            maxLength={max}
+            onChange={change(setValue)}
+            onBlur={validate(setValue, onChange, min, max, defaultValue)}
+        />
+    );
+};
