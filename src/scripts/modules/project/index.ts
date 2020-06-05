@@ -10,8 +10,8 @@ import { getDirame, setAuthor } from 'modules/app';
 import { AppThunk, AppDispatch } from 'modules/store';
 import { editMasterVolume } from 'modules/project/master';
 import { closeOverlay, openOverlay } from 'modules/overlay';
-import { ReverbID, setReverbType } from 'modules/project/reverb';
 import { setDelayAmount, setDelayRate } from 'modules/project/delay';
+import { ReverbID, setReverbType, setReverbDepth } from 'modules/project/reverb';
 import { setRecentFilesDirectory, addRecentProject } from 'modules/recent-projects';
 
 import {
@@ -81,8 +81,9 @@ type ProjectReducers = {
     readonly setTrackVolume: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
     readonly setMasterVolume: CaseReducer<ProjectDataState, PayloadAction<number>>;
     readonly setMasterReverbType: CaseReducer<ProjectDataState, PayloadAction<ReverbID>>;
-    readonly setMasterDelayAmount: CaseReducer<ProjectDataState, PayloadAction<number>>;
+    readonly setMasterReverbDepth: CaseReducer<ProjectDataState, PayloadAction<number>>;
     readonly setMasterDelayRate: CaseReducer<ProjectDataState, PayloadAction<number>>;
+    readonly setMasterDelayAmount: CaseReducer<ProjectDataState, PayloadAction<number>>;
 };
 
 export const Project = createSlice<ProjectDataState, ProjectReducers>({
@@ -222,6 +223,12 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
         setMasterReverbType: (state, action) => produce(state, draft => {
             if (draft) {
                 setReverbType(draft.file.master.reverb, action.payload);
+            }
+            return edit(state, draft);
+        }),
+        setMasterReverbDepth: (state, action) => produce(state, draft => {
+            if (draft) {
+                setReverbDepth(draft.file.master.reverb, action.payload);
             }
             return edit(state, draft);
         }),
@@ -436,6 +443,10 @@ export const setMasterVolume = (volume: number): AppThunk => dispatch => {
 
 export const setMasterReverbType = (type: ReverbID): AppThunk => dispatch => {
     dispatch(Project.actions.setMasterReverbType(type));
+};
+
+export const setMasterReverbDepth = (depth: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setMasterReverbDepth(depth));
 };
 
 export const setMasterDelayAmount = (amount: number): AppThunk => dispatch => {

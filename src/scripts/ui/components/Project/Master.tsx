@@ -8,14 +8,16 @@ import { AppDispatch } from 'modules/store';
 import { MasterData } from 'modules/project/master';
 import { ReverbID, reverbs } from 'modules/project/reverb';
 import {
-    setMasterVolume, setMasterDelayAmount, setMasterDelayRate, setMasterReverbType
+    setMasterVolume,
+    setMasterDelayAmount, setMasterDelayRate,
+    setMasterReverbType, setMasterReverbDepth
 } from 'modules/project';
 
 import { FormField } from 'ui/common/FormField';
 import { FormNumber } from 'ui/common/FormNumber';
 import { FormSelect, createSelectOptions } from 'ui/common/FormSelect';
 
-const { VOLUME, DELAY } = MASTER;
+const { VOLUME, DELAY, REVERB } = MASTER;
 
 const reverbTypes = createSelectOptions<ReverbID>(reverbs.slice(0), type => ({
     label: TXT.reverb[type],
@@ -61,7 +63,7 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
                     max={DELAY.RATE.MAX}
                     mini
                     onChange={value => dispatch(setMasterDelayRate(value))}
-                />&nbsp;%
+                />&nbsp;x
             </FormField>
 
             <FormField id="reverb-type" label={TXT.master.reverb.type}>
@@ -71,6 +73,17 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
                     options={reverbTypes}
                     onChange={value => dispatch(setMasterReverbType(value as ReverbID))}
                 />
+            </FormField>
+
+            <FormField id="reverb-depth" label={TXT.master.reverb.depth}>
+                <FormNumber
+                    id="reverb-depth"
+                    value={reverb.depth}
+                    min={REVERB.DEPTH.MIN}
+                    max={REVERB.DEPTH.MAX}
+                    mini
+                    onChange={value => dispatch(setMasterReverbDepth(value))}
+                />&nbsp;%
             </FormField>
         </>
     );

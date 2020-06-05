@@ -5,7 +5,6 @@ BUGS
 
 TODO
 -----------------------------------------------------------
---  pridat Reverb.depth do MasterData
 --  kazda Track bude mit time signature
 --  nahradit systemove dialogy za notifikacni UI komponentu
 --  ukladat pozici a rozmery okna

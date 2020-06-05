@@ -100,6 +100,11 @@ export const MASTER = Object.freeze({
     REVERB: {
         TYPE: {
             DEFAULT: 'ROOM' as ReverbID
+        },
+        DEPTH: {
+            DEFAULT: 50,
+            MIN: 0,
+            MAX: 100
         }
     }
 });

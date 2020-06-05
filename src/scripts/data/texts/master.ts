@@ -5,7 +5,8 @@ export const masterTexts = {
         rate: 'Delay rate'
     },
     reverb: {
-        type: 'Reverb type'
+        type: 'Reverb type',
+        depth: 'Reverb depth'
     },
     volume: 'Volume'
 };
