@@ -3,12 +3,12 @@ import { Tracks } from 'modules/project/track';
 
 const { BAR } = SEQUENCER;
 
-interface Bar {
+export interface Bar {
     readonly id: number;
 }
 
 export const createBars = (tracks: Tracks): Bar[] => {
-    let count = BAR.MIN;
+    let count = BAR.PERPAGE;
 
     main: for (const { patterns } of Object.values(tracks)) {
         for (const { start, length } of patterns) {

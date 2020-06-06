@@ -1,0 +1,48 @@
+.Paging {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background: $color-neutral;
+    margin-top: ($vu/2);
+
+    &-item {
+        @extend %text-body;
+        color: $color-lighter;
+    }
+
+    &-pages {
+        display: flex;
+        flex-direction: row;
+
+        &-item {
+            flex: 1;
+        }
+    }
+
+    &-link {
+        @extend %button-reset, %text-body;
+        width: 3*$vu;
+        color: $color-lighter;
+        
+        &:hover,
+        &:focus {
+            background: $color-dark;
+        }
+
+        &:disabled {
+            color: $color-light;
+
+            &:hover,
+            &:focus {
+                background: $color-neutral;
+            }
+        }
+    }
+
+    &-active {
+        width: 3*$vu;
+        text-align: center;
+        background: $color-dark;
+    }
+}

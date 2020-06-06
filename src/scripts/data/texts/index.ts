@@ -36,5 +36,11 @@ export const TXT = {
     project: projectTexts,
     track: trackTexts,
     master: masterTexts,
-    reverb: reverbTTexts
+    reverb: reverbTTexts,
+    paging: {
+        first: 'First page',
+        prev: 'Previous page',
+        next: 'Next page',
+        last: 'Last page'
+    }
 };

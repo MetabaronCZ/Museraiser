@@ -12,6 +12,7 @@
 
             &:first-child {
                 flex: 1;
+                white-space: nowrap;
             }
 
             &:last-child {

@@ -5,11 +5,12 @@ BUGS
 
 TODO
 -----------------------------------------------------------
+--  jmeno stopy se bude menit po dvojkliku na jeji nazev
+    - text se zmeni na FormInput
 --  kazda Track bude mit time signature
 --  nahradit systemove dialogy za notifikacni UI komponentu
 --  ukladat pozici a rozmery okna
 --  funkce insertBarAfter a insertBarBefore do Sequencer headeru
---  paging do Sequencer footeru
 --  k samplum pridat:
     - Filter (cutoff, resonance); +envelope (ADSR LOWPASS cutoff); +LFO (=phase)
         - 2 filtry (LOWPASS, HIGHPASS) za sebou
@@ -25,3 +26,5 @@ TODO
         - RATE - rychlost oscilace
         - AMOUNT - "hlasitost" - uroven modulace
         - SYNC - synchronizovat s tempem
+
+--  responzivne po 1024x768

@@ -111,7 +111,8 @@ export const MASTER = Object.freeze({
 
 export const SEQUENCER = Object.freeze({
     BAR: {
-        MIN: 16,
+        PERPAGE: 16,
+        PAGING: 10,
         MAX: 999
     }
 });
