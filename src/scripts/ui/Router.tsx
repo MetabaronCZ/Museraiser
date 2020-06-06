@@ -5,6 +5,7 @@ import { AppState } from 'modules/store';
 import { OverlayID } from 'modules/overlay';
 import { ProjectDataState } from 'modules/project';
 
+import { AboutUI } from 'ui/components/About';
 import { IntroUI } from 'ui/components/Intro';
 import { ProjectUI } from 'ui/components/Project';
 import { SettingsUI } from 'ui/components/Settings';
@@ -22,6 +23,8 @@ export const RouterUI: React.SFC = () => {
             return <ProjectEditUI />;
         case 'SETTINGS':
             return <SettingsUI />;
+        case 'ABOUT':
+            return <AboutUI />;
         default:
             // pass
     }

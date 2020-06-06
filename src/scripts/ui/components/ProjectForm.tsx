@@ -53,6 +53,7 @@ export const ProjectFormUI: React.SFC<Props> = props => {
                     value={tempo}
                     min={TEMPO.MIN}
                     max={TEMPO.MAX}
+                    mini
                     onChange={onTempo}
                 />
             </FormField>

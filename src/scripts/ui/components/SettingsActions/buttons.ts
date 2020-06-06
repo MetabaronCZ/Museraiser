@@ -26,5 +26,12 @@ export const getSettingsButtons = (dispatch: AppDispatch, project: ProjectDataSt
         ico: TXT.settings.ico,
         disabled: false,
         onClick: () => dispatch(openOverlay('SETTINGS'))
+    },
+    {
+        id: 'ABOUT',
+        title: TXT.about.title,
+        ico: TXT.about.ico,
+        disabled: false,
+        onClick: () => dispatch(openOverlay('ABOUT'))
     }
 ]);

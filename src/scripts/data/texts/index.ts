@@ -6,6 +6,8 @@ import { projectTexts } from 'data/texts/project';
 import { reverbTTexts } from 'data/texts/reverbs';
 import { recentProjectTexts } from 'data/texts/recent-project';
 
+const year = new Date().getFullYear();
+
 export const TXT = {
     dialog: {
         positive: 'Yes',
@@ -29,6 +31,11 @@ export const TXT = {
     settings: {
         title: 'Settings',
         ico: '⚙'
+    },
+    about: {
+        title: 'About',
+        ico: '©',
+        text: `Copyright © ${year} Milan K.`
     },
     pattern: {
         title: 'Pattern'
