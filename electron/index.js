@@ -15,6 +15,7 @@ const createWindow = () => {
         resizable: true,
         useContentSize: true,
         webPreferences: {
+            spellcheck: false,
             nodeIntegration: true,
             enableRemoteModule: true
         }
