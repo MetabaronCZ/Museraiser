@@ -13,6 +13,7 @@ import {
     setMasterReverbType, setMasterReverbDepth
 } from 'modules/project/actions';
 
+import { Heading } from 'ui/common/Heading';
 import { FormField } from 'ui/common/FormField';
 import { FormSelect } from 'ui/common/FormSelect';
 import { FormNumber } from 'ui/common/FormNumber';
@@ -34,6 +35,8 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
     const dispatch = useDispatch<AppDispatch>();
     return (
         <>
+            <Heading text={TXT.master.title} />
+
             <FormField id="volume" label={TXT.master.volume}>
                 <FormNumber
                     id="master-volume"

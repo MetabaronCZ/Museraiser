@@ -9,10 +9,10 @@ import { ProjectDataState } from 'modules/project';
 
 import { Heading } from 'ui/common/Heading';
 import { IntroUI } from 'ui/components/Intro';
-import { Paragraph } from 'ui/common/Paragraph';
 import { TrackUI } from 'ui/components/Project/Track';
 import { MasterUI } from 'ui/components/Project/Master';
 import { TracksUI } from 'ui/components/Project/Tracks';
+import { PianoRollUI } from 'ui/components/Project/PianoRoll';
 
 export const ProjectUI: React.SFC = () => {
     const project = useSelector<AppState, ProjectDataState>(state => state.project);
@@ -36,14 +36,10 @@ export const ProjectUI: React.SFC = () => {
                 </div>
 
                 <div className="Project-footer-content">
-                    <Heading text={TXT.pattern.title} />
-                    <Paragraph>
-                        Piano roll / Sample edit / ???
-                    </Paragraph>
+                    <PianoRollUI />
                 </div>
 
                 <div className="Project-footer-master">
-                    <Heading text={TXT.master.title} />
                     <MasterUI master={master} />
                 </div>
             </div>

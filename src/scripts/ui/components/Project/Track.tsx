@@ -12,22 +12,18 @@ interface Props {
     readonly track: TrackData | null;
 }
 
-export const TrackUI: React.SFC<Props> = ({ track }) => {
-    if (!track) {
-        return (
+export const TrackUI: React.SFC<Props> = ({ track }) => (
+    <>
+        <Heading text={TXT.track.patterns} />
+        {track
+            ? <PatternsUI patterns={track.patterns} />
+            : <Paragraph>{TXT.track.notSelected}</Paragraph>
+        }
+        {!!track && (
             <>
-                <Heading text={TXT.track.title} />
-                <Paragraph>{TXT.track.notSelected}</Paragraph>
+                <Heading text={TXT.track.sample} />
+                <SampleUI sample={track.sample} />
             </>
-        );
-    }
-    return (
-        <>
-            <Heading text={TXT.track.patterns} />
-            <PatternsUI patterns={track.patterns} />
-
-            <Heading text={TXT.track.sample} />
-            <SampleUI sample={track.sample} />
-        </>
-    );
-};
+        )}
+    </>
+);

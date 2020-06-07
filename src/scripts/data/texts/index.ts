@@ -38,7 +38,8 @@ export const TXT = {
         text: `Copyright © ${year} Milan K.`
     },
     pattern: {
-        title: 'Pattern'
+        title: 'Pattern',
+        empty: 'No pattern selected'
     },
     project: projectTexts,
     track: trackTexts,
