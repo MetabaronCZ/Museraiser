@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { clickOnly } from 'modules/events';
 import { ProjectDataState } from 'modules/project';
 import { AppState, AppDispatch } from 'modules/store';
 
@@ -19,7 +20,7 @@ export const Menu: React.SFC = () => {
                         type="button"
                         title={title}
                         disabled={disabled}
-                        onClick={onClick}
+                        onClick={clickOnly(onClick)}
                     >
                         {text}
                     </button>

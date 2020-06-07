@@ -1,6 +1,5 @@
 import React from 'react';
-
-type OnChange = (value: string) => void;
+import { changeOnly, OnChange } from 'modules/events';
 
 interface Props {
     readonly id: string;
@@ -10,11 +9,6 @@ interface Props {
     readonly onChange: OnChange;
 }
 
-const change = (cb: OnChange) => (e: React.SyntheticEvent<HTMLTextAreaElement>) => {
-    const { value } = e.currentTarget;
-    cb(value);
-};
-
 export const FormTextarea: React.SFC<Props> = ({ id, value, min, max, onChange }) => (
     <textarea
         id={id}
@@ -23,6 +17,6 @@ export const FormTextarea: React.SFC<Props> = ({ id, value, min, max, onChange }
         value={value}
         minLength={min}
         maxLength={max}
-        onChange={change(onChange)}
+        onChange={changeOnly(onChange)}
     />
 );

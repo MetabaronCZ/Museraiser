@@ -12,9 +12,10 @@ import { setMaxRecentFiles } from 'modules/recent-projects/actions';
 
 import { Heading } from 'ui/common/Heading';
 import { FormField } from 'ui/common/FormField';
-import { OverlayUI } from 'ui/components/Overlay';
+import { FormSelect } from 'ui/common/FormSelect';
 import { FormNumber } from 'ui/common/FormNumber';
-import { FormSelect, createSelectOptions } from 'ui/common/FormSelect';
+import { OverlayUI } from 'ui/components/Overlay';
+import { createSelectOptions } from 'ui/common/FormSelect/options';
 
 const options = createSelectOptions(Array.from(RECENT_PROJECTS.VALUES), value => ({
     label: value.toString(),

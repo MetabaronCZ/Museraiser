@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
-type OnChange = (value: number) => void;
+import { changeOnly, OnChange } from 'modules/events';
 
 interface Props {
     readonly id: string;
@@ -10,14 +10,8 @@ interface Props {
     readonly step?: number;
     readonly mini?: boolean;
     readonly value: number;
-    readonly onChange: OnChange;
+    readonly onChange: OnChange<number>;
 }
-
-const change = (cb: OnChange) => (e: React.SyntheticEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget;
-    const nr = parseInt(value, 10);
-    cb(nr);
-};
 
 const wheel = () => (e: React.WheelEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -41,6 +35,6 @@ export const FormNumber: React.SFC<Props> = ({ id, min, max, step = 1, mini = fa
         max={max}
         step={step}
         onWheel={wheel}
-        onChange={change(onChange)}
+        onChange={changeOnly(val => onChange(parseInt(val, 10)))}
     />
 );

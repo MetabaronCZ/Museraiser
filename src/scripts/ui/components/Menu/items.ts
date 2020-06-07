@@ -1,7 +1,6 @@
-import React from 'react';
-
 import { TXT } from 'data/texts';
 
+import { OnClick } from 'modules/events';
 import { AppDispatch } from 'modules/store';
 import { ProjectDataState } from 'modules/project';
 import {
@@ -11,20 +10,12 @@ import {
 
 const { create, open, save, undo, redo, close } = TXT.menu;
 
-type OnClick = () => void;
-type OnMouseClick = (e: React.MouseEvent) => void;
-
-const click = (cb: OnClick): OnMouseClick => e => {
-    e.preventDefault();
-    cb();
-};
-
 interface MenuItem {
     readonly id: string;
     readonly text: string;
     readonly title: string;
     readonly disabled: boolean;
-    readonly onClick: OnMouseClick;
+    readonly onClick: OnClick;
 }
 
 export const getMenuItems = (dispatch: AppDispatch, project: ProjectDataState): MenuItem[] => [
@@ -33,41 +24,41 @@ export const getMenuItems = (dispatch: AppDispatch, project: ProjectDataState): 
         text: create.text,
         title: `${create.title} (${create.shortcut})`,
         disabled: false,
-        onClick: click(() => dispatch(createProject()))
+        onClick: () => dispatch(createProject())
     },
     {
         id: 'OPEN',
         text: open.text,
         title: `${open.title} (${open.shortcut})`,
         disabled: false,
-        onClick: click(() => dispatch(selectProject()))
+        onClick: () => dispatch(selectProject())
     },
     {
         id: 'SAVE',
         text: save.text,
         title: `${save.title} (${save.shortcut})`,
         disabled: (!project || project.saved),
-        onClick: click(() => dispatch(saveProject()))
+        onClick: () => dispatch(saveProject())
     },
     {
         id: 'UNDO',
         text: undo.text,
         title: `${undo.title} (${undo.shortcut})`,
         disabled: (!project || !project.undo.length),
-        onClick: click(() => dispatch(undoProject()))
+        onClick: () => dispatch(undoProject())
     },
     {
         id: 'REDO',
         text: redo.text,
         title: `${redo.title} (${redo.shortcut})`,
         disabled: (!project || !project.redo.length),
-        onClick: click(() => dispatch(redoProject()))
+        onClick: () => dispatch(redoProject())
     },
     {
         id: 'CLOSE',
         text: close.text,
         title: `${close.title} (${close.shortcut})`,
         disabled: !project,
-        onClick: click(() => dispatch(closeProject()))
+        onClick: () => dispatch(closeProject())
     }
 ];

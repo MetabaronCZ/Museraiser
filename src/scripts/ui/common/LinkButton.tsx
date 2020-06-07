@@ -1,18 +1,13 @@
 import React from 'react';
 import cn from 'classnames';
 
-type OnClick = () => void;
+import { clickOnly, OnClick } from 'modules/events';
 
 interface Props {
     readonly title?: string;
     readonly limited?: boolean;
     readonly onClick: OnClick;
 }
-
-const click = (cb: OnClick) => (e: React.MouseEvent) => {
-    e.preventDefault();
-    cb();
-};
 
 export const LinkButton: React.SFC<Props> = ({ title, limited = false, onClick, children }) => (
     <button
@@ -21,7 +16,7 @@ export const LinkButton: React.SFC<Props> = ({ title, limited = false, onClick, 
         })}
         type="button"
         title={title}
-        onClick={click(onClick)}
+        onClick={clickOnly(onClick)}
     >
         {children}
     </button>

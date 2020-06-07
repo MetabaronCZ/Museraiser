@@ -1,11 +1,13 @@
 import { TXT } from 'data/texts';
+
+import { OnClick } from 'modules/events';
 import { minimizeWindow, maximizeWindow, closeWindow } from 'modules/app/actions';
 
 interface ButtonItem {
     readonly id: string;
-    readonly title: string;
     readonly ico: string;
-    readonly onClick: () => void;
+    readonly title: string;
+    readonly onClick: OnClick;
 }
 
 export const windowButtons: ButtonItem[] = [

@@ -14,8 +14,9 @@ import {
 } from 'modules/project/actions';
 
 import { FormField } from 'ui/common/FormField';
+import { FormSelect } from 'ui/common/FormSelect';
 import { FormNumber } from 'ui/common/FormNumber';
-import { FormSelect, createSelectOptions } from 'ui/common/FormSelect';
+import { createSelectOptions } from 'ui/common/FormSelect/options';
 
 const { VOLUME, DELAY, REVERB } = MASTER;
 

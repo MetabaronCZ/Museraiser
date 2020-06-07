@@ -1,11 +1,5 @@
 import React from 'react';
-
-type OnClick = () => void;
-
-const click = (cb: OnClick) => (e: React.MouseEvent) => {
-    e.preventDefault();
-    cb();
-};
+import { clickOnly, OnClick } from 'modules/events';
 
 interface Props {
     readonly title: string;
@@ -20,7 +14,7 @@ export const AppButton: React.SFC<Props> = ({ title, ico, disabled = false, onCl
         type="button"
         title={title}
         disabled={disabled}
-        onClick={click(onClick)}
+        onClick={clickOnly(onClick)}
     >
         {ico}
     </button>

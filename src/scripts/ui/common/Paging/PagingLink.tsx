@@ -1,11 +1,5 @@
 import React from 'react';
-
-type OnClick = () => void;
-
-const click = (cb: OnClick) => (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    cb();
-};
+import { clickOnly, OnClick } from 'modules/events';
 
 interface Props {
     readonly text: string | number;
@@ -20,7 +14,7 @@ export const PagingLink: React.SFC<Props> = ({ text, title, active = true, onCli
         type="button"
         title={title}
         disabled={!active}
-        onClick={click(onClick)}
+        onClick={clickOnly(onClick)}
     >
         {text}
     </button>

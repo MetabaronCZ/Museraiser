@@ -1,5 +1,6 @@
 import { TXT } from 'data/texts';
 
+import { OnClick } from 'modules/events';
 import { AppDispatch } from 'modules/store';
 import { openOverlay } from 'modules/overlay';
 import { ProjectDataState } from 'modules/project';
@@ -9,7 +10,7 @@ interface ButtonItem {
     readonly title: string;
     readonly ico: string;
     readonly disabled: boolean;
-    readonly onClick: () => void;
+    readonly onClick: OnClick;
 }
 
 export const getSettingsButtons = (dispatch: AppDispatch, project: ProjectDataState): ButtonItem[] => ([

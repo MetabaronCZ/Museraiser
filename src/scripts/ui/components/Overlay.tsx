@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Key } from 'data/keys';
 import { TXT } from 'data/texts';
 
+import { OnClick } from 'modules/events';
 import { bindKey } from 'modules/keymap';
 import { AppDispatch } from 'modules/store';
 import { closeOverlay } from 'modules/overlay';
@@ -11,8 +12,6 @@ import { closeOverlay } from 'modules/overlay';
 import { Button } from 'ui/common/Button';
 import { Heading } from 'ui/common/Heading';
 import { ButtonList } from 'ui/common/ButtonList';
-
-type OnClick = () => void;
 
 interface Props {
     readonly title: string;
