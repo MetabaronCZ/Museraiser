@@ -10,8 +10,8 @@ export interface Bar {
 export const createBars = (tracks: Tracks): Bar[] => {
     let count = BAR.PERPAGE;
 
-    main: for (const { patterns } of Object.values(tracks)) {
-        for (const { start, length } of patterns) {
+    main: for (const { sequences } of Object.values(tracks)) {
+        for (const { start, length } of sequences) {
             const ptnEnd = start + length;
             count = Math.max(ptnEnd, count);
 

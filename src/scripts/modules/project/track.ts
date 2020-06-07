@@ -11,6 +11,10 @@ import {
     PatternData, PatternSnapshot, parsePatterns, serializePatterns
 } from 'modules/project/pattern';
 
+import {
+    SequenceData, SequenceSnapshot, parseSequences, serializeSequences
+} from 'modules/project/sequence';
+
 const { NAME, VOLUME, REVERB, DELAY, PAN } = TRACK;
 
 const trackIDs = [
@@ -23,6 +27,7 @@ export type TrackID = typeof trackIDs[number];
 export interface TrackData {
     readonly id: TrackID;
     readonly patterns: PatternData[];
+    readonly sequences: SequenceData[];
     name: string;
     solo: boolean;
     mute: boolean;
@@ -43,6 +48,7 @@ interface TrackSnapshot {
     readonly reverb: number;
     readonly volume: number;
     readonly patterns: PatternSnapshot[];
+    readonly sequences: SequenceSnapshot[];
     readonly sample: SampleSnapshot | null;
 }
 
@@ -60,7 +66,8 @@ const createTrack = (id: TrackID): TrackData => ({
     delay: DELAY.DEFAULT,
     reverb: REVERB.DEFAULT,
     volume: VOLUME.DEFAULT,
-    patterns: []
+    patterns: [],
+    sequences: []
 });
 
 export type Tracks = {
@@ -90,7 +97,8 @@ const parseTrack = (data: any): TrackData => ({
     reverb: parseInt(data.reverb, 10),
     volume: parseInt(data.volume, 10),
     sample: parseSample(data.sample),
-    patterns: parsePatterns(data.patterns)
+    patterns: parsePatterns(data.patterns),
+    sequences: parseSequences(data.sequences)
 });
 
 export const parseTracks = (data: any): Tracks => {
@@ -105,7 +113,8 @@ export const parseTracks = (data: any): Tracks => {
 const serializeTrack = (track: TrackData): TrackSnapshot => ({
     ...track,
     sample: serializeSample(track.sample),
-    patterns: serializePatterns(track.patterns)
+    patterns: serializePatterns(track.patterns),
+    sequences: serializeSequences(track.sequences)
 });
 
 export const serializeTracks = (tracks: Tracks): TracksSnapshot => {

@@ -5,8 +5,11 @@ BUGS
 
 TODO
 -----------------------------------------------------------
---  jmeno stopy se bude menit po dvojkliku na jeji nazev
-    - text se zmeni na FormInput
+--  RMB contextMenu na Track.name:
+    - clear sequences
+    - clear patterns
+    - reset master
+    - clear all to defaults
 --  kazda Track bude mit time signature
 --  nahradit systemove dialogy za notifikacni UI komponentu
 --  ukladat pozici a rozmery okna
