@@ -71,7 +71,7 @@ const createTrack = (id: TrackID): TrackData => ({
 });
 
 export type Tracks = {
-    readonly [id in TrackID]: TrackData;
+    [id in TrackID]: TrackData;
 };
 
 export type TracksSnapshot = {
@@ -166,4 +166,12 @@ export const editTrackReverb = (tracks: Tracks, id: TrackID, reverb: number): vo
 export const editTrackDelay = (tracks: Tracks, id: TrackID, delay: number): void => {
     delay = limitNumber(delay, DELAY.MIN, DELAY.MAX);
     tracks[id].delay = delay;
+};
+
+export const removePatterns = (tracks: Tracks, id: TrackID): void => {
+    tracks[id].sequences.length = 0;
+};
+
+export const resetTrack = (tracks: Tracks, id: TrackID): void => {
+    tracks[id] = createTrack(id);
 };

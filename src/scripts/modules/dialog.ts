@@ -19,6 +19,11 @@ const filters: AppFilters = {
     PROJECT: [{ name: 'Project files', extensions: [PROJECT.FILE.EXT] }]
 };
 
+interface ContextItem {
+    readonly title: string;
+    readonly onClick: () => void;
+}
+
 export const Dialog = {
     ask: (text: string, positive = defPositive, negative = defNegative): AskDialog => {
         return new Promise((resolve, reject) => {
@@ -60,5 +65,17 @@ export const Dialog = {
     },
     showError: (title: string, msg: string): void => {
         remote.dialog.showErrorBox(title, msg);
+    },
+    contextMenu: (items: ContextItem[]): void => {
+        const menu = new remote.Menu();
+
+        for (const { title, onClick } of items) {
+            const item = new remote.MenuItem({
+                label: title,
+                click: onClick
+            });
+            menu.append(item);
+        }
+        menu.popup();
     }
 };

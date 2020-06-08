@@ -6,7 +6,7 @@ import { setDelayAmount, setDelayRate } from 'modules/project/delay';
 import { ReverbID, setReverbType, setReverbDepth } from 'modules/project/reverb';
 
 import {
-    TrackID, muteTrack, soloTrack,
+    TrackID, muteTrack, soloTrack, removePatterns, resetTrack,
     editTrackName, editTrackVolume, editTrackPan, editTrackDelay, editTrackReverb
 } from 'modules/project/track';
 
@@ -67,6 +67,8 @@ type ProjectReducers = {
     readonly setTrackDelay: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
     readonly setTrackReverb: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
     readonly setTrackVolume: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
+    readonly removeTrackPatterns: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
+    readonly deleteTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
     readonly setMasterVolume: CaseReducer<ProjectDataState, PayloadAction<number>>;
     readonly setMasterReverbType: CaseReducer<ProjectDataState, PayloadAction<ReverbID>>;
     readonly setMasterReverbDepth: CaseReducer<ProjectDataState, PayloadAction<number>>;
@@ -216,6 +218,18 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
             if (draft) {
                 const { track, value } = action.payload;
                 editTrackVolume(draft.file.tracks, track, value);
+            }
+            return edit(state, draft);
+        }),
+        removeTrackPatterns: (state, action) => produce(state, draft => {
+            if (draft) {
+                removePatterns(draft.file.tracks, action.payload);
+            }
+            return edit(state, draft);
+        }),
+        deleteTrack: (state, action) => produce(state, draft => {
+            if (draft) {
+                resetTrack(draft.file.tracks, action.payload);
             }
             return edit(state, draft);
         }),

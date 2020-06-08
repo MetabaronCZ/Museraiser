@@ -187,6 +187,22 @@ export const setTrackVolume = (track: TrackID, volume: number): AppThunk => disp
     dispatch(Project.actions.setTrackVolume({ track, value: volume }));
 };
 
+export const removeTrackPatterns = (track: TrackID): AppThunk => dispatch => {
+    Dialog.ask(TXT.track.removePatterns.message).then(result => {
+        if (result) {
+            dispatch(Project.actions.removeTrackPatterns(track));
+        }
+    });
+};
+
+export const deleteTrack = (track: TrackID): AppThunk => dispatch => {
+    Dialog.ask(TXT.track.delete.message).then(result => {
+        if (result) {
+            dispatch(Project.actions.deleteTrack(track));
+        }
+    });
+};
+
 export const setMasterVolume = (volume: number): AppThunk => dispatch => {
     dispatch(Project.actions.setMasterVolume(volume));
 };

@@ -21,5 +21,13 @@ export const trackTexts = {
     setNameError: {
         title: 'Invalid track name',
         message: `Track name should be between ${TRACK.NAME.MIN} and ${TRACK.NAME.MAX} characters!`
+    },
+    removePatterns: {
+        title: 'Remove paterns',
+        message: 'Do you want to remove patterns from this track?'
+    },
+    delete: {
+        title: 'Delete track',
+        message: 'Do you want to delete patterns and reset this track to default?'
     }
 };
