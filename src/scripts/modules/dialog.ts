@@ -10,13 +10,14 @@ const defNegative = TXT.dialog.negative;
 type AskDialog = Promise<boolean>;
 type FileDialog = Promise<string>;
 
-type AppFilter = 'PROJECT';
+type AppFilter = 'PROJECT' | 'AUDIO';
 
 type AppFilters = {
     readonly [type in AppFilter]: FileFilter[];
 };
 const filters: AppFilters = {
-    PROJECT: [{ name: 'Project files', extensions: [PROJECT.FILE.EXT] }]
+    PROJECT: [{ name: 'Project files', extensions: PROJECT.FILE.EXT }],
+    AUDIO: [{ name: 'Audio files', extensions: PROJECT.SAMPLE.EXT }]
 };
 
 interface ContextItem {

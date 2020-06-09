@@ -4,7 +4,7 @@ import { limitNumber } from 'core/number';
 import { TRACK } from 'data/config';
 
 import {
-    SampleData, SampleSnapshot, parseSample, serializeSample
+    SampleData, SampleSnapshot, parseSample, serializeSample, createSample
 } from 'modules/project/sample';
 
 import {
@@ -166,6 +166,17 @@ export const editTrackReverb = (tracks: Tracks, id: TrackID, reverb: number): vo
 export const editTrackDelay = (tracks: Tracks, id: TrackID, delay: number): void => {
     delay = limitNumber(delay, DELAY.MIN, DELAY.MAX);
     tracks[id].delay = delay;
+};
+
+export const setTrackSample = (tracks: Tracks, id: TrackID, name: string, buffer: string): void => {
+    const { sample } = tracks[id];
+
+    if (sample) {
+        sample.name = name;
+        sample.buffer = buffer;
+    } else {
+        tracks[id].sample = createSample(name, buffer);
+    }
 };
 
 export const removePatterns = (tracks: Tracks, id: TrackID): void => {

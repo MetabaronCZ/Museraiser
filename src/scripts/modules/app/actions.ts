@@ -16,6 +16,10 @@ export const getDirame = (path: string): string => {
     return p.dirname(path);
 };
 
+export const getFilename = (path: string): string => {
+    return p.basename(path);
+};
+
 export const minimizeWindow = (): void => {
     return remote.getCurrentWindow().minimize();
 };

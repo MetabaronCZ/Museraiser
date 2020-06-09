@@ -43,7 +43,14 @@ export const TXT = {
     },
     sample: {
         title: 'Sample',
-        notSelected: 'No sample selected'
+        select: 'Select',
+        name: 'Name',
+        loop: 'Loop',
+        selectError: {
+            title: 'Invalid file',
+            message: 'Selected audio file is invalid!'
+        },
+        notSelected: 'No sample loaded'
     },
     project: projectTexts,
     track: trackTexts,

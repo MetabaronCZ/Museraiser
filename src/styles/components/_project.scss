@@ -16,15 +16,17 @@
 
         &-patterns {
             width: $left-column-width;
+            margin-right: 2*$vu;
         }
 
         &-pianoRoll {
             flex: 1;
-            padding: 0 2*$vu;
+            margin-right: 2*$vu;
         }
 
         &-sample {
             width: $right-column-width;
+            margin-right: 2*$vu;
         }
 
         &-master {

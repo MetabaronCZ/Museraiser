@@ -5,10 +5,11 @@ import { Logger } from 'modules/logger';
 import { TrackID } from 'modules/project/track';
 import { readFile, saveFile } from 'modules/file';
 import { ReverbID } from 'modules/project/reverb';
+import { readSample } from 'modules/project/sample';
 import { AppThunk, AppDispatch } from 'modules/store';
-import { getDirame, setAuthor } from 'modules/app/actions';
 import { closeOverlay, openOverlay } from 'modules/overlay';
 import { ProjectDataState, Project } from 'modules/project';
+import { getDirame, setAuthor, getFilename } from 'modules/app/actions';
 import { ProjectFile, parseProject, serializeProject} from 'modules/project/file';
 import {
     setRecentFilesDirectory, addRecentProject
@@ -201,6 +202,32 @@ export const deleteTrack = (track: TrackID): AppThunk => dispatch => {
             dispatch(Project.actions.deleteTrack(track));
         }
     });
+};
+
+export const selectTrackSample = (track: TrackID): AppThunk => dispatch => {
+    Dialog.openFile(__dirname, 'AUDIO').then(path => {
+        if (!path) {
+            return;
+        }
+        try {
+            const base64 = readSample(path);
+
+            dispatch(Project.actions.setTrackSample({ track, value: {
+                name: getFilename(path),
+                buffer: base64
+            }}));
+
+        } catch (err) {
+            Logger.log(err);
+
+            const { title, message } = TXT.sample.selectError;
+            Dialog.showError(title, message);
+        }
+    });
+};
+
+export const setTrackSampleLoop = (track: TrackID, loop: boolean): AppThunk => dispatch => {
+    dispatch(Project.actions.setTrackSampleLoop({ track, value: loop }));
 };
 
 export const setMasterVolume = (volume: number): AppThunk => dispatch => {

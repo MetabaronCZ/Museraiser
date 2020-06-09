@@ -25,11 +25,12 @@ export const RECENT_PROJECTS = Object.freeze({
 
 export const PROJECT = Object.freeze({
     FILE: {
-        EXT: 'museproj',
+        EXT: ['museproj'],
         AUTHOR: '',
         DESCRIPTION: ''
     },
     SAMPLE: {
+        EXT: ['wav', 'mp3', 'mp4', 'ogg', 'flac'], // https://en.wikipedia.org/wiki/HTML5_audio
         RATE: 44100
     },
     NAME: {

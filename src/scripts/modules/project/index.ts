@@ -1,13 +1,15 @@
 import produce from 'immer';
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
+import { setSampleLoop } from 'modules/project/sample';
 import { editMasterVolume } from 'modules/project/master';
 import { setDelayAmount, setDelayRate } from 'modules/project/delay';
 import { ReverbID, setReverbType, setReverbDepth } from 'modules/project/reverb';
 
 import {
     TrackID, muteTrack, soloTrack, removePatterns, resetTrack,
-    editTrackName, editTrackVolume, editTrackPan, editTrackDelay, editTrackReverb
+    editTrackName, editTrackVolume, editTrackPan, editTrackDelay, editTrackReverb,
+    setTrackSample
 } from 'modules/project/track';
 
 import {
@@ -50,6 +52,14 @@ interface TrackValue<T> {
     readonly value: T;
 }
 
+interface SampleValue {
+    readonly track: TrackID;
+    readonly value: {
+        readonly name: string;
+        readonly buffer: string; // base64 encoded sample buffer
+    };
+}
+
 type ProjectReducers = {
     readonly set: CaseReducer<ProjectDataState, PayloadAction<ProjectSettings | null>>;
     readonly save: CaseReducer<ProjectDataState, PayloadAction<string>>;
@@ -67,6 +77,8 @@ type ProjectReducers = {
     readonly setTrackDelay: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
     readonly setTrackReverb: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
     readonly setTrackVolume: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
+    readonly setTrackSample: CaseReducer<ProjectDataState, PayloadAction<SampleValue>>;
+    readonly setTrackSampleLoop: CaseReducer<ProjectDataState, PayloadAction<TrackValue<boolean>>>;
     readonly removeTrackPatterns: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
     readonly deleteTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
     readonly setMasterVolume: CaseReducer<ProjectDataState, PayloadAction<number>>;
@@ -218,6 +230,24 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
             if (draft) {
                 const { track, value } = action.payload;
                 editTrackVolume(draft.file.tracks, track, value);
+            }
+            return edit(state, draft);
+        }),
+        setTrackSample: (state, action) => produce(state, draft => {
+            if (draft) {
+                const { track, value } = action.payload;
+                setTrackSample(draft.file.tracks, track, value.name, value.buffer);
+            }
+            return edit(state, draft);
+        }),
+        setTrackSampleLoop: (state, action) => produce(state, draft => {
+            if (draft) {
+                const { track, value } = action.payload;
+                const { sample } = draft.file.tracks[track];
+
+                if (sample) {
+                    setSampleLoop(sample, value);
+                }
             }
             return edit(state, draft);
         }),

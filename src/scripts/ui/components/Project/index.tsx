@@ -43,7 +43,6 @@ export const ProjectUI: React.SFC = () => {
                 </div>
 
                 <div className="Project-bottom-sample">
-                    <Heading text={TXT.track.sample} />
                     <SampleUI track={track} />
                 </div>
 

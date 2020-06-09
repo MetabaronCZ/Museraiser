@@ -4,6 +4,10 @@ export const readFile = (path: string): string => {
     return fs.readFileSync(path, 'utf8');
 };
 
+export const readBuffer = (path: string): Buffer => {
+    return fs.readFileSync(path);
+};
+
 export const saveFile = (path: string, data : string): void => {
     fs.writeFileSync(path, data, 'utf8');
 };

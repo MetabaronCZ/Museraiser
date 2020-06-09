@@ -5,6 +5,7 @@ BUGS
 
 TODO
 -----------------------------------------------------------
+--  vykreslit waveform v SampleUI
 --  kazdy Pattern bude mit time signature
 --  nahradit systemove dialogy za notifikacni UI komponentu
 --  ukladat pozici a rozmery okna
