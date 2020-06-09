@@ -1,14 +1,26 @@
 import React from 'react';
 
-import { SampleData } from 'modules/project/sample';
+import { TXT } from 'data/texts';
+
+import { TrackData } from 'modules/project/track';
 import { Paragraph } from 'ui/common/Paragraph';
 
 interface Props {
-    readonly sample: SampleData | null;
+    readonly track: TrackData | null;
 }
 
-export const SampleUI: React.SFC<Props> = ({ sample }) => (
-    <Paragraph>
-        {sample ? sample.name : 'none'}
-    </Paragraph>
-);
+export const SampleUI: React.SFC<Props> = ({ track }) => {
+    if (!track) {
+        return <Paragraph>{TXT.track.notSelected}</Paragraph>;
+    }
+    const { sample } = track;
+
+    if (!sample) {
+        return <Paragraph>{TXT.sample.notSelected}</Paragraph>;
+    }
+    return (
+        <Paragraph>
+            {JSON.stringify(sample, null, '\t')}
+        </Paragraph>
+    );
+};

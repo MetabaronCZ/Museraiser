@@ -5,12 +5,7 @@ BUGS
 
 TODO
 -----------------------------------------------------------
---  RMB contextMenu na Track.name:
-    - clear sequences
-    - clear patterns
-    - reset master
-    - clear all to defaults
---  kazda Track bude mit time signature
+--  kazdy Pattern bude mit time signature
 --  nahradit systemove dialogy za notifikacni UI komponentu
 --  ukladat pozici a rozmery okna
 --  funkce insertBarAfter a insertBarBefore do Sequencer headeru

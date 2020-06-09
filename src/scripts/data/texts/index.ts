@@ -41,6 +41,10 @@ export const TXT = {
         title: 'Pattern',
         empty: 'No pattern selected'
     },
+    sample: {
+        title: 'Sample',
+        notSelected: 'No sample selected'
+    },
     project: projectTexts,
     track: trackTexts,
     master: masterTexts,

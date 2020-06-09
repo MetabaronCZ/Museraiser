@@ -9,9 +9,10 @@ import { ProjectDataState } from 'modules/project';
 
 import { Heading } from 'ui/common/Heading';
 import { IntroUI } from 'ui/components/Intro';
-import { TrackUI } from 'ui/components/Project/Track';
+import { SampleUI } from 'ui/components/Project/Sample';
 import { MasterUI } from 'ui/components/Project/Master';
 import { TracksUI } from 'ui/components/Project/Tracks';
+import { PatternsUI } from 'ui/components/Project/Patterns';
 import { PianoRollUI } from 'ui/components/Project/PianoRoll';
 
 export const ProjectUI: React.SFC = () => {
@@ -25,21 +26,29 @@ export const ProjectUI: React.SFC = () => {
     const track = project.track ? tracks[project.track] : null;
     return (
         <div className="Project">
-            <div className="Project-tracks">
+            <div className="Project-top">
                 <Heading size="large" text={`${TXT.project.title}: ${name}`} />
                 <TracksUI tracks={tracks} selected={project.track} />
             </div>
 
-            <div className="Project-footer">
-                <div className="Project-footer-track">
-                    <TrackUI track={track} />
+            <div className="Project-bottom">
+                <div className="Project-bottom-patterns">
+                    <Heading text={TXT.track.patterns} />
+                    <PatternsUI track={track} />
                 </div>
 
-                <div className="Project-footer-content">
+                <div className="Project-bottom-pianoRoll">
+                    <Heading text={TXT.pattern.title} />
                     <PianoRollUI />
                 </div>
 
-                <div className="Project-footer-master">
+                <div className="Project-bottom-sample">
+                    <Heading text={TXT.track.sample} />
+                    <SampleUI track={track} />
+                </div>
+
+                <div className="Project-bottom-master">
+                    <Heading text={TXT.master.title} />
                     <MasterUI master={master} />
                 </div>
             </div>

@@ -3,24 +3,28 @@
     flex-direction: column;
     height: 100%;
 
-    &-tracks {
+    &-top {
         padding-bottom: 2*$vu;
         margin-bottom: 2*$vu;
         border-bottom: $border-light;
     }
 
-    &-footer {
+    &-bottom {
         display: flex;
         flex-direction: row;
         flex: 1;
 
-        &-track {
+        &-patterns {
             width: $left-column-width;
         }
 
-        &-content {
+        &-pianoRoll {
             flex: 1;
             padding: 0 2*$vu;
+        }
+
+        &-sample {
+            width: $right-column-width;
         }
 
         &-master {
