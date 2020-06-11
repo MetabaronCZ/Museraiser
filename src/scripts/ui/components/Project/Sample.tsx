@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { TXT } from 'data/texts';
 
 import { Audio } from 'modules/audio';
 import { AppDispatch } from 'modules/store';
+import { drawWaveform } from 'modules/visual';
 import { TrackData } from 'modules/project/track';
 import { selectTrackSample, setTrackSampleLoop } from 'modules/project/actions';
 
@@ -20,6 +21,16 @@ interface Props {
 
 export const SampleUI: React.SFC<Props> = ({ track }) => {
     const dispatch = useDispatch<AppDispatch>();
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        const sample = track ? track.sample : null;
+
+        if (canvas && sample) {
+            drawWaveform(canvas, sample.buffer);
+        }
+    });
 
     if (!track) {
         return (
@@ -30,6 +41,7 @@ export const SampleUI: React.SFC<Props> = ({ track }) => {
         );
     }
     const { id, sample } = track;
+
     return (
         <>
             <Heading
@@ -44,6 +56,8 @@ export const SampleUI: React.SFC<Props> = ({ track }) => {
             {sample
                 ? (
                     <>
+                        <canvas className="SampleCanvas" ref={canvasRef} />
+
                         <FormField id="sample-loop" label={TXT.sample.name}>
                             {sample.name}
                         </FormField>
