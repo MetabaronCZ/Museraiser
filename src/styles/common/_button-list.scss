@@ -4,7 +4,11 @@
     flex-direction: row;
 
     &-item {
-        padding-right: $vu;
+        padding-left: $vu;
+
+        &:first-child {
+            padding-left: 0;
+        }
     }
 
     &.ButtonList--stretched {
@@ -12,7 +16,7 @@
             display: flex;
             flex: 1;
             justify-content: center;
-            padding-right: 0;
+            padding-left: 0;
     
             &:last-child {
                 justify-content: flex-end;

@@ -82,7 +82,7 @@ export const TRACK = Object.freeze({
 
 export const MASTER = Object.freeze({
     VOLUME: {
-        DEFAULT: 90,
+        DEFAULT: 100,
         MIN: 0,
         MAX: 100
     },
@@ -104,6 +104,26 @@ export const MASTER = Object.freeze({
         },
         DEPTH: {
             DEFAULT: 50,
+            MIN: 0,
+            MAX: 100
+        }
+    }
+});
+
+export const SAMPLE = Object.freeze({
+    VOLUME: {
+        DEFAULT: 100,
+        MIN: 0,
+        MAX: 100
+    },
+    FILTER: {
+        CUTOFF: {
+            DEFAULT: 0,
+            MIN: 0,
+            MAX: 100
+        },
+        RESONANCE: {
+            DEFAULT: 0,
             MIN: 0,
             MAX: 100
         }

@@ -1,20 +1,34 @@
 BUGS
 -----------------------------------------------------------
---  ...
+--  u FormNumber pri umazani hodnoty dat default
+    - jinak je NaN chyba
 
 
 TODO
 -----------------------------------------------------------
+--  u SampleData pridat i sampleStart, sampleEnd (jako %)
+--  nahradit % a X za inputem za atribut "unit" u FormField
+--  pridat Panic button
+    - vypnout AudioContext pri uzavreni projektu
 --  kazdy Pattern bude mit time signature
 --  nahradit systemove dialogy za notifikacni UI komponentu
 --  ukladat pozici a rozmery okna
 --  funkce insertBarAfter a insertBarBefore do Sequencer headeru
---  k samplum pridat:
-    - Filter (cutoff, resonance); +envelope (ADSR LOWPASS cutoff); +LFO (=phase)
-        - 2 filtry (LOWPASS, HIGHPASS) za sebou
-    - Amplitude (gain); +envelope (ADSR); +LFO (=tremolo)
-    - Pan; +LFO
-    - Pitch; +LFO (=vibrato)
+>>  k samplum pridat:
+    --  Filter (cutoff, resonance);
+        OK  2 filtry (LOWPASS, HIGHPASS) za sebou
+        --  envelope (ADSR LOWPASS cutoff);
+        --  LFO (=phase)
+    --  Amplitude (gain)
+        OK  volume
+        --  envelope (ADSR)
+        --  LFO (=tremolo)
+    --  Pan
+        --  pan
+        --  LFO
+    --  Pitch
+        --  pitch
+        --  LFO (=vibrato)
     ? u ENVELOPE mit moznost:
         - POLY - spusti ADSR pri spusteni noty (default mod)
         - MONO - ADSR bezi porad a pri spusteni noty se jen aplikuje aktualni hodnota
@@ -24,5 +38,12 @@ TODO
         - RATE - rychlost oscilace
         - AMOUNT - "hlasitost" - uroven modulace
         - SYNC - synchronizovat s tempem
-
+--  v ramci projektu vytvaret sceny:
+    - cely song je scena
+    - sceny pro battle songy: INTRO, NEUTRAL, WINNING, LOSING, WON_OUTRO, LOSE_OUTRO
+    - pripravit eventy: zmena sceny po skonceni aktualniho "baru" (???nebo dvoj-baru)
+    - moznost kopirovat sekvence patternu mezi scenami
+    - vytvorit scenu z existujici (duplikovat)
+    - projekt tedy bude obsahovat: samply, patterny, sceny (sekvence patternu vsech stop)
+    ? tempo pro kazdou scenu zvlast
 --  responzivne po 1024x768

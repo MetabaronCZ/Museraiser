@@ -1,10 +1,14 @@
 import produce from 'immer';
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
-import { setSampleLoop } from 'modules/project/sample';
 import { editMasterVolume } from 'modules/project/master';
 import { setDelayAmount, setDelayRate } from 'modules/project/delay';
 import { ReverbID, setReverbType, setReverbDepth } from 'modules/project/reverb';
+
+import {
+    FilterType,
+    setSampleLoop, setSampleFilterCutoff, setSampleFilterResonance, setSampleVolume
+} from 'modules/project/sample';
 
 import {
     TrackID, muteTrack, soloTrack, removePatterns, resetTrack,
@@ -60,6 +64,11 @@ interface SampleValue {
     };
 }
 
+interface SampleFilter {
+    readonly filter: FilterType;
+    readonly attr: number; // filter attribute
+}
+
 type ProjectReducers = {
     readonly set: CaseReducer<ProjectDataState, PayloadAction<ProjectSettings | null>>;
     readonly save: CaseReducer<ProjectDataState, PayloadAction<string>>;
@@ -78,7 +87,10 @@ type ProjectReducers = {
     readonly setTrackReverb: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
     readonly setTrackVolume: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
     readonly setTrackSample: CaseReducer<ProjectDataState, PayloadAction<SampleValue>>;
+    readonly setTrackSampleVolume: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
     readonly setTrackSampleLoop: CaseReducer<ProjectDataState, PayloadAction<TrackValue<boolean>>>;
+    readonly setTrackSampleFilterCutoff: CaseReducer<ProjectDataState, PayloadAction<TrackValue<SampleFilter>>>;
+    readonly setTrackSampleFilterResonance: CaseReducer<ProjectDataState, PayloadAction<TrackValue<SampleFilter>>>;
     readonly removeTrackPatterns: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
     readonly deleteTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
     readonly setMasterVolume: CaseReducer<ProjectDataState, PayloadAction<number>>;
@@ -240,6 +252,17 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
             }
             return edit(state, draft);
         }),
+        setTrackSampleVolume: (state, action) => produce(state, draft => {
+            if (draft) {
+                const { track, value } = action.payload;
+                const { sample } = draft.file.tracks[track];
+
+                if (sample) {
+                    setSampleVolume(sample, value);
+                }
+            }
+            return edit(state, draft);
+        }),
         setTrackSampleLoop: (state, action) => produce(state, draft => {
             if (draft) {
                 const { track, value } = action.payload;
@@ -247,6 +270,28 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
 
                 if (sample) {
                     setSampleLoop(sample, value);
+                }
+            }
+            return edit(state, draft);
+        }),
+        setTrackSampleFilterCutoff: (state, action) => produce(state, draft => {
+            if (draft) {
+                const { track, value } = action.payload;
+                const { sample } = draft.file.tracks[track];
+
+                if (sample) {
+                    setSampleFilterCutoff(sample, value.filter, value.attr);
+                }
+            }
+            return edit(state, draft);
+        }),
+        setTrackSampleFilterResonance: (state, action) => produce(state, draft => {
+            if (draft) {
+                const { track, value } = action.payload;
+                const { sample } = draft.file.tracks[track];
+
+                if (sample) {
+                    setSampleFilterResonance(sample, value.filter, value.attr);
                 }
             }
             return edit(state, draft);

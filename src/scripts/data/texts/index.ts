@@ -46,11 +46,20 @@ export const TXT = {
         select: 'Select',
         name: 'Name',
         loop: 'Loop',
+        start: 'Play',
+        stop: 'Stop',
+        volume: 'Volume',
         selectError: {
             title: 'Invalid file',
             message: 'Selected audio file is invalid!'
         },
-        notSelected: 'No sample loaded'
+        notSelected: 'No sample loaded',
+        filter: {
+            title1: 'Filter (low-pass)',
+            title2: 'Filter (high-pass)',
+            cutoff: 'Cutoff',
+            resonance: 'Resonance'
+        }
     },
     project: projectTexts,
     track: trackTexts,

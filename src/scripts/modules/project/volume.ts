@@ -1,3 +1,8 @@
+import { limitNumber } from 'core/number';
+
+const VOLUME_MIN = 0;
+const VOLUME_MAX = 1;
+
 export interface Volume {
     gain: number;
 }
@@ -17,3 +22,13 @@ export const parseVolume = (data: any): Volume => ({
 export const serializeVolume = (volume: Volume): VolumeSnapshot => ({
     ...volume
 });
+
+export const createGainNode = (ctx: AudioContext, data: Volume): GainNode => {
+    const now = ctx.currentTime;
+    const gain = ctx.createGain();
+
+    const volume = limitNumber(data.gain / 100, VOLUME_MIN, VOLUME_MAX, true);
+    gain.gain.setValueAtTime(volume, now);
+
+    return gain;
+};

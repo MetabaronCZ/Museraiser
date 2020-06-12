@@ -2,24 +2,38 @@ import React, { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { TXT } from 'data/texts';
+import { SAMPLE } from 'data/config';
 
 import { Audio } from 'modules/audio';
 import { AppDispatch } from 'modules/store';
 import { drawWaveform } from 'modules/visual';
 import { TrackData } from 'modules/project/track';
-import { selectTrackSample, setTrackSampleLoop } from 'modules/project/actions';
+import { MasterData } from 'modules/project/master';
+import {
+    selectTrackSample, setTrackSampleLoop, setTrackSampleVolume,
+    setTrackSampleFilterCutoff, setTrackSampleFilterResonance
+} from 'modules/project/actions';
 
+import { Grid } from 'ui/common/Grid';
 import { Button } from 'ui/common/Button';
 import { Heading } from 'ui/common/Heading';
+import { GridRow } from 'ui/common/Grid/Row';
 import { Paragraph } from 'ui/common/Paragraph';
 import { FormField } from 'ui/common/FormField';
+import { ButtonList } from 'ui/common/ButtonList';
+import { FormNumber } from 'ui/common/FormNumber';
+import { GridColumn } from 'ui/common/Grid/Column';
 import { FormCheckbox } from 'ui/common/FormCheckbox';
+
+const { VOLUME, FILTER } = SAMPLE;
+const MAX_DISPLAY_NAME = 16;
 
 interface Props {
     readonly track: TrackData | null;
+    readonly master: MasterData;
 }
 
-export const SampleUI: React.SFC<Props> = ({ track }) => {
+export const SampleUI: React.SFC<Props> = ({ track, master }) => {
     const dispatch = useDispatch<AppDispatch>();
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -41,25 +55,53 @@ export const SampleUI: React.SFC<Props> = ({ track }) => {
         );
     }
     const { id, sample } = track;
+    let name = (sample ? sample.name : '');
 
+    if (name.length > MAX_DISPLAY_NAME) {
+        name = `${name.substr(0, MAX_DISPLAY_NAME - 3)}...`;
+    }
     return (
         <>
-            <Heading
-                text={TXT.track.sample}
-                extra={
-                    <Button
-                        text={TXT.sample.select}
-                        onClick={() => dispatch(selectTrackSample(id))}
-                    />
-                }
-            />
+            <Heading text={TXT.track.sample} extra={name} />
             {sample
                 ? (
                     <>
                         <canvas className="SampleCanvas" ref={canvasRef} />
 
-                        <FormField id="sample-loop" label={TXT.sample.name}>
-                            {sample.name}
+                        <Grid>
+                            <GridRow>
+                                <GridColumn align="left">
+                                    <Button
+                                        text={TXT.sample.select}
+                                        onClick={() => dispatch(selectTrackSample(id))}
+                                    />
+                                </GridColumn>
+
+                                <GridColumn align="right">
+                                    <ButtonList>
+                                        <Button
+                                            text={TXT.sample.start}
+                                            onClick={() => Audio.auditStart(sample, master)}
+                                        />
+
+                                        <Button
+                                            text={TXT.sample.stop}
+                                            onClick={() => Audio.auditStop()}
+                                        />
+                                    </ButtonList>
+                                </GridColumn>
+                            </GridRow>
+                        </Grid>
+
+                        <FormField id="sample-volume" label={TXT.sample.volume}>
+                            <FormNumber
+                                id="sample-volume"
+                                min={VOLUME.MIN}
+                                max={VOLUME.MAX}
+                                value={sample.volume.gain}
+                                mini
+                                onChange={value => dispatch(setTrackSampleVolume(id, value))}
+                            />&nbsp;%
                         </FormField>
 
                         <FormField id="sample-loop" label={TXT.sample.loop}>
@@ -70,13 +112,61 @@ export const SampleUI: React.SFC<Props> = ({ track }) => {
                             />
                         </FormField>
 
-                        <Button
-                            text="Play"
-                            onClick={() => Audio.audit(sample, 0.5)}
-                        />
+                        <Heading size="small" text={TXT.sample.filter.title1} />
+
+                        <FormField id="filter-1-cutoff" label={TXT.sample.filter.cutoff}>
+                            <FormNumber
+                                id="filter-1-cutoff"
+                                min={FILTER.CUTOFF.MIN}
+                                max={FILTER.CUTOFF.MAX}
+                                value={sample.filter1.cutoff}
+                                mini
+                                onChange={value => dispatch(setTrackSampleFilterCutoff(id, 'FILTER1', value))}
+                            />&nbsp;%
+                        </FormField>
+
+                        <FormField id="filter-1-resonance" label={TXT.sample.filter.resonance}>
+                            <FormNumber
+                                id="filter-1-resonancef"
+                                min={FILTER.RESONANCE.MIN}
+                                max={FILTER.RESONANCE.MAX}
+                                value={sample.filter1.resonance}
+                                mini
+                                onChange={value => dispatch(setTrackSampleFilterResonance(id, 'FILTER1', value))}
+                            />&nbsp;%
+                        </FormField>
+
+                        <Heading size="small" text={TXT.sample.filter.title2} />
+
+                        <FormField id="filter-2-cutoff" label={TXT.sample.filter.cutoff}>
+                            <FormNumber
+                                id="filter-2-cutoff"
+                                min={FILTER.CUTOFF.MIN}
+                                max={FILTER.CUTOFF.MAX}
+                                value={sample.filter2.cutoff}
+                                mini
+                                onChange={value => dispatch(setTrackSampleFilterCutoff(id, 'FILTER2', value))}
+                            />&nbsp;%
+                        </FormField>
+
+                        <FormField id="filter-2-resonance" label={TXT.sample.filter.resonance}>
+                            <FormNumber
+                                id="filter-2-resonancef"
+                                min={FILTER.RESONANCE.MIN}
+                                max={FILTER.RESONANCE.MAX}
+                                value={sample.filter2.resonance}
+                                mini
+                                onChange={value => dispatch(setTrackSampleFilterResonance(id, 'FILTER2', value))}
+                            />&nbsp;%
+                        </FormField>
                     </>
                 )
-                : <Paragraph>{TXT.sample.notSelected}</Paragraph>
+                : (
+                    <Button
+                        text={TXT.sample.select}
+                        onClick={() => dispatch(selectTrackSample(id))}
+                    />
+                )
             }
         </>
     );

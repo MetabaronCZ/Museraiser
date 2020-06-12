@@ -2,7 +2,7 @@ import { limitNumber } from 'core/number';
 import { MASTER } from 'data/config';
 
 import {
-    Volume, VolumeSnapshot, createVolume, parseVolume, serializeVolume
+    Volume, VolumeSnapshot, createVolume, parseVolume, serializeVolume, createGainNode
 } from 'modules/project/volume';
 
 import {
@@ -48,4 +48,14 @@ export const serializeMasterData = (master: MasterData): MasterSnapshot => ({
 export const editMasterVolume = (master: MasterData, volume: number): void => {
     volume = limitNumber(volume, VOLUME.MIN, VOLUME.MAX);
     master.volume.gain = volume;
+};
+
+export const createMasterNode = (ctx: AudioContext, data: MasterData): GainNode => {
+    const gain = createGainNode(ctx, data.volume);
+    const compressor = ctx.createDynamicsCompressor();
+
+    gain.connect(compressor);
+    compressor.connect(ctx.destination);
+
+    return gain;
 };

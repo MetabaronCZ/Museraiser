@@ -5,15 +5,14 @@ import { Logger } from 'modules/logger';
 import { TrackID } from 'modules/project/track';
 import { readFile, saveFile } from 'modules/file';
 import { ReverbID } from 'modules/project/reverb';
-import { readSample } from 'modules/project/sample';
 import { AppThunk, AppDispatch } from 'modules/store';
 import { closeOverlay, openOverlay } from 'modules/overlay';
 import { ProjectDataState, Project } from 'modules/project';
+import { readSample, FilterType } from 'modules/project/sample';
 import { getDirame, setAuthor, getFilename } from 'modules/app/actions';
 import { ProjectFile, parseProject, serializeProject} from 'modules/project/file';
-import {
-    setRecentFilesDirectory, addRecentProject
-} from 'modules/recent-projects/actions';
+import { setRecentFilesDirectory, addRecentProject } from 'modules/recent-projects/actions';
+import { Audio } from 'modules/audio';
 
 const checkProjectSaved = (project: ProjectDataState, cb: () => void): void => {
     if (!project || project.saved) {
@@ -217,6 +216,8 @@ export const selectTrackSample = (track: TrackID): AppThunk => dispatch => {
                 buffer: base64
             }}));
 
+            Audio.auditStop();
+
         } catch (err) {
             Logger.log(err);
 
@@ -226,8 +227,32 @@ export const selectTrackSample = (track: TrackID): AppThunk => dispatch => {
     });
 };
 
+export const setTrackSampleVolume = (track: TrackID, volume: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setTrackSampleVolume({ track, value: volume }));
+};
+
 export const setTrackSampleLoop = (track: TrackID, loop: boolean): AppThunk => dispatch => {
     dispatch(Project.actions.setTrackSampleLoop({ track, value: loop }));
+};
+
+export const setTrackSampleFilterCutoff = (track: TrackID, filter: FilterType, cutoff: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setTrackSampleFilterCutoff({
+        track,
+        value: {
+            filter,
+            attr: cutoff
+        }
+    }));
+};
+
+export const setTrackSampleFilterResonance = (track: TrackID, filter: FilterType, reso: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setTrackSampleFilterResonance({
+        track,
+        value: {
+            filter,
+            attr: reso
+        }
+    }));
 };
 
 export const setMasterVolume = (volume: number): AppThunk => dispatch => {
