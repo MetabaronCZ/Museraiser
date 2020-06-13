@@ -40,9 +40,10 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
                     value={volume.gain}
                     min={VOLUME.MIN}
                     max={VOLUME.MAX}
+                    unit="%"
                     mini
                     onChange={value => dispatch(setMasterVolume(value))}
-                />&nbsp;%
+                />
             </FormField>
 
             <FormField id="delay-amount" label={TXT.master.delay.amount}>
@@ -51,9 +52,10 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
                     value={delay.amount}
                     min={DELAY.AMOUNT.MIN}
                     max={DELAY.AMOUNT.MAX}
+                    unit="%"
                     mini
                     onChange={value => dispatch(setMasterDelayAmount(value))}
-                />&nbsp;%
+                />
             </FormField>
 
             <FormField id="delay-rate" label={TXT.master.delay.rate}>
@@ -62,9 +64,10 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
                     value={delay.rate}
                     min={DELAY.RATE.MIN}
                     max={DELAY.RATE.MAX}
+                    unit="x"
                     mini
                     onChange={value => dispatch(setMasterDelayRate(value))}
-                />&nbsp;x
+                />
             </FormField>
 
             <FormField id="reverb-type" label={TXT.master.reverb.type}>
@@ -82,9 +85,10 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
                     value={reverb.depth}
                     min={REVERB.DEPTH.MIN}
                     max={REVERB.DEPTH.MAX}
+                    unit="%"
                     mini
                     onChange={value => dispatch(setMasterReverbDepth(value))}
-                />&nbsp;%
+                />
             </FormField>
         </>
     );

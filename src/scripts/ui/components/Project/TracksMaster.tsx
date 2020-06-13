@@ -26,6 +26,7 @@ const getInput = (id: string, value: number, min: number, max: number, onChange:
         value={value}
         min={min}
         max={max}
+        unit="%"
         mini
         onChange={onChange}
     />
@@ -47,25 +48,25 @@ export const TracksMasterUI: React.SFC<Props> = ({ tracks, selected }) => {
                         <div className="TracksMaster-item-column">
                             {getInput('VOLUME', volume, VOLUME.MIN, VOLUME.MAX, value => {
                                 dispatch(setTrackVolume(id, value));
-                            })}&nbsp;%
+                            })}
                         </div>
 
                         <div className="TracksMaster-item-column">
                             {getInput('PAN', pan, PAN.MIN, PAN.MAX, value => {
                                 dispatch(setTrackPan(id, value));
-                            })}&nbsp;%
+                            })}
                         </div>
 
                         <div className="TracksMaster-item-column">
                             {getInput('DELAY', delay, DELAY.MIN, DELAY.MAX, value => {
                                 dispatch(setTrackDelay(id, value));
-                            })}&nbsp;%
+                            })}
                         </div>
 
                         <div className="TracksMaster-item-column">
                             {getInput('REVERB', reverb, REVERB.MIN, REVERB.MAX, value => {
                                 dispatch(setTrackReverb(id, value));
-                            })}&nbsp;%
+                            })}
                         </div>
                     </li>
                 );

@@ -9,6 +9,7 @@ interface Props {
     readonly max?: number;
     readonly step?: number;
     readonly mini?: boolean;
+    readonly unit?: string;
     readonly value: number;
     readonly onChange: OnChange<number>;
 }
@@ -22,19 +23,22 @@ const wheel = () => (e: React.WheelEvent<HTMLInputElement>) => {
     tgt.value = `${value + diff}`;
 };
 
-export const FormNumber: React.SFC<Props> = ({ id, min, max, step = 1, mini = false, value, onChange }) => (
-    <input
-        id={id}
-        className={cn('FormInput', {
-            'FormInput--mini': mini
-        })}
-        type="number"
-        name={id}
-        value={value}
-        min={min}
-        max={max}
-        step={step}
-        onWheel={wheel}
-        onChange={changeOnly(val => onChange(parseInt(val, 10)))}
-    />
+export const FormNumber: React.SFC<Props> = ({ id, min, max, step = 1, mini = false, unit, value, onChange }) => (
+    <>
+        <input
+            id={id}
+            className={cn('FormInput', {
+                'FormInput--mini': mini
+            })}
+            type="number"
+            name={id}
+            value={value}
+            min={min}
+            max={max}
+            step={step}
+            onWheel={wheel}
+            onChange={changeOnly(val => onChange(parseInt(val, 10)))}
+        />
+        {unit ? `\u00A0${unit}` : ''}
+    </>
 );

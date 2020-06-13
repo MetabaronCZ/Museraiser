@@ -99,9 +99,10 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 min={VOLUME.MIN}
                                 max={VOLUME.MAX}
                                 value={sample.volume.gain}
+                                unit="%"
                                 mini
                                 onChange={value => dispatch(setTrackSampleVolume(id, value))}
-                            />&nbsp;%
+                            />
                         </FormField>
 
                         <FormField id="sample-loop" label={TXT.sample.loop}>
@@ -120,9 +121,10 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 min={FILTER.CUTOFF.MIN}
                                 max={FILTER.CUTOFF.MAX}
                                 value={sample.filter1.cutoff}
+                                unit="%"
                                 mini
                                 onChange={value => dispatch(setTrackSampleFilterCutoff(id, 'FILTER1', value))}
-                            />&nbsp;%
+                            />
                         </FormField>
 
                         <FormField id="filter-1-resonance" label={TXT.sample.filter.resonance}>
@@ -131,9 +133,10 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 min={FILTER.RESONANCE.MIN}
                                 max={FILTER.RESONANCE.MAX}
                                 value={sample.filter1.resonance}
+                                unit="%"
                                 mini
                                 onChange={value => dispatch(setTrackSampleFilterResonance(id, 'FILTER1', value))}
-                            />&nbsp;%
+                            />
                         </FormField>
 
                         <Heading size="small" text={TXT.sample.filter.title2} />
@@ -144,9 +147,10 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 min={FILTER.CUTOFF.MIN}
                                 max={FILTER.CUTOFF.MAX}
                                 value={sample.filter2.cutoff}
+                                unit="%"
                                 mini
                                 onChange={value => dispatch(setTrackSampleFilterCutoff(id, 'FILTER2', value))}
-                            />&nbsp;%
+                            />
                         </FormField>
 
                         <FormField id="filter-2-resonance" label={TXT.sample.filter.resonance}>
@@ -155,9 +159,10 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 min={FILTER.RESONANCE.MIN}
                                 max={FILTER.RESONANCE.MAX}
                                 value={sample.filter2.resonance}
+                                unit="%"
                                 mini
                                 onChange={value => dispatch(setTrackSampleFilterResonance(id, 'FILTER2', value))}
-                            />&nbsp;%
+                            />
                         </FormField>
                     </>
                 )

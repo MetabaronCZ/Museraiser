@@ -6,8 +6,6 @@ BUGS
 
 TODO
 -----------------------------------------------------------
---  u SampleData pridat i sampleStart, sampleEnd (jako %)
---  nahradit % a X za inputem za atribut "unit" u FormField
 --  pridat Panic button
     - vypnout AudioContext pri uzavreni projektu
 --  kazdy Pattern bude mit time signature
