@@ -47,7 +47,7 @@ export const TracksMasterUI: React.SFC<Props> = ({ tracks, selected }) => {
                         key={id}
                     >
                         <div className="TracksMaster-item-column">
-                            {getInput('VOLUME', volume, VOLUME.MIN, VOLUME.MAX, value => {
+                            {getInput('VOLUME', volume.gain, VOLUME.MIN, VOLUME.MAX, value => {
                                 dispatch(setTrackVolume(id, value));
                             })}
                         </div>

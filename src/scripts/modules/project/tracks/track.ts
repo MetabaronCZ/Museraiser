@@ -1,6 +1,10 @@
 import { TRACK } from 'data/config';
 
 import {
+    Volume, createVolume, parseVolume, serializeVolume
+} from 'modules/project/volume';
+
+import {
     SampleData, SampleSnapshot, parseSample, serializeSample
 } from 'modules/project/sample';
 
@@ -31,7 +35,7 @@ export interface TrackData {
     pan: number;
     delay: number;
     reverb: number;
-    volume: number;
+    volume: Volume;
     sample: SampleData | null;
 }
 
@@ -43,7 +47,7 @@ export interface TrackSnapshot {
     readonly pan: number;
     readonly delay: number;
     readonly reverb: number;
-    readonly volume: number;
+    readonly volume: Volume;
     readonly patterns: PatternSnapshot[];
     readonly sequences: SequenceSnapshot[];
     readonly sample: SampleSnapshot | null;
@@ -62,7 +66,7 @@ export const createTrack = (id: TrackID): TrackData => ({
     pan: PAN.DEFAULT,
     delay: DELAY.DEFAULT,
     reverb: REVERB.DEFAULT,
-    volume: VOLUME.DEFAULT,
+    volume: createVolume(VOLUME.DEFAULT),
     patterns: [],
     sequences: []
 });
@@ -75,7 +79,7 @@ export const parseTrack = (data: any): TrackData => ({
     pan: parseInt(data.pan, 10),
     delay: parseInt(data.delay, 10),
     reverb: parseInt(data.reverb, 10),
-    volume: parseInt(data.volume, 10),
+    volume: parseVolume(data.volume),
     sample: parseSample(data.sample),
     patterns: parsePatterns(data.patterns),
     sequences: parseSequences(data.sequences)
@@ -83,6 +87,7 @@ export const parseTrack = (data: any): TrackData => ({
 
 export const serializeTrack = (track: TrackData): TrackSnapshot => ({
     ...track,
+    volume: serializeVolume(track.volume),
     sample: serializeSample(track.sample),
     patterns: serializePatterns(track.patterns),
     sequences: serializeSequences(track.sequences)

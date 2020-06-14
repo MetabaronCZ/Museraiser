@@ -1,18 +1,12 @@
-import { limitNumber } from 'core/number';
-
-import { MASTER } from 'data/config';
-
 import { ReverbID } from 'modules/project/reverb';
 import { MasterData } from 'modules/project/master';
 import { DelayActions } from 'modules/project/delay/actions';
 import { ReverbActions } from 'modules/project/reverb/actions';
-
-const { VOLUME } = MASTER;
+import { VolumeActions } from 'modules/project/volume/actions';
 
 export const MasterActions = {
-    setVolume: (master: MasterData, volume: number): void => {
-        volume = limitNumber(volume, VOLUME.MIN, VOLUME.MAX);
-        master.volume.gain = volume;
+    setVolume: (master: MasterData, gain: number): void => {
+        VolumeActions.setGain(master.volume, gain);
     },
     setReverbType: (master: MasterData, type: ReverbID): void => {
         ReverbActions.setType(master.reverb, type);

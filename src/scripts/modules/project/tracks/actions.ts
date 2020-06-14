@@ -4,9 +4,10 @@ import { TRACK } from 'data/config';
 
 import { Tracks } from 'modules/project/tracks';
 import { createSample } from 'modules/project/sample';
+import { VolumeActions } from 'modules/project/volume/actions';
 import { TrackID, createTrack, TrackData } from 'modules/project/tracks/track';
 
-const { NAME, VOLUME, REVERB, DELAY, PAN } = TRACK;
+const { NAME, REVERB, DELAY, PAN } = TRACK;
 
 export const TrackActions = {
     mute: (tracks: Tracks, id: TrackID): void => {
@@ -28,9 +29,8 @@ export const TrackActions = {
         name = name.substring(0, NAME.MAX);
         track.name = name;
     },
-    setVolume: (track: TrackData, volume: number): void => {
-        volume = limitNumber(volume, VOLUME.MIN, VOLUME.MAX);
-        track.volume = volume;
+    setVolume: (track: TrackData, gain: number): void => {
+        VolumeActions.setGain(track.volume, gain);
     },
     setPan: (track: TrackData, pan: number): void => {
         pan = limitNumber(pan, PAN.MIN, PAN.MAX);

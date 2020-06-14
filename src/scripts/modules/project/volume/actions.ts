@@ -6,7 +6,7 @@ import { Volume } from 'modules/project/volume';
 const { VOLUME } = TRACK;
 
 export const VolumeActions = {
-    set: (volume: Volume, gain: number) => {
+    setGain: (volume: Volume, gain: number) => {
         gain = limitNumber(gain, VOLUME.MIN, VOLUME.MAX);
         volume.gain = gain;
     }
