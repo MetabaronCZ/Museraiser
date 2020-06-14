@@ -6,7 +6,7 @@ import { TRACK } from 'data/config';
 
 import { OnChange } from 'modules/events';
 import { AppDispatch } from 'modules/store';
-import { Tracks } from 'modules/project/tracks';
+import { TracksData } from 'modules/project/tracks';
 import { TrackID } from 'modules/project/tracks/track';
 import {
     setTrackVolume, setTrackPan, setTrackDelay, setTrackReverb
@@ -17,7 +17,7 @@ import { FormNumber } from 'ui/common/FormNumber';
 const { VOLUME, PAN, DELAY, REVERB } = TRACK;
 
 interface Props {
-    readonly tracks: Tracks;
+    readonly tracks: TracksData;
     readonly selected: TrackID | null;
 }
 

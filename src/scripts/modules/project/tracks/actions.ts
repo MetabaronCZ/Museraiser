@@ -2,20 +2,20 @@ import { limitNumber } from 'core/number';
 
 import { TRACK } from 'data/config';
 
-import { Tracks } from 'modules/project/tracks';
+import { TracksData } from 'modules/project/tracks';
 import { createSample } from 'modules/project/sample';
-import { VolumeActions } from 'modules/project/volume/actions';
+import { Volume } from 'modules/project/volume/actions';
 import { TrackID, createTrack, TrackData } from 'modules/project/tracks/track';
 
 const { NAME, REVERB, DELAY, PAN } = TRACK;
 
-export const TrackActions = {
-    mute: (tracks: Tracks, id: TrackID): void => {
+export const Track = {
+    mute: (tracks: TracksData, id: TrackID): void => {
         const track = tracks[id];
         track.mute = !track.mute;
         track.solo = false;
     },
-    solo: (tracks: Tracks, id: TrackID): void => {
+    solo: (tracks: TracksData, id: TrackID): void => {
         const track = tracks[id];
         const solo = track.solo;
 
@@ -30,7 +30,7 @@ export const TrackActions = {
         track.name = name;
     },
     setVolume: (track: TrackData, gain: number): void => {
-        VolumeActions.setGain(track.volume, gain);
+        Volume.setGain(track.volume, gain);
     },
     setPan: (track: TrackData, pan: number): void => {
         pan = limitNumber(pan, PAN.MIN, PAN.MAX);
@@ -57,7 +57,7 @@ export const TrackActions = {
     removePatterns: (track: TrackData): void => {
         track.sequences.length = 0;
     },
-    reset: (tracks: Tracks, id: TrackID): void => {
+    reset: (tracks: TracksData, id: TrackID): void => {
         tracks[id] = createTrack(id);
     }
 };

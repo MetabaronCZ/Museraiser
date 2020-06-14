@@ -1,7 +1,7 @@
 import { TRACK } from 'data/config';
 
 import {
-    Volume, createVolume, parseVolume, serializeVolume
+    VolumeData, createVolume, parseVolume, serializeVolume
 } from 'modules/project/volume';
 
 import {
@@ -35,7 +35,7 @@ export interface TrackData {
     pan: number;
     delay: number;
     reverb: number;
-    volume: Volume;
+    volume: VolumeData;
     sample: SampleData | null;
 }
 
@@ -47,7 +47,7 @@ export interface TrackSnapshot {
     readonly pan: number;
     readonly delay: number;
     readonly reverb: number;
-    readonly volume: Volume;
+    readonly volume: VolumeData;
     readonly patterns: PatternSnapshot[];
     readonly sequences: SequenceSnapshot[];
     readonly sample: SampleSnapshot | null;

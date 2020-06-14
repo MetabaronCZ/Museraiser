@@ -1,10 +1,10 @@
 import { limitNumber } from 'core/number';
-import { Volume } from 'modules/project/volume';
+import { VolumeData } from 'modules/project/volume';
 
 const VOLUME_MIN = 0;
 const VOLUME_MAX = 1;
 
-export const createGainNode = (ctx: AudioContext, data: Volume): GainNode => {
+export const createGainNode = (ctx: AudioContext, data: VolumeData): GainNode => {
     const now = ctx.currentTime;
     const gain = ctx.createGain();
 

@@ -1,9 +1,12 @@
 import { fromBuffer, toBase64 } from 'core/buffer';
 
 import { SAMPLE } from 'data/config';
-
 import { readBuffer } from 'modules/file';
-import { Volume, createVolume, parseVolume, serializeVolume } from 'modules/project/volume';
+
+import {
+    VolumeData, createVolume, parseVolume, serializeVolume
+} from 'modules/project/volume';
+
 import {
     FilterData, FilterSnapshot, createFilterData, parseFilter, serializeFilter
 } from 'modules/project/filter';
@@ -13,7 +16,7 @@ const { VOLUME } = SAMPLE;
 export type FilterType = 'FILTER1' | 'FILTER2';
 
 export interface SampleData {
-    readonly volume: Volume;
+    readonly volume: VolumeData;
     readonly filter1: FilterData;
     readonly filter2: FilterData;
     buffer: string;
@@ -25,7 +28,7 @@ export interface SampleSnapshot {
     readonly name: string;
     readonly loop: boolean;
     readonly buffer: string;
-    readonly volume: Volume;
+    readonly volume: VolumeData;
     readonly filter1: FilterSnapshot;
     readonly filter2: FilterSnapshot;
 }

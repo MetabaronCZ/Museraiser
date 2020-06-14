@@ -1,23 +1,23 @@
 import { MASTER } from 'data/config';
 
 import {
-    Volume, VolumeSnapshot, createVolume, parseVolume, serializeVolume
+    VolumeData, VolumeSnapshot, createVolume, parseVolume, serializeVolume
 } from 'modules/project/volume';
 
 import {
-    Delay, DelaySnapshot, createDelay, parseDelay, serializeDelay
+    DelayData, DelaySnapshot, createDelay, parseDelay, serializeDelay
 } from 'modules/project/delay';
 
 import {
-    Reverb, ReverbSnapshot, createReverb, parseReverb, serializeReverb
+    ReverbData, ReverbSnapshot, createReverb, parseReverb, serializeReverb
 } from 'modules/project/reverb';
 
 const { VOLUME } = MASTER;
 
 export interface MasterData {
-    readonly delay: Delay;
-    readonly reverb: Reverb;
-    readonly volume: Volume;
+    readonly delay: DelayData;
+    readonly reverb: ReverbData;
+    readonly volume: VolumeData;
 }
 
 export interface MasterSnapshot {

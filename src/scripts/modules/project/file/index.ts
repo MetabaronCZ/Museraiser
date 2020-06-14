@@ -1,14 +1,14 @@
 import {
-    Tracks, TracksSnapshot, createTracks, parseTracks, serializeTracks
+    TracksData, TracksSnapshot, createTracks, parseTracks, serializeTracks
 } from 'modules/project/tracks';
 
 import {
     MasterData, MasterSnapshot, createMasterData, parseMasterData, serializeMasterData
 } from 'modules/project/master';
 
-export interface ProjectFile {
+export interface ProjectFileData {
     readonly created: number;
-    readonly tracks: Tracks;
+    readonly tracks: TracksData;
     readonly master: MasterData;
     name: string;
     author: string;
@@ -28,7 +28,7 @@ interface ProjectSnapshot {
     readonly tracks: TracksSnapshot;
 }
 
-export const createProjectFile = (name: string, author: string, desc: string, tempo: number): ProjectFile => {
+export const createProjectFile = (name: string, author: string, desc: string, tempo: number): ProjectFileData => {
     const now = Date.now();
     return {
         name,
@@ -42,7 +42,7 @@ export const createProjectFile = (name: string, author: string, desc: string, te
     };
 };
 
-export const parseProjectFile = (data: any): ProjectFile => {
+export const parseProjectFile = (data: any): ProjectFileData => {
     return {
         name: `${data.name}`,
         author: `${data.author}`,
@@ -55,7 +55,7 @@ export const parseProjectFile = (data: any): ProjectFile => {
     };
 };
 
-export const serializeProjectFile = (file: ProjectFile): ProjectSnapshot => ({
+export const serializeProjectFile = (file: ProjectFileData): ProjectSnapshot => ({
     ...file,
     master: serializeMasterData(file.master),
     tracks: serializeTracks(file.tracks)

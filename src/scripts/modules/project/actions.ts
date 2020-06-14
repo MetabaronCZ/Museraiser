@@ -11,8 +11,8 @@ import { closeOverlay, openOverlay } from 'modules/overlay';
 import { ProjectDataState, Project } from 'modules/project';
 import { readSample, FilterType } from 'modules/project/sample';
 import { getDirame, setAuthor, getFilename } from 'modules/app/actions';
-import { ProjectFile, parseProjectFile, serializeProjectFile} from 'modules/project/file';
 import { setRecentFilesDirectory, addRecentProject } from 'modules/recent-projects/actions';
+import { ProjectFileData, parseProjectFile, serializeProjectFile} from 'modules/project/file';
 
 const checkProjectSaved = (project: ProjectDataState, cb: () => void): void => {
     if (!project || project.saved) {
@@ -26,7 +26,7 @@ const checkProjectSaved = (project: ProjectDataState, cb: () => void): void => {
     });
 };
 
-export const setProject = (data: ProjectFile, path: string | null): AppThunk => (dispatch, getState) => {
+export const setProject = (data: ProjectFileData, path: string | null): AppThunk => (dispatch, getState) => {
     const { undo, redo } = getState().app;
     dispatch(Project.actions.set({ file: data, path, undo, redo }));
     dispatch(closeOverlay());
@@ -64,7 +64,7 @@ export const openProject = (path: string): AppThunk => dispatch => {
     }
 };
 
-const save = (dispatch: AppDispatch, file: ProjectFile, path: string): void => {
+const save = (dispatch: AppDispatch, file: ProjectFileData, path: string): void => {
     const data = serializeProjectFile(file);
 
     try {

@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { TXT } from 'data/texts';
 
-import { ProjectFile } from 'modules/project/file';
 import { AppDispatch, AppState } from 'modules/store';
+import { ProjectFileData } from 'modules/project/file';
 import {
     setProjectName, setProjectTempo, setProjectAuthor, setProjectDescription
 } from 'modules/project/actions';
@@ -15,7 +15,7 @@ import { ProjectFormUI } from 'ui/components/ProjectForm';
 export const ProjectEditUI: React.SFC = () => {
     const dispatch = useDispatch<AppDispatch>();
 
-    const project = useSelector<AppState, ProjectFile | null>(state => {
+    const project = useSelector<AppState, ProjectFileData | null>(state => {
         return state.project ? state.project.file : null;
     });
 

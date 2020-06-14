@@ -1,15 +1,15 @@
 import { limitNumber } from 'core/number';
 import { MASTER } from 'data/config';
 
-import { Reverb, ReverbID } from 'modules/project/reverb';
+import { ReverbData, ReverbID } from 'modules/project/reverb';
 
 const { DEPTH } = MASTER.REVERB;
 
-export const ReverbActions = {
-    setType: (reverb: Reverb, type: ReverbID): void => {
+export const Reverb = {
+    setType: (reverb: ReverbData, type: ReverbID): void => {
         reverb.type = type;
     },
-    setDepth: (reverb: Reverb, depth: number): void => {
+    setDepth: (reverb: ReverbData, depth: number): void => {
         depth = limitNumber(depth, DEPTH.MIN, DEPTH.MAX);
         reverb.depth = depth;
     }

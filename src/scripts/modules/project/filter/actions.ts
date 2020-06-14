@@ -5,7 +5,7 @@ import { FilterData } from 'modules/project/filter';
 
 const { FILTER } = SAMPLE;
 
-export const FilterActions = {
+export const Filter = {
     setCutoff: (filter: FilterData, cutoff: number): void => {
         cutoff = limitNumber(cutoff, FILTER.CUTOFF.MIN, FILTER.CUTOFF.MAX);
         filter.cutoff = cutoff;

@@ -2,11 +2,11 @@ import React from 'react';
 import cn from 'classnames';
 
 import { Bar } from 'modules/project/sequencer';
-import { Tracks } from 'modules/project/tracks';
+import { TracksData } from 'modules/project/tracks';
 import { TrackID } from 'modules/project/tracks/track';
 
 interface Props {
-    readonly tracks: Tracks;
+    readonly tracks: TracksData;
     readonly bars: Bar[];
     readonly selected: TrackID | null;
 }
