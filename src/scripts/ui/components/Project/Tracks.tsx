@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { TXT } from 'data/texts';
 import { SEQUENCER } from 'data/config';
 
+import { Tracks } from 'modules/project/tracks';
+import { TrackID } from 'modules/project/tracks/track';
 import { createBars } from 'modules/project/sequencer';
-import { Tracks, TrackID } from 'modules/project/track';
 
 import { PagingUI } from 'ui/common/Paging';
 import { SequencerUI } from 'ui/components/Project/Sequencer';

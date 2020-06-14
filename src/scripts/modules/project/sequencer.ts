@@ -1,5 +1,5 @@
 import { SEQUENCER } from 'data/config';
-import { Tracks } from 'modules/project/track';
+import { Tracks } from 'modules/project/tracks';
 
 const { BAR } = SEQUENCER;
 

@@ -2,7 +2,8 @@ import React from 'react';
 import cn from 'classnames';
 
 import { Bar } from 'modules/project/sequencer';
-import { Tracks, TrackID } from 'modules/project/track';
+import { Tracks } from 'modules/project/tracks';
+import { TrackID } from 'modules/project/tracks/track';
 
 interface Props {
     readonly tracks: Tracks;

@@ -1,15 +1,10 @@
-import { limitNumber } from 'core/number';
-import { PROJECT } from 'data/config';
-
 import {
     Tracks, TracksSnapshot, createTracks, parseTracks, serializeTracks
-} from 'modules/project/track';
+} from 'modules/project/tracks';
 
 import {
     MasterData, MasterSnapshot, createMasterData, parseMasterData, serializeMasterData
 } from 'modules/project/master';
-
-const { NAME, AUTHOR, DESCRIPTION, TEMPO } = PROJECT;
 
 export interface ProjectFile {
     readonly created: number;
@@ -47,7 +42,7 @@ export const createProjectFile = (name: string, author: string, desc: string, te
     };
 };
 
-export const parseProject = (data: any): ProjectFile => {
+export const parseProjectFile = (data: any): ProjectFile => {
     return {
         name: `${data.name}`,
         author: `${data.author}`,
@@ -60,28 +55,8 @@ export const parseProject = (data: any): ProjectFile => {
     };
 };
 
-export const serializeProject = (file: ProjectFile): ProjectSnapshot => ({
+export const serializeProjectFile = (file: ProjectFile): ProjectSnapshot => ({
     ...file,
     master: serializeMasterData(file.master),
     tracks: serializeTracks(file.tracks)
 });
-
-export const editProjectName = (file: ProjectFile, name: string): void => {
-    name = name.substring(0, NAME.MAX);
-    file.name = name;
-};
-
-export const editProjectAuthor = (file: ProjectFile, author: string): void => {
-    author = author.substring(0, AUTHOR.MAX);
-    file.author = author;
-};
-
-export const editProjectDescription = (file: ProjectFile, desc: string): void => {
-    desc = desc.substring(0, DESCRIPTION.MAX);
-    file.description = desc;
-};
-
-export const setTempo = (file: ProjectFile, tempo: number): void => {
-    tempo = limitNumber(tempo, TEMPO.MIN, TEMPO.MIN);
-    file.tempo = tempo;
-};

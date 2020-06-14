@@ -1,10 +1,11 @@
 import { toArrayBuffer } from 'core/buffer';
 import { PROJECT } from 'data/config';
 
+import { MasterData } from 'modules/project/master';
 import { SampleData } from 'modules/project/sample';
-import { createFilterNode } from 'modules/project/filter';
-import { createMasterNode, MasterData } from 'modules/project/master';
-import { createGainNode } from 'modules/project/volume';
+import { createGainNode } from 'modules/project/nodes/volume';
+import { createFilterNode } from 'modules/project/nodes/filter';
+import { createMasterNode } from 'modules/project/nodes/master';
 
 const { SAMPLE } = PROJECT;
 

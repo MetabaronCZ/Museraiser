@@ -5,7 +5,8 @@ import { useDispatch } from 'react-redux';
 import { TXT } from 'data/texts';
 
 import { AppDispatch } from 'modules/store';
-import { TrackID, Tracks } from 'modules/project/track';
+import { Tracks } from 'modules/project/tracks';
+import { TrackID } from 'modules/project/tracks/track';
 import { soloProjectTrack, muteProjectTrack } from 'modules/project/actions';
 
 import { TrackButton } from 'ui/components/Project/TrackButton';

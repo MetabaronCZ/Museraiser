@@ -2,8 +2,8 @@ import React from 'react';
 
 import { TXT } from 'data/texts';
 
-import { TrackData } from 'modules/project/track';
 import { Paragraph } from 'ui/common/Paragraph';
+import { TrackData } from 'modules/project/tracks/track';
 
 interface Props {
     readonly track: TrackData | null;

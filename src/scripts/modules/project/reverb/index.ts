@@ -1,4 +1,3 @@
-import { limitNumber } from 'core/number';
 import { MASTER } from 'data/config';
 
 const { TYPE, DEPTH } = MASTER.REVERB;
@@ -29,12 +28,3 @@ export const parseReverb = (data: any): Reverb => ({
 export const serializeReverb = (reverb: Reverb): ReverbSnapshot => ({
     ...reverb
 });
-
-export const setReverbType = (reverb: Reverb, type: ReverbID): void => {
-    reverb.type = type;
-};
-
-export const setReverbDepth = (reverb: Reverb, depth: number): void => {
-    depth = limitNumber(depth, DEPTH.MIN, DEPTH.MAX);
-    reverb.depth = depth;
-};

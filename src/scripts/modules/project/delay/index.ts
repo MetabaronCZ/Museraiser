@@ -1,5 +1,4 @@
 import { MASTER } from 'data/config';
-import { limitNumber } from 'core/number';
 
 const { AMOUNT, RATE } = MASTER.DELAY;
 
@@ -26,13 +25,3 @@ export const parseDelay = (data: any): Delay => ({
 export const serializeDelay = (delay: Delay): DelaySnapshot => ({
     ...delay
 });
-
-export const setDelayAmount = (delay: Delay, amount: number): void => {
-    amount = limitNumber(amount, AMOUNT.MIN, AMOUNT.MAX);
-    delay.amount = amount;
-};
-
-export const setDelayRate = (delay: Delay, rate: number): void => {
-    rate = limitNumber(rate, RATE.MIN, RATE.MAX);
-    delay.rate = rate;
-};

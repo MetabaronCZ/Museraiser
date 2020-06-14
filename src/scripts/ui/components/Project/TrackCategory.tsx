@@ -7,7 +7,7 @@ import { TRACK } from 'data/config';
 import { Dialog } from 'modules/dialog';
 import { clickOnly } from 'modules/events';
 import { AppDispatch } from 'modules/store';
-import { TrackID, getDefaultTrackName } from 'modules/project/track';
+import { TrackID, getDefaultTrackName } from 'modules/project/tracks/track';
 import {
     setTrackName, selectTrack, deleteTrack, removeTrackPatterns
 } from 'modules/project/actions';

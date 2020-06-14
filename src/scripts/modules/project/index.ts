@@ -1,25 +1,21 @@
 import produce from 'immer';
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
-import { editMasterVolume } from 'modules/project/master';
-import { setDelayAmount, setDelayRate } from 'modules/project/delay';
-import { ReverbID, setReverbType, setReverbDepth } from 'modules/project/reverb';
+import { ReverbID } from 'modules/project/reverb';
+import { ProjectFile } from 'modules/project/file';
+import { MasterData } from 'modules/project/master';
+import { FilterType, SampleData } from 'modules/project/sample';
+import { TrackID, TrackData } from 'modules/project/tracks/track';
 
-import {
-    FilterType,
-    setSampleLoop, setSampleFilterCutoff, setSampleFilterResonance, setSampleVolume
-} from 'modules/project/sample';
+import { TrackActions } from 'modules/project/tracks/actions';
+import { SampleActions } from 'modules/project/sample/actions';
+import { MasterActions } from 'modules/project/master/actions';
+import { ProjectFileActions } from 'modules/project/file/actions';
 
-import {
-    TrackID, muteTrack, soloTrack, removePatterns, resetTrack,
-    editTrackName, editTrackVolume, editTrackPan, editTrackDelay, editTrackReverb,
-    setTrackSample
-} from 'modules/project/track';
-
-import {
-    ProjectFile,
-    setTempo, editProjectName, editProjectAuthor, editProjectDescription
-} from 'modules/project/file';
+type OnProjectEdit = (file: ProjectFile) => void;
+type OnTrackEdit = (track: TrackData) => void;
+type OnSampleEdit = (sample: SampleData) => void;
+type OnMasterEdit = (master: MasterData) => void;
 
 export interface ProjectData {
     readonly file: ProjectFile; // actual project file
@@ -51,23 +47,20 @@ interface ProjectSettings {
     readonly redo: number;
 }
 
-interface TrackValue<T> {
+type TrackAction<T> = PayloadAction<{
     readonly track: TrackID;
     readonly value: T;
-}
+}>;
 
-interface SampleValue {
-    readonly track: TrackID;
-    readonly value: {
-        readonly name: string;
-        readonly buffer: string; // base64 encoded sample buffer
-    };
-}
+type SampleAction = TrackAction<{
+    readonly name: string;
+    readonly buffer: string; // base64 encoded sample buffer
+}>;
 
-interface SampleFilter {
+type FilterAction = TrackAction<{
     readonly filter: FilterType;
     readonly attr: number; // filter attribute
-}
+}>;
 
 type ProjectReducers = {
     readonly set: CaseReducer<ProjectDataState, PayloadAction<ProjectSettings | null>>;
@@ -79,18 +72,18 @@ type ProjectReducers = {
     readonly setAuthor: CaseReducer<ProjectDataState, PayloadAction<string>>;
     readonly setDescription: CaseReducer<ProjectDataState, PayloadAction<string>>;
     readonly selectTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
-    readonly setTrackName: CaseReducer<ProjectDataState, PayloadAction<TrackValue<string>>>;
+    readonly setTrackName: CaseReducer<ProjectDataState, TrackAction<string>>;
     readonly soloTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
     readonly muteTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
-    readonly setTrackPan: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
-    readonly setTrackDelay: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
-    readonly setTrackReverb: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
-    readonly setTrackVolume: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
-    readonly setTrackSample: CaseReducer<ProjectDataState, PayloadAction<SampleValue>>;
-    readonly setTrackSampleVolume: CaseReducer<ProjectDataState, PayloadAction<TrackValue<number>>>;
-    readonly setTrackSampleLoop: CaseReducer<ProjectDataState, PayloadAction<TrackValue<boolean>>>;
-    readonly setTrackSampleFilterCutoff: CaseReducer<ProjectDataState, PayloadAction<TrackValue<SampleFilter>>>;
-    readonly setTrackSampleFilterResonance: CaseReducer<ProjectDataState, PayloadAction<TrackValue<SampleFilter>>>;
+    readonly setTrackPan: CaseReducer<ProjectDataState, TrackAction<number>>;
+    readonly setTrackDelay: CaseReducer<ProjectDataState, TrackAction<number>>;
+    readonly setTrackReverb: CaseReducer<ProjectDataState, TrackAction<number>>;
+    readonly setTrackVolume: CaseReducer<ProjectDataState, TrackAction<number>>;
+    readonly setTrackSample: CaseReducer<ProjectDataState, SampleAction>;
+    readonly setTrackSampleVolume: CaseReducer<ProjectDataState, TrackAction<number>>;
+    readonly setTrackSampleLoop: CaseReducer<ProjectDataState, TrackAction<boolean>>;
+    readonly setTrackSampleFilterCutoff: CaseReducer<ProjectDataState, FilterAction>;
+    readonly setTrackSampleFilterResonance: CaseReducer<ProjectDataState, FilterAction>;
     readonly removeTrackPatterns: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
     readonly deleteTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
     readonly setMasterVolume: CaseReducer<ProjectDataState, PayloadAction<number>>;
@@ -115,6 +108,26 @@ const edit = (state: ProjectDataState, draft: ProjectDataState): ProjectDataStat
         draft.undo = draft.undo.slice(0, draft.maxUndo);
     }
     return draft;
+};
+
+const editProject = (state: ProjectDataState, draft: ProjectDataState, cb: OnProjectEdit): ProjectDataState => {
+    if (!draft) {
+        return draft;
+    }
+    cb(draft.file);
+    return edit(state, draft);
+};
+
+const editTrack = (state: ProjectDataState, draft: ProjectDataState, id: TrackID, cb: OnTrackEdit): ProjectDataState => {
+    return editProject(state, draft, file => cb(file.tracks[id]));
+};
+
+const editSample = (state: ProjectDataState, draft: ProjectDataState, id: TrackID, cb: OnSampleEdit): ProjectDataState => {
+    return editTrack(state, draft, id, ({ sample }) => sample ? cb(sample) : null);
+};
+
+const editMaster = (state: ProjectDataState, draft: ProjectDataState, cb: OnMasterEdit): ProjectDataState => {
+    return editProject(state, draft, file => cb(file.master));
 };
 
 export const Project = createSlice<ProjectDataState, ProjectReducers>({
@@ -169,28 +182,20 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
             return draft;
         }),
         setName: (state, action) => produce(state, draft => {
-            if (draft) {
-                editProjectName(draft.file, action.payload);
-            }
-            return edit(state, draft);
+            const name = action.payload;
+            return editProject(state, draft, file => ProjectFileActions.setName(file, name));
         }),
         setTempo: (state, action) => produce(state, draft => {
-            if (draft) {
-                setTempo(draft.file, action.payload);
-            }
-            return edit(state, draft);
+            const tempo = action.payload;
+            return editProject(state, draft, file => ProjectFileActions.setTempo(file, tempo));
         }),
         setAuthor: (state, action) => produce(state, draft => {
-            if (draft) {
-                editProjectAuthor(draft.file, action.payload);
-            }
-            return edit(state, draft);
+            const author = action.payload;
+            return editProject(state, draft, file => ProjectFileActions.setAuthor(file, author));
         }),
         setDescription: (state, action) => produce(state, draft => {
-            if (draft) {
-                editProjectDescription(draft.file, action.payload);
-            }
-            return edit(state, draft);
+            const desc = action.payload;
+            return editProject(state, draft, file => ProjectFileActions.setDescription(file, desc));
         }),
         selectTrack: (state, action) => produce(state, draft => {
             if (draft) {
@@ -199,144 +204,80 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
             return draft;
         }),
         soloTrack: (state, action) => produce(state, draft => {
-            if (draft) {
-                soloTrack(draft.file.tracks, action.payload);
-            }
-            return edit(state, draft);
+            const id = action.payload;
+            return editProject(state, draft, file => TrackActions.solo(file.tracks, id));
         }),
         muteTrack: (state, action) => produce(state, draft => {
-            if (draft) {
-                muteTrack(draft.file.tracks, action.payload);
-            }
-            return edit(state, draft);
+            const id = action.payload;
+            return editProject(state, draft, file => TrackActions.mute(file.tracks, id));
         }),
         setTrackName: (state, action) => produce(state, draft => {
-            if (draft) {
-                const { track, value } = action.payload;
-                editTrackName(draft.file.tracks, track, value);
-            }
-            return edit(state, draft);
+            const { track: id, value: name } = action.payload;
+            return editTrack(state, draft, id, track => TrackActions.setName(track, name));
         }),
         setTrackPan: (state, action) => produce(state, draft => {
-            if (draft) {
-                const { track, value } = action.payload;
-                editTrackPan(draft.file.tracks, track, value);
-            }
-            return edit(state, draft);
+            const { track: id, value: pan } = action.payload;
+            return editTrack(state, draft, id, track => TrackActions.setPan(track, pan));
         }),
         setTrackDelay: (state, action) => produce(state, draft => {
-            if (draft) {
-                const { track, value } = action.payload;
-                editTrackDelay(draft.file.tracks, track, value);
-            }
-            return edit(state, draft);
+            const { track: id, value: delay } = action.payload;
+            return editTrack(state, draft, id, track => TrackActions.setDelay(track, delay));
         }),
         setTrackReverb: (state, action) => produce(state, draft => {
-            if (draft) {
-                const { track, value } = action.payload;
-                editTrackReverb(draft.file.tracks, track, value);
-            }
-            return edit(state, draft);
+            const { track: id, value: reverb } = action.payload;
+            return editTrack(state, draft, id, track => TrackActions.setReverb(track, reverb));
         }),
         setTrackVolume: (state, action) => produce(state, draft => {
-            if (draft) {
-                const { track, value } = action.payload;
-                editTrackVolume(draft.file.tracks, track, value);
-            }
-            return edit(state, draft);
+            const { track: id, value: volume } = action.payload;
+            return editTrack(state, draft, id, track => TrackActions.setVolume(track, volume));
         }),
         setTrackSample: (state, action) => produce(state, draft => {
-            if (draft) {
-                const { track, value } = action.payload;
-                setTrackSample(draft.file.tracks, track, value.name, value.buffer);
-            }
-            return edit(state, draft);
+            const { track: id, value: { name, buffer } } = action.payload;
+            return editTrack(state, draft, id, track => TrackActions.setSample(track, name, buffer));
         }),
         setTrackSampleVolume: (state, action) => produce(state, draft => {
-            if (draft) {
-                const { track, value } = action.payload;
-                const { sample } = draft.file.tracks[track];
-
-                if (sample) {
-                    setSampleVolume(sample, value);
-                }
-            }
-            return edit(state, draft);
+            const { track: id, value: volume } = action.payload;
+            return editSample(state, draft, id, sample => SampleActions.setVolume(sample, volume));
         }),
         setTrackSampleLoop: (state, action) => produce(state, draft => {
-            if (draft) {
-                const { track, value } = action.payload;
-                const { sample } = draft.file.tracks[track];
-
-                if (sample) {
-                    setSampleLoop(sample, value);
-                }
-            }
-            return edit(state, draft);
+            const { track: id, value: loop } = action.payload;
+            return editSample(state, draft, id, sample => SampleActions.loop(sample, loop));
         }),
         setTrackSampleFilterCutoff: (state, action) => produce(state, draft => {
-            if (draft) {
-                const { track, value } = action.payload;
-                const { sample } = draft.file.tracks[track];
-
-                if (sample) {
-                    setSampleFilterCutoff(sample, value.filter, value.attr);
-                }
-            }
-            return edit(state, draft);
+            const { track: id, value: { filter, attr } } = action.payload;
+            return editSample(state, draft, id, sample => SampleActions.setFilterCutoff(sample, filter, attr));
         }),
         setTrackSampleFilterResonance: (state, action) => produce(state, draft => {
-            if (draft) {
-                const { track, value } = action.payload;
-                const { sample } = draft.file.tracks[track];
-
-                if (sample) {
-                    setSampleFilterResonance(sample, value.filter, value.attr);
-                }
-            }
-            return edit(state, draft);
+            const { track: id, value: { filter, attr } } = action.payload;
+            return editSample(state, draft, id, sample => SampleActions.setFilterResonance(sample, filter, attr));
         }),
         removeTrackPatterns: (state, action) => produce(state, draft => {
-            if (draft) {
-                removePatterns(draft.file.tracks, action.payload);
-            }
-            return edit(state, draft);
+            const id = action.payload;
+            return editTrack(state, draft, id, track => TrackActions.removePatterns(track));
         }),
         deleteTrack: (state, action) => produce(state, draft => {
-            if (draft) {
-                resetTrack(draft.file.tracks, action.payload);
-            }
-            return edit(state, draft);
+            const id = action.payload;
+            return editProject(state, draft, file => TrackActions.reset(file.tracks, id));
         }),
         setMasterVolume: (state, action) => produce(state, draft => {
-            if (draft) {
-                editMasterVolume(draft.file.master, action.payload);
-            }
-            return edit(state, draft);
+            const volume = action.payload;
+            return editMaster(state, draft, master => MasterActions.setVolume(master, volume));
         }),
         setMasterReverbType: (state, action) => produce(state, draft => {
-            if (draft) {
-                setReverbType(draft.file.master.reverb, action.payload);
-            }
-            return edit(state, draft);
+            const type = action.payload;
+            return editMaster(state, draft, master => MasterActions.setReverbType(master, type));
         }),
         setMasterReverbDepth: (state, action) => produce(state, draft => {
-            if (draft) {
-                setReverbDepth(draft.file.master.reverb, action.payload);
-            }
-            return edit(state, draft);
+            const depth = action.payload;
+            return editMaster(state, draft, master => MasterActions.setReverbDepth(master, depth));
         }),
         setMasterDelayAmount: (state, action) => produce(state, draft => {
-            if (draft) {
-                setDelayAmount(draft.file.master.delay, action.payload);
-            }
-            return edit(state, draft);
+            const amount = action.payload;
+            return editMaster(state, draft, master => MasterActions.setDelayAmount(master, amount));
         }),
         setMasterDelayRate: (state, action) => produce(state, draft => {
-            if (draft) {
-                setDelayRate(draft.file.master.delay, action.payload);
-            }
-            return edit(state, draft);
+            const rate = action.payload;
+            return editMaster(state, draft, master => MasterActions.setDelayRate(master, rate));
         })
     }
 });

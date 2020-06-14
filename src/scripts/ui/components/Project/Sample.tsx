@@ -7,8 +7,8 @@ import { SAMPLE } from 'data/config';
 import { Audio } from 'modules/audio';
 import { AppDispatch } from 'modules/store';
 import { drawWaveform } from 'modules/visual';
-import { TrackData } from 'modules/project/track';
 import { MasterData } from 'modules/project/master';
+import { TrackData } from 'modules/project/tracks/track';
 import {
     selectTrackSample, setTrackSampleLoop, setTrackSampleVolume,
     setTrackSampleFilterCutoff, setTrackSampleFilterResonance

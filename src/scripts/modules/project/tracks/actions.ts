@@ -1,0 +1,63 @@
+import { limitNumber } from 'core/number';
+
+import { TRACK } from 'data/config';
+
+import { Tracks } from 'modules/project/tracks';
+import { createSample } from 'modules/project/sample';
+import { TrackID, createTrack, TrackData } from 'modules/project/tracks/track';
+
+const { NAME, VOLUME, REVERB, DELAY, PAN } = TRACK;
+
+export const TrackActions = {
+    mute: (tracks: Tracks, id: TrackID): void => {
+        const track = tracks[id];
+        track.mute = !track.mute;
+        track.solo = false;
+    },
+    solo: (tracks: Tracks, id: TrackID): void => {
+        const track = tracks[id];
+        const solo = track.solo;
+
+        for (const track of Object.values(tracks)) {
+            track.solo = false;
+        }
+        track.solo = !solo;
+        track.mute = false;
+    },
+    setName: (track: TrackData, name: string): void => {
+        name = name.substring(0, NAME.MAX);
+        track.name = name;
+    },
+    setVolume: (track: TrackData, volume: number): void => {
+        volume = limitNumber(volume, VOLUME.MIN, VOLUME.MAX);
+        track.volume = volume;
+    },
+    setPan: (track: TrackData, pan: number): void => {
+        pan = limitNumber(pan, PAN.MIN, PAN.MAX);
+        track.pan = pan;
+    },
+    setReverb: (track: TrackData, reverb: number): void => {
+        reverb = limitNumber(reverb, REVERB.MIN, REVERB.MAX);
+        track.reverb = reverb;
+    },
+    setDelay: (track: TrackData, delay: number): void => {
+        delay = limitNumber(delay, DELAY.MIN, DELAY.MAX);
+        track.delay = delay;
+    },
+    setSample: (track: TrackData, name: string, buffer: string): void => {
+        const { sample } = track;
+
+        if (sample) {
+            sample.name = name;
+            sample.buffer = buffer;
+        } else {
+            track.sample = createSample(name, buffer);
+        }
+    },
+    removePatterns: (track: TrackData): void => {
+        track.sequences.length = 0;
+    },
+    reset: (tracks: Tracks, id: TrackID): void => {
+        tracks[id] = createTrack(id);
+    }
+};

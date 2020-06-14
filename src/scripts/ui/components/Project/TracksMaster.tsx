@@ -6,7 +6,8 @@ import { TRACK } from 'data/config';
 
 import { OnChange } from 'modules/events';
 import { AppDispatch } from 'modules/store';
-import { Tracks, TrackID } from 'modules/project/track';
+import { Tracks } from 'modules/project/tracks';
+import { TrackID } from 'modules/project/tracks/track';
 import {
     setTrackVolume, setTrackPan, setTrackDelay, setTrackReverb
 } from 'modules/project/actions';

@@ -1,18 +1,18 @@
 import { TXT } from 'data/texts';
 
+import { Audio } from 'modules/audio';
 import { Dialog } from 'modules/dialog';
 import { Logger } from 'modules/logger';
-import { TrackID } from 'modules/project/track';
 import { readFile, saveFile } from 'modules/file';
 import { ReverbID } from 'modules/project/reverb';
 import { AppThunk, AppDispatch } from 'modules/store';
+import { TrackID } from 'modules/project/tracks/track';
 import { closeOverlay, openOverlay } from 'modules/overlay';
 import { ProjectDataState, Project } from 'modules/project';
 import { readSample, FilterType } from 'modules/project/sample';
 import { getDirame, setAuthor, getFilename } from 'modules/app/actions';
-import { ProjectFile, parseProject, serializeProject} from 'modules/project/file';
+import { ProjectFile, parseProjectFile, serializeProjectFile} from 'modules/project/file';
 import { setRecentFilesDirectory, addRecentProject } from 'modules/recent-projects/actions';
-import { Audio } from 'modules/audio';
 
 const checkProjectSaved = (project: ProjectDataState, cb: () => void): void => {
     if (!project || project.saved) {
@@ -48,7 +48,7 @@ export const openProject = (path: string): AppThunk => dispatch => {
         const file = readFile(path);
         const data = JSON.parse(file);
 
-        const project = parseProject(data);
+        const project = parseProjectFile(data);
         dispatch(setProject(project, path));
 
         dispatch(addRecentProject(path));
@@ -65,7 +65,7 @@ export const openProject = (path: string): AppThunk => dispatch => {
 };
 
 const save = (dispatch: AppDispatch, file: ProjectFile, path: string): void => {
-    const data = serializeProject(file);
+    const data = serializeProjectFile(file);
 
     try {
         const save = JSON.stringify(data);
