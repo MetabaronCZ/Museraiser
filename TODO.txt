@@ -1,7 +1,6 @@
 BUGS
 -----------------------------------------------------------
---  u FormNumber pri umazani hodnoty dat default
-    - jinak je NaN chyba
+--  ...
 
 
 TODO

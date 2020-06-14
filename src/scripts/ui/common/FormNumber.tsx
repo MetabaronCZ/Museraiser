@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 
+import { limitNumber } from 'core/number';
 import { changeOnly, OnChange } from 'modules/events';
 
 interface Props {
@@ -14,31 +15,41 @@ interface Props {
     readonly onChange: OnChange<number>;
 }
 
-const wheel = () => (e: React.WheelEvent<HTMLInputElement>) => {
-    e.preventDefault();
-
-    const tgt = e.currentTarget;
-    const value = parseInt(tgt.value, 10);
-    const diff = (e.deltaY > 0 ? -1 : 1);
-    tgt.value = `${value + diff}`;
+const getInt = (value: string, defaultValue: number): number => {
+    const int = parseInt(value, 10);
+    return !isNaN(int) ? int : defaultValue;
 };
 
-export const FormNumber: React.SFC<Props> = ({ id, min, max, step = 1, mini = false, unit, value, onChange }) => (
-    <>
-        <input
-            id={id}
-            className={cn('FormInput', {
-                'FormInput--mini': mini
-            })}
-            type="number"
-            name={id}
-            value={value}
-            min={min}
-            max={max}
-            step={step}
-            onWheel={wheel}
-            onChange={changeOnly(val => onChange(parseInt(val, 10)))}
-        />
-        {unit ? `\u00A0${unit}` : ''}
-    </>
-);
+const validate = (min: number, max: number, onChange: OnChange<number>) => (e: React.SyntheticEvent<HTMLInputElement>) => {
+    let value = getInt(e.currentTarget.value, min);
+    value = limitNumber(value, min, max);
+    onChange(value);
+};
+
+export const FormNumber: React.SFC<Props> = ({ id, min = 0, max = 1, step = 1, mini = false, unit, value, onChange }) => {
+    const [val, setValue] = useState<number>(value);
+
+    // reset value when input props changes
+    useEffect(() => setValue(value), [value]);
+
+    return (
+        <>
+            <input
+                id={id}
+                className={cn('FormInput', {
+                    'FormInput--mini': mini
+                })}
+                type="number"
+                name={id}
+                value={val}
+                min={min}
+                max={max}
+                step={step}
+                onChange={changeOnly(v => setValue(getInt(v, value)))}
+                onWheel={validate(min, max, setValue)}
+                onBlur={validate(min, max, onChange)}
+            />
+            {unit ? `\u00A0${unit}` : ''}
+        </>
+    );
+};

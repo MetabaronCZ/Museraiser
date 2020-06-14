@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { changeOnly, OnChange } from 'modules/events';
 
 type OnBlur = () => void;
-type OnChange = (value: string) => void;
 
 interface Props {
     readonly id: string;
@@ -14,12 +14,7 @@ interface Props {
     readonly onChange: OnChange;
 }
 
-const change = (cb: OnChange) => (e: React.SyntheticEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget;
-    cb(value);
-};
-
-const validate = (min = 0, max = 100, defaultValue = '-', setValue: OnChange, cb: OnChange) => (e: React.SyntheticEvent<HTMLInputElement>) => {
+const validate = (min: number, max: number, defaultValue: string, setValue: OnChange, cb: OnChange) => (e: React.SyntheticEvent<HTMLInputElement>) => {
     let { value } = e.currentTarget;
 
     if (value.length < min) {
@@ -32,7 +27,7 @@ const validate = (min = 0, max = 100, defaultValue = '-', setValue: OnChange, cb
     cb(value);
 };
 
-export const FormInput: React.SFC<Props> = ({ id, value, min, max, defaultValue, autofocus = false, onChange, onBlur }) => {
+export const FormInput: React.SFC<Props> = ({ id, value, min = 0, max = 100, defaultValue = '-', autofocus = false, onChange, onBlur }) => {
     const [val, setValue] = useState<string>(value);
 
     // reset value when input props changes
@@ -55,7 +50,7 @@ export const FormInput: React.SFC<Props> = ({ id, value, min, max, defaultValue,
             minLength={min}
             maxLength={max}
             autoFocus={autofocus}
-            onChange={change(setValue)}
+            onChange={changeOnly(setValue)}
             onBlur={validate(min, max, defaultValue, setValue, blur)}
         />
     );
