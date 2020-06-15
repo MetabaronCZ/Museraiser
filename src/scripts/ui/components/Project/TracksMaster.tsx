@@ -21,12 +21,13 @@ interface Props {
     readonly selected: TrackID | null;
 }
 
-const getInput = (id: string, value: number, min: number, max: number, onChange: OnChange<number>): React.ReactNode => (
+const getInput = (id: string, value: number, min: number, max: number, def: number, onChange: OnChange<number>): React.ReactNode => (
     <FormSlider
         id={id}
-        value={value}
         min={min}
         max={max}
+        value={value}
+        defaultValue={def}
         unit="%"
         onChange={onChange}
     />
@@ -46,25 +47,25 @@ export const TracksMasterUI: React.SFC<Props> = ({ tracks, selected }) => {
                         key={id}
                     >
                         <div className="TracksMaster-item-column">
-                            {getInput('VOLUME', volume.gain, VOLUME.MIN, VOLUME.MAX, value => {
+                            {getInput('VOLUME', volume.gain, VOLUME.MIN, VOLUME.MAX, VOLUME.DEFAULT, value => {
                                 dispatch(setTrackVolume(id, value));
                             })}
                         </div>
 
                         <div className="TracksMaster-item-column">
-                            {getInput('PAN', pan, PAN.MIN, PAN.MAX, value => {
+                            {getInput('PAN', pan, PAN.MIN, PAN.MAX, PAN.DEFAULT, value => {
                                 dispatch(setTrackPan(id, value));
                             })}
                         </div>
 
                         <div className="TracksMaster-item-column">
-                            {getInput('DELAY', delay, DELAY.MIN, DELAY.MAX, value => {
+                            {getInput('DELAY', delay, DELAY.MIN, DELAY.MAX, DELAY.DEFAULT, value => {
                                 dispatch(setTrackDelay(id, value));
                             })}
                         </div>
 
                         <div className="TracksMaster-item-column">
-                            {getInput('REVERB', reverb, REVERB.MIN, REVERB.MAX, value => {
+                            {getInput('REVERB', reverb, REVERB.MIN, REVERB.MAX, REVERB.DEFAULT, value => {
                                 dispatch(setTrackReverb(id, value));
                             })}
                         </div>

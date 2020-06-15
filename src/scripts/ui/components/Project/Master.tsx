@@ -40,6 +40,7 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
                     value={volume.gain}
                     min={VOLUME.MIN}
                     max={VOLUME.MAX}
+                    defaultValue={VOLUME.DEFAULT}
                     unit="%"
                     onChange={value => dispatch(setMasterVolume(value))}
                 />
@@ -51,6 +52,7 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
                     value={delay.amount}
                     min={DELAY.AMOUNT.MIN}
                     max={DELAY.AMOUNT.MAX}
+                    defaultValue={DELAY.AMOUNT.DEFAULT}
                     unit="%"
                     onChange={value => dispatch(setMasterDelayAmount(value))}
                 />
@@ -62,6 +64,7 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
                     value={delay.rate}
                     min={DELAY.RATE.MIN}
                     max={DELAY.RATE.MAX}
+                    defaultValue={DELAY.RATE.DEFAULT}
                     unit="x"
                     onChange={value => dispatch(setMasterDelayRate(value))}
                 />
@@ -82,6 +85,7 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
                     value={reverb.depth}
                     min={REVERB.DEPTH.MIN}
                     max={REVERB.DEPTH.MAX}
+                    defaultValue={REVERB.DEPTH.DEFAULT}
                     unit="%"
                     onChange={value => dispatch(setMasterReverbDepth(value))}
                 />

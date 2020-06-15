@@ -99,6 +99,7 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 min={VOLUME.MIN}
                                 max={VOLUME.MAX}
                                 value={sample.volume.gain}
+                                defaultValue={VOLUME.DEFAULT}
                                 unit="%"
                                 onChange={value => dispatch(setTrackSampleVolume(id, value))}
                             />
@@ -120,6 +121,7 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 min={FILTER.CUTOFF.MIN}
                                 max={FILTER.CUTOFF.MAX}
                                 value={sample.filter1.cutoff}
+                                defaultValue={FILTER.CUTOFF.DEFAULT}
                                 unit="%"
                                 onChange={value => dispatch(setTrackSampleFilterCutoff(id, 'FILTER1', value))}
                             />
@@ -131,6 +133,7 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 min={FILTER.RESONANCE.MIN}
                                 max={FILTER.RESONANCE.MAX}
                                 value={sample.filter1.resonance}
+                                defaultValue={FILTER.RESONANCE.DEFAULT}
                                 unit="%"
                                 onChange={value => dispatch(setTrackSampleFilterResonance(id, 'FILTER1', value))}
                             />
@@ -144,6 +147,7 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 min={FILTER.CUTOFF.MIN}
                                 max={FILTER.CUTOFF.MAX}
                                 value={sample.filter2.cutoff}
+                                defaultValue={FILTER.CUTOFF.DEFAULT}
                                 unit="%"
                                 onChange={value => dispatch(setTrackSampleFilterCutoff(id, 'FILTER2', value))}
                             />
@@ -155,6 +159,7 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 min={FILTER.RESONANCE.MIN}
                                 max={FILTER.RESONANCE.MAX}
                                 value={sample.filter2.resonance}
+                                defaultValue={FILTER.RESONANCE.DEFAULT}
                                 unit="%"
                                 onChange={value => dispatch(setTrackSampleFilterResonance(id, 'FILTER2', value))}
                             />
