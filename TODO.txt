@@ -5,6 +5,7 @@ BUGS
 
 TODO
 -----------------------------------------------------------
+--  nastylovat FormCheckbox
 --  pridat Panic button
     - vypnout AudioContext pri uzavreni projektu
 --  kazdy Pattern bude mit time signature

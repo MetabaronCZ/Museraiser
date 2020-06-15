@@ -20,8 +20,8 @@ import { Heading } from 'ui/common/Heading';
 import { GridRow } from 'ui/common/Grid/Row';
 import { Paragraph } from 'ui/common/Paragraph';
 import { FormField } from 'ui/common/FormField';
+import { FormSlider } from 'ui/common/FormSlider';
 import { ButtonList } from 'ui/common/ButtonList';
-import { FormNumber } from 'ui/common/FormNumber';
 import { GridColumn } from 'ui/common/Grid/Column';
 import { FormCheckbox } from 'ui/common/FormCheckbox';
 
@@ -94,13 +94,12 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                         </Grid>
 
                         <FormField id="sample-volume" label={TXT.sample.volume}>
-                            <FormNumber
+                            <FormSlider
                                 id="sample-volume"
                                 min={VOLUME.MIN}
                                 max={VOLUME.MAX}
                                 value={sample.volume.gain}
                                 unit="%"
-                                mini
                                 onChange={value => dispatch(setTrackSampleVolume(id, value))}
                             />
                         </FormField>
@@ -116,25 +115,23 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                         <Heading size="small" text={TXT.sample.filter.title1} />
 
                         <FormField id="filter-1-cutoff" label={TXT.sample.filter.cutoff}>
-                            <FormNumber
+                            <FormSlider
                                 id="filter-1-cutoff"
                                 min={FILTER.CUTOFF.MIN}
                                 max={FILTER.CUTOFF.MAX}
                                 value={sample.filter1.cutoff}
                                 unit="%"
-                                mini
                                 onChange={value => dispatch(setTrackSampleFilterCutoff(id, 'FILTER1', value))}
                             />
                         </FormField>
 
                         <FormField id="filter-1-resonance" label={TXT.sample.filter.resonance}>
-                            <FormNumber
+                            <FormSlider
                                 id="filter-1-resonancef"
                                 min={FILTER.RESONANCE.MIN}
                                 max={FILTER.RESONANCE.MAX}
                                 value={sample.filter1.resonance}
                                 unit="%"
-                                mini
                                 onChange={value => dispatch(setTrackSampleFilterResonance(id, 'FILTER1', value))}
                             />
                         </FormField>
@@ -142,25 +139,23 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                         <Heading size="small" text={TXT.sample.filter.title2} />
 
                         <FormField id="filter-2-cutoff" label={TXT.sample.filter.cutoff}>
-                            <FormNumber
+                            <FormSlider
                                 id="filter-2-cutoff"
                                 min={FILTER.CUTOFF.MIN}
                                 max={FILTER.CUTOFF.MAX}
                                 value={sample.filter2.cutoff}
                                 unit="%"
-                                mini
                                 onChange={value => dispatch(setTrackSampleFilterCutoff(id, 'FILTER2', value))}
                             />
                         </FormField>
 
                         <FormField id="filter-2-resonance" label={TXT.sample.filter.resonance}>
-                            <FormNumber
+                            <FormSlider
                                 id="filter-2-resonancef"
                                 min={FILTER.RESONANCE.MIN}
                                 max={FILTER.RESONANCE.MAX}
                                 value={sample.filter2.resonance}
                                 unit="%"
-                                mini
                                 onChange={value => dispatch(setTrackSampleFilterResonance(id, 'FILTER2', value))}
                             />
                         </FormField>

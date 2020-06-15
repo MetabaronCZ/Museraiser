@@ -1,0 +1,29 @@
+.FormSlider {
+    display: block;
+    width: 100%;
+    padding: ($vu/2) 0;
+    outline: none;
+    appearance: none;
+    background: transparent;
+
+    &::-webkit-slider-thumb {
+        position: relative;
+        top: -1px;
+        display: block;
+        width: $vu;
+        height: $vu;
+        appearance: none;
+        border-radius: 100%;
+        background: $color-darkest;
+        cursor: pointer;
+    }
+
+    &::-webkit-slider-runnable-track {
+        @extend %form-field;
+        display: block;
+        height: $vu;
+        width: 100%;
+        padding: 0;
+        border-radius: 4px;
+    }
+}

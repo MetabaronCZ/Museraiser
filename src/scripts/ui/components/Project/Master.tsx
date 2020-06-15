@@ -15,7 +15,7 @@ import {
 
 import { FormField } from 'ui/common/FormField';
 import { FormSelect } from 'ui/common/FormSelect';
-import { FormNumber } from 'ui/common/FormNumber';
+import { FormSlider } from 'ui/common/FormSlider';
 import { createSelectOptions } from 'ui/common/FormSelect/options';
 
 const { VOLUME, DELAY, REVERB } = MASTER;
@@ -35,37 +35,34 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
     return (
         <>
             <FormField id="volume" label={TXT.master.volume}>
-                <FormNumber
+                <FormSlider
                     id="master-volume"
                     value={volume.gain}
                     min={VOLUME.MIN}
                     max={VOLUME.MAX}
                     unit="%"
-                    mini
                     onChange={value => dispatch(setMasterVolume(value))}
                 />
             </FormField>
 
             <FormField id="delay-amount" label={TXT.master.delay.amount}>
-                <FormNumber
+                <FormSlider
                     id="delay-amount"
                     value={delay.amount}
                     min={DELAY.AMOUNT.MIN}
                     max={DELAY.AMOUNT.MAX}
                     unit="%"
-                    mini
                     onChange={value => dispatch(setMasterDelayAmount(value))}
                 />
             </FormField>
 
             <FormField id="delay-rate" label={TXT.master.delay.rate}>
-                <FormNumber
+                <FormSlider
                     id="delay-rate"
                     value={delay.rate}
                     min={DELAY.RATE.MIN}
                     max={DELAY.RATE.MAX}
                     unit="x"
-                    mini
                     onChange={value => dispatch(setMasterDelayRate(value))}
                 />
             </FormField>
@@ -80,13 +77,12 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
             </FormField>
 
             <FormField id="reverb-depth" label={TXT.master.reverb.depth}>
-                <FormNumber
+                <FormSlider
                     id="reverb-depth"
                     value={reverb.depth}
                     min={REVERB.DEPTH.MIN}
                     max={REVERB.DEPTH.MAX}
                     unit="%"
-                    mini
                     onChange={value => dispatch(setMasterReverbDepth(value))}
                 />
             </FormField>

@@ -12,7 +12,7 @@ import {
     setTrackVolume, setTrackPan, setTrackDelay, setTrackReverb
 } from 'modules/project/actions';
 
-import { FormNumber } from 'ui/common/FormNumber';
+import { FormSlider } from 'ui/common/FormSlider';
 
 const { VOLUME, PAN, DELAY, REVERB } = TRACK;
 
@@ -22,13 +22,12 @@ interface Props {
 }
 
 const getInput = (id: string, value: number, min: number, max: number, onChange: OnChange<number>): React.ReactNode => (
-    <FormNumber
+    <FormSlider
         id={id}
         value={value}
         min={min}
         max={max}
         unit="%"
-        mini
         onChange={onChange}
     />
 );
