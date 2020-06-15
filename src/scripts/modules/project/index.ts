@@ -39,6 +39,7 @@ const createProjectData = (data: ProjectSettings): ProjectData => ({
 });
 
 export type ProjectDataState = ProjectData | null;
+type ProjectReducer<T = void> = CaseReducer<ProjectDataState, PayloadAction<T>>;
 
 interface ProjectSettings {
     readonly file: ProjectFileData;
@@ -47,50 +48,50 @@ interface ProjectSettings {
     readonly redo: number;
 }
 
-type TrackAction<T> = PayloadAction<{
+type TrackActionPayload<T> = {
     readonly track: TrackID;
     readonly value: T;
-}>;
+};
 
-type SampleAction = TrackAction<{
+type SampleActionPayload = TrackActionPayload<{
     readonly name: string;
     readonly buffer: string; // base64 encoded sample buffer
 }>;
 
-type FilterAction = TrackAction<{
+type FilterActionPayload = TrackActionPayload<{
     readonly filter: FilterType;
     readonly attr: number; // filter attribute
 }>;
 
 type ProjectReducers = {
-    readonly set: CaseReducer<ProjectDataState, PayloadAction<ProjectSettings | null>>;
-    readonly save: CaseReducer<ProjectDataState, PayloadAction<string>>;
-    readonly undo: CaseReducer<ProjectDataState, PayloadAction>;
-    readonly redo: CaseReducer<ProjectDataState, PayloadAction>;
-    readonly setName: CaseReducer<ProjectDataState, PayloadAction<string>>;
-    readonly setTempo: CaseReducer<ProjectDataState, PayloadAction<number>>;
-    readonly setAuthor: CaseReducer<ProjectDataState, PayloadAction<string>>;
-    readonly setDescription: CaseReducer<ProjectDataState, PayloadAction<string>>;
-    readonly selectTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
-    readonly setTrackName: CaseReducer<ProjectDataState, TrackAction<string>>;
-    readonly soloTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
-    readonly muteTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
-    readonly setTrackPan: CaseReducer<ProjectDataState, TrackAction<number>>;
-    readonly setTrackDelay: CaseReducer<ProjectDataState, TrackAction<number>>;
-    readonly setTrackReverb: CaseReducer<ProjectDataState, TrackAction<number>>;
-    readonly setTrackVolume: CaseReducer<ProjectDataState, TrackAction<number>>;
-    readonly setTrackSample: CaseReducer<ProjectDataState, SampleAction>;
-    readonly setTrackSampleVolume: CaseReducer<ProjectDataState, TrackAction<number>>;
-    readonly setTrackSampleLoop: CaseReducer<ProjectDataState, TrackAction<boolean>>;
-    readonly setTrackSampleFilterCutoff: CaseReducer<ProjectDataState, FilterAction>;
-    readonly setTrackSampleFilterResonance: CaseReducer<ProjectDataState, FilterAction>;
-    readonly removeTrackPatterns: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
-    readonly deleteTrack: CaseReducer<ProjectDataState, PayloadAction<TrackID>>;
-    readonly setMasterVolume: CaseReducer<ProjectDataState, PayloadAction<number>>;
-    readonly setMasterReverbType: CaseReducer<ProjectDataState, PayloadAction<ReverbID>>;
-    readonly setMasterReverbDepth: CaseReducer<ProjectDataState, PayloadAction<number>>;
-    readonly setMasterDelayRate: CaseReducer<ProjectDataState, PayloadAction<number>>;
-    readonly setMasterDelayAmount: CaseReducer<ProjectDataState, PayloadAction<number>>;
+    readonly set: ProjectReducer<ProjectSettings | null>;
+    readonly save: ProjectReducer<string>;
+    readonly undo: ProjectReducer;
+    readonly redo: ProjectReducer;
+    readonly setName: ProjectReducer<string>;
+    readonly setTempo: ProjectReducer<number>;
+    readonly setAuthor: ProjectReducer<string>;
+    readonly setDescription: ProjectReducer<string>;
+    readonly selectTrack: ProjectReducer<TrackID>;
+    readonly setTrackName: ProjectReducer<TrackActionPayload<string>>;
+    readonly soloTrack: ProjectReducer<TrackID>;
+    readonly muteTrack: ProjectReducer<TrackID>;
+    readonly setTrackPan: ProjectReducer<TrackActionPayload<number>>;
+    readonly setTrackDelay: ProjectReducer<TrackActionPayload<number>>;
+    readonly setTrackReverb: ProjectReducer<TrackActionPayload<number>>;
+    readonly setTrackVolume: ProjectReducer<TrackActionPayload<number>>;
+    readonly setTrackSample: ProjectReducer<SampleActionPayload>;
+    readonly setTrackSampleVolume: ProjectReducer<TrackActionPayload<number>>;
+    readonly setTrackSampleLoop: ProjectReducer<TrackActionPayload<boolean>>;
+    readonly setTrackSampleFilterCutoff: ProjectReducer<FilterActionPayload>;
+    readonly setTrackSampleFilterResonance: ProjectReducer<FilterActionPayload>;
+    readonly removeTrackPatterns: ProjectReducer<TrackID>;
+    readonly deleteTrack: ProjectReducer<TrackID>;
+    readonly setMasterVolume: ProjectReducer<number>;
+    readonly setMasterReverbType: ProjectReducer<ReverbID>;
+    readonly setMasterReverbDepth: ProjectReducer<number>;
+    readonly setMasterDelayRate: ProjectReducer<number>;
+    readonly setMasterDelayAmount: ProjectReducer<number>;
 };
 
 const edit = (state: ProjectDataState, draft: ProjectDataState): ProjectDataState => {
