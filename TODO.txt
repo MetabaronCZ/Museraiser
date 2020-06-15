@@ -5,10 +5,10 @@ BUGS
 
 TODO
 -----------------------------------------------------------
---  nastylovat FormCheckbox
 --  pridat Panic button
     - vypnout AudioContext pri uzavreni projektu
 --  kazdy Pattern bude mit time signature
+--  naimplementovat Sample.loop
 --  nahradit systemove dialogy za notifikacni UI komponentu
 --  ukladat pozici a rozmery okna
 --  funkce insertBarAfter a insertBarBefore do Sequencer headeru

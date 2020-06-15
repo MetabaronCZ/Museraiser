@@ -1,3 +1,25 @@
 .FormCheckbox {
+    $input-size: 1.5*$vu;
+    @extend %form-field;
+    position: relative;
+    display: inline-block;
+    width: $input-size;
+    height: $input-size;
+    appearance: none;
+    cursor: pointer;
     vertical-align: middle;
+    border-radius: $border-radius-default;
+
+    &:checked::after {
+        @extend %font-bold;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        content: "✔";
+        width: 100%;
+        font-size: $font-size-default;
+        line-height: $input-size;
+        text-align: center;
+    }
 }
