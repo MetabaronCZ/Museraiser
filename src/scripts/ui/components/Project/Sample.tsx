@@ -10,8 +10,8 @@ import { drawWaveform } from 'modules/visual';
 import { MasterData } from 'modules/project/master';
 import { TrackData } from 'modules/project/tracks/track';
 import {
-    selectTrackSample, setTrackSampleLoop, setTrackSampleVolume,
-    setTrackSampleFilterCutoff, setTrackSampleFilterResonance
+    selectSample, setSampleLoop, setSampleVolume,
+    setSampleFilterCutoff, setSampleFilterResonance
 } from 'modules/project/actions';
 
 import { Grid } from 'ui/common/Grid';
@@ -73,7 +73,7 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 <GridColumn align="left">
                                     <Button
                                         text={TXT.sample.select}
-                                        onClick={() => dispatch(selectTrackSample(id))}
+                                        onClick={() => dispatch(selectSample(id))}
                                     />
                                 </GridColumn>
 
@@ -101,7 +101,7 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 value={sample.volume.gain}
                                 defaultValue={VOLUME.DEFAULT}
                                 unit="%"
-                                onChange={value => dispatch(setTrackSampleVolume(id, value))}
+                                onChange={value => dispatch(setSampleVolume(id, value))}
                             />
                         </FormField>
 
@@ -109,7 +109,7 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                             <FormCheckbox
                                 id="sample-loop"
                                 checked={sample.loop}
-                                onChange={value => dispatch(setTrackSampleLoop(id, value))}
+                                onChange={value => dispatch(setSampleLoop(id, value))}
                             />
                         </FormField>
 
@@ -123,7 +123,7 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 value={sample.filter1.cutoff}
                                 defaultValue={FILTER.CUTOFF.DEFAULT}
                                 unit="%"
-                                onChange={value => dispatch(setTrackSampleFilterCutoff(id, 'FILTER1', value))}
+                                onChange={value => dispatch(setSampleFilterCutoff(id, 'FILTER1', value))}
                             />
                         </FormField>
 
@@ -135,7 +135,7 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 value={sample.filter1.resonance}
                                 defaultValue={FILTER.RESONANCE.DEFAULT}
                                 unit="%"
-                                onChange={value => dispatch(setTrackSampleFilterResonance(id, 'FILTER1', value))}
+                                onChange={value => dispatch(setSampleFilterResonance(id, 'FILTER1', value))}
                             />
                         </FormField>
 
@@ -149,7 +149,7 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 value={sample.filter2.cutoff}
                                 defaultValue={FILTER.CUTOFF.DEFAULT}
                                 unit="%"
-                                onChange={value => dispatch(setTrackSampleFilterCutoff(id, 'FILTER2', value))}
+                                onChange={value => dispatch(setSampleFilterCutoff(id, 'FILTER2', value))}
                             />
                         </FormField>
 
@@ -161,7 +161,7 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 value={sample.filter2.resonance}
                                 defaultValue={FILTER.RESONANCE.DEFAULT}
                                 unit="%"
-                                onChange={value => dispatch(setTrackSampleFilterResonance(id, 'FILTER2', value))}
+                                onChange={value => dispatch(setSampleFilterResonance(id, 'FILTER2', value))}
                             />
                         </FormField>
                     </>
@@ -169,7 +169,7 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                 : (
                     <Button
                         text={TXT.sample.select}
-                        onClick={() => dispatch(selectTrackSample(id))}
+                        onClick={() => dispatch(selectSample(id))}
                     />
                 )
             }

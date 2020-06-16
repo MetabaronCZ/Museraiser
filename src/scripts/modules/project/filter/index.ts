@@ -12,7 +12,7 @@ export interface FilterSnapshot {
     readonly resonance: number;
 }
 
-export const createFilterData = (): FilterData => ({
+export const createFilter = (): FilterData => ({
     cutoff: FILTER.CUTOFF.DEFAULT,
     resonance: FILTER.RESONANCE.DEFAULT
 });

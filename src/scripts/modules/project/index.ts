@@ -80,11 +80,15 @@ type ProjectReducers = {
     readonly setTrackDelay: ProjectReducer<TrackActionPayload<number>>;
     readonly setTrackReverb: ProjectReducer<TrackActionPayload<number>>;
     readonly setTrackVolume: ProjectReducer<TrackActionPayload<number>>;
-    readonly setTrackSample: ProjectReducer<SampleActionPayload>;
-    readonly setTrackSampleVolume: ProjectReducer<TrackActionPayload<number>>;
-    readonly setTrackSampleLoop: ProjectReducer<TrackActionPayload<boolean>>;
-    readonly setTrackSampleFilterCutoff: ProjectReducer<FilterActionPayload>;
-    readonly setTrackSampleFilterResonance: ProjectReducer<FilterActionPayload>;
+    readonly setSample: ProjectReducer<SampleActionPayload>;
+    readonly setSampleVolume: ProjectReducer<TrackActionPayload<number>>;
+    readonly setSampleLoop: ProjectReducer<TrackActionPayload<boolean>>;
+    readonly setSampleFilterCutoff: ProjectReducer<FilterActionPayload>;
+    readonly setSampleFilterResonance: ProjectReducer<FilterActionPayload>;
+    readonly setSampleVolumeEnvelopeAttack: ProjectReducer<TrackActionPayload<number>>;
+    readonly setSampleVolumeEnvelopeDecay: ProjectReducer<TrackActionPayload<number>>;
+    readonly setSampleVolumeEnvelopeSustain: ProjectReducer<TrackActionPayload<number>>;
+    readonly setSampleVolumeEnvelopeRelease: ProjectReducer<TrackActionPayload<number>>;
     readonly removeTrackPatterns: ProjectReducer<TrackID>;
     readonly deleteTrack: ProjectReducer<TrackID>;
     readonly setMasterVolume: ProjectReducer<number>;
@@ -232,25 +236,41 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
             const { track: id, value: volume } = action.payload;
             return editTrack(state, draft, id, track => Track.setVolume(track, volume));
         }),
-        setTrackSample: (state, action) => produce(state, draft => {
+        setSample: (state, action) => produce(state, draft => {
             const { track: id, value: { name, buffer } } = action.payload;
             return editTrack(state, draft, id, track => Track.setSample(track, name, buffer));
         }),
-        setTrackSampleVolume: (state, action) => produce(state, draft => {
+        setSampleVolume: (state, action) => produce(state, draft => {
             const { track: id, value: volume } = action.payload;
             return editSample(state, draft, id, sample => Sample.setVolume(sample, volume));
         }),
-        setTrackSampleLoop: (state, action) => produce(state, draft => {
+        setSampleLoop: (state, action) => produce(state, draft => {
             const { track: id, value: loop } = action.payload;
             return editSample(state, draft, id, sample => Sample.loop(sample, loop));
         }),
-        setTrackSampleFilterCutoff: (state, action) => produce(state, draft => {
+        setSampleFilterCutoff: (state, action) => produce(state, draft => {
             const { track: id, value: { filter, attr } } = action.payload;
             return editSample(state, draft, id, sample => Sample.setFilterCutoff(sample, filter, attr));
         }),
-        setTrackSampleFilterResonance: (state, action) => produce(state, draft => {
+        setSampleFilterResonance: (state, action) => produce(state, draft => {
             const { track: id, value: { filter, attr } } = action.payload;
             return editSample(state, draft, id, sample => Sample.setFilterResonance(sample, filter, attr));
+        }),
+        setSampleVolumeEnvelopeAttack: (state, action) => produce(state, draft => {
+            const { track: id, value: attack } = action.payload;
+            return editSample(state, draft, id, sample => Sample.setVolumeEnvelopeAttack(sample, attack));
+        }),
+        setSampleVolumeEnvelopeDecay: (state, action) => produce(state, draft => {
+            const { track: id, value: decay } = action.payload;
+            return editSample(state, draft, id, sample => Sample.setVolumeEnvelopeDecay(sample, decay));
+        }),
+        setSampleVolumeEnvelopeSustain: (state, action) => produce(state, draft => {
+            const { track: id, value: sustain } = action.payload;
+            return editSample(state, draft, id, sample => Sample.setVolumeEnvelopeSustain(sample, sustain));
+        }),
+        setSampleVolumeEnvelopeRelease: (state, action) => produce(state, draft => {
+            const { track: id, value: release } = action.payload;
+            return editSample(state, draft, id, sample => Sample.setVolumeEnvelopeRelease(sample, release));
         }),
         removeTrackPatterns: (state, action) => produce(state, draft => {
             const id = action.payload;

@@ -203,7 +203,7 @@ export const deleteTrack = (track: TrackID): AppThunk => dispatch => {
     });
 };
 
-export const selectTrackSample = (track: TrackID): AppThunk => dispatch => {
+export const selectSample = (track: TrackID): AppThunk => dispatch => {
     Dialog.openFile(__dirname, 'AUDIO').then(path => {
         if (!path) {
             return;
@@ -211,7 +211,7 @@ export const selectTrackSample = (track: TrackID): AppThunk => dispatch => {
         try {
             const base64 = readSample(path);
 
-            dispatch(Project.actions.setTrackSample({ track, value: {
+            dispatch(Project.actions.setSample({ track, value: {
                 name: getFilename(path),
                 buffer: base64
             }}));
@@ -227,16 +227,16 @@ export const selectTrackSample = (track: TrackID): AppThunk => dispatch => {
     });
 };
 
-export const setTrackSampleVolume = (track: TrackID, volume: number): AppThunk => dispatch => {
-    dispatch(Project.actions.setTrackSampleVolume({ track, value: volume }));
+export const setSampleVolume = (track: TrackID, volume: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setSampleVolume({ track, value: volume }));
 };
 
-export const setTrackSampleLoop = (track: TrackID, loop: boolean): AppThunk => dispatch => {
-    dispatch(Project.actions.setTrackSampleLoop({ track, value: loop }));
+export const setSampleLoop = (track: TrackID, loop: boolean): AppThunk => dispatch => {
+    dispatch(Project.actions.setSampleLoop({ track, value: loop }));
 };
 
-export const setTrackSampleFilterCutoff = (track: TrackID, filter: FilterType, cutoff: number): AppThunk => dispatch => {
-    dispatch(Project.actions.setTrackSampleFilterCutoff({
+export const setSampleFilterCutoff = (track: TrackID, filter: FilterType, cutoff: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setSampleFilterCutoff({
         track,
         value: {
             filter,
@@ -245,14 +245,30 @@ export const setTrackSampleFilterCutoff = (track: TrackID, filter: FilterType, c
     }));
 };
 
-export const setTrackSampleFilterResonance = (track: TrackID, filter: FilterType, reso: number): AppThunk => dispatch => {
-    dispatch(Project.actions.setTrackSampleFilterResonance({
+export const setSampleFilterResonance = (track: TrackID, filter: FilterType, reso: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setSampleFilterResonance({
         track,
         value: {
             filter,
             attr: reso
         }
     }));
+};
+
+export const setSampleVolumeEnvelopeAttack = (track: TrackID, attack: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setSampleVolumeEnvelopeAttack({ track, value: attack }));
+};
+
+export const setSampleVolumeEnvelopeDecay = (track: TrackID, decay: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setSampleVolumeEnvelopeDecay({ track, value: decay }));
+};
+
+export const setSampleVolumeEnvelopeSustain = (track: TrackID, sustain: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setSampleVolumeEnvelopeSustain({ track, value: sustain }));
+};
+
+export const setSampleVolumeEnvelopeRelease = (track: TrackID, release: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setSampleVolumeEnvelopeRelease({ track, value: release }));
 };
 
 export const setMasterVolume = (volume: number): AppThunk => dispatch => {

@@ -1,6 +1,6 @@
 import { fromBuffer, toBase64 } from 'core/buffer';
-
 import { SAMPLE } from 'data/config';
+
 import { readBuffer } from 'modules/file';
 
 import {
@@ -8,8 +8,12 @@ import {
 } from 'modules/project/volume';
 
 import {
-    FilterData, FilterSnapshot, createFilterData, parseFilter, serializeFilter
+    FilterData, FilterSnapshot, createFilter, parseFilter, serializeFilter
 } from 'modules/project/filter';
+
+import {
+    EnvelopeData, EnvelopeSnapshot, createEnvelope, parseEnvelope, serializeEnvelope
+} from 'modules/project/envelope';
 
 const { VOLUME } = SAMPLE;
 
@@ -19,6 +23,7 @@ export interface SampleData {
     readonly volume: VolumeData;
     readonly filter1: FilterData;
     readonly filter2: FilterData;
+    readonly volumeEnvelope: EnvelopeData;
     buffer: string;
     name: string;
     loop: boolean;
@@ -31,15 +36,17 @@ export interface SampleSnapshot {
     readonly volume: VolumeData;
     readonly filter1: FilterSnapshot;
     readonly filter2: FilterSnapshot;
+    readonly volumeEnvelope: EnvelopeSnapshot;
 }
 
 export const createSample = (name: string, buffer: string, loop = false): SampleData => ({
     buffer,
     name,
     loop,
+    filter1: createFilter(),
+    filter2: createFilter(),
     volume: createVolume(VOLUME.DEFAULT),
-    filter1: createFilterData(),
-    filter2: createFilterData()
+    volumeEnvelope: createEnvelope()
 });
 
 export const parseSample = (sample: any): SampleData | null => {
@@ -52,7 +59,8 @@ export const parseSample = (sample: any): SampleData | null => {
         loop: !!sample.loop,
         volume: parseVolume(sample.volume),
         filter1: parseFilter(sample.filter1),
-        filter2: parseFilter(sample.filter2)
+        filter2: parseFilter(sample.filter2),
+        volumeEnvelope: parseEnvelope(sample.volumeEnvelope)
     };
 };
 
@@ -64,7 +72,8 @@ export const serializeSample = (data: SampleData | null): SampleSnapshot | null 
         ...data,
         volume: serializeVolume(data.volume),
         filter1: serializeFilter(data.filter1),
-        filter2: serializeFilter(data.filter2)
+        filter2: serializeFilter(data.filter2),
+        volumeEnvelope: serializeEnvelope(data.volumeEnvelope)
     };
 };
 

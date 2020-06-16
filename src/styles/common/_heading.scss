@@ -9,8 +9,12 @@
 
     &-extra {
         @extend %text-body;
+        padding-left: $vu;
+        overflow: hidden;
         font-weight: normal;
+        white-space: nowrap;
         vertical-align: middle;
+        text-overflow: ellipsis;
     }
 
     &.Heading--small {

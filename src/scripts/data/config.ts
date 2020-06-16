@@ -59,7 +59,7 @@ export const TRACK = Object.freeze({
         MAX: 16
     },
     VOLUME: {
-        DEFAULT: 90,
+        DEFAULT: 100,
         MIN: 0,
         MAX: 100
     },
@@ -135,5 +135,28 @@ export const SEQUENCER = Object.freeze({
         PERPAGE: 16,
         PAGING: 10,
         MAX: 999
+    }
+});
+
+export const ENVELOPE = Object.freeze({
+    ATTACK: {
+        DEFAULT: 0.01,
+        MIN: 0.01,
+        MAX: 10
+    },
+    DECAY: {
+        DEFAULT: 0.01,
+        MIN: 0.01,
+        MAX: 10
+    },
+    SUSTAIN: {
+        DEFAULT: 100,
+        MIN: 0,
+        MAX: 100
+    },
+    RELEASE: {
+        DEFAULT: 0.01,
+        MIN: 0.01,
+        MAX: 10
     }
 });

@@ -5,13 +5,6 @@ BUGS
 
 TODO
 -----------------------------------------------------------
---  pridat Panic button
-    - vypnout AudioContext pri uzavreni projektu
---  kazdy Pattern bude mit time signature
---  naimplementovat Sample.loop
---  nahradit systemove dialogy za notifikacni UI komponentu
---  ukladat pozici a rozmery okna
---  funkce insertBarAfter a insertBarBefore do Sequencer headeru
 >>  k samplum pridat:
     --  Filter (cutoff, resonance);
         OK  2 filtry (LOWPASS, HIGHPASS) za sebou
@@ -28,6 +21,7 @@ TODO
         --  pitch
         --  LFO (=vibrato)
     ? u ENVELOPE mit moznost:
+        - vertikalni slidery
         - POLY - spusti ADSR pri spusteni noty (default mod)
         - MONO - ADSR bezi porad a pri spusteni noty se jen aplikuje aktualni hodnota
         - RETRIG - jako MONO, ale ADSR se spousti pri spusteni noty
@@ -36,6 +30,14 @@ TODO
         - RATE - rychlost oscilace
         - AMOUNT - "hlasitost" - uroven modulace
         - SYNC - synchronizovat s tempem
+--  naimplementovat Sample.loop
+--  funkce insertBarAfter a insertBarBefore do Sequencer headeru
+--  Pattern.color (pro rozliseni v sekvenceru)
+--  kazdy Pattern bude mit time signature
+--  pridat Panic button
+    - vypnout AudioContext pri uzavreni projektu
+--  nahradit systemove dialogy za notifikacni UI komponentu
+--  ukladat pozici a rozmery okna
 --  v ramci projektu vytvaret sceny:
     - cely song je scena
     - sceny pro battle songy: INTRO, NEUTRAL, WINNING, LOSING, WON_OUTRO, LOSE_OUTRO
