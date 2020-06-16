@@ -5,20 +5,22 @@
 
     &-label {
         @extend %text-body;
-        width: 50%;
+        flex: 1;
+        padding-right: $vu;
     }
 
     &-field {
         @extend %text-body;
+        position: relative;
         flex: 1;
-        padding-left: 2*$vu;
+        padding-left: $vu;
     }
 
     &.FormField--wide {
         flex-direction: column;
 
         .FormField-label {
-            width: 100%;
+            padding-right: 0;
         }
     
         .FormField-field {

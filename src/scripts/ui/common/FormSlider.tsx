@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import cn from 'classnames';
+
 import { changeOnly, OnChange } from 'modules/events';
 
 type OnReset = () => void;
@@ -10,17 +12,19 @@ interface Props {
     readonly step?: number;
     readonly unit?: string;
     readonly value: number;
+    readonly vertical?: boolean;
     readonly defaultValue: number;
     readonly onChange: OnChange<number>;
 }
 
 const reset = (cb: OnReset) => (e: React.MouseEvent<HTMLInputElement>) => {
     if (1 === e.button) { // MMB
+        e.preventDefault();
         cb();
     }
 };
 
-export const FormSlider: React.SFC<Props> = ({ id, min = 0, max = 1, step = 1, unit = '', defaultValue, value, onChange }) => {
+export const FormSlider: React.SFC<Props> = ({ id, min = 0, max = 1, step = 1, unit = '', vertical = false, defaultValue, value, onChange }) => {
     const [val, setValue] = useState<number>(value);
 
     // reset value when input props changes
@@ -29,7 +33,9 @@ export const FormSlider: React.SFC<Props> = ({ id, min = 0, max = 1, step = 1, u
     return (
         <input
             id={id}
-            className="FormSlider"
+            className={cn('FormSlider', {
+                'FormSlider--vertical': vertical
+            })}
             type="range"
             name={id}
             title={`${val}${unit}`}
@@ -38,7 +44,7 @@ export const FormSlider: React.SFC<Props> = ({ id, min = 0, max = 1, step = 1, u
             max={max}
             step={step}
             onMouseDown={reset(() => onChange(defaultValue || 0))}
-            onChange={changeOnly(v => setValue(parseInt(v, 10)))}
+            onChange={changeOnly(v => setValue(parseFloat(v)))}
             onBlur={() => onChange(val)}
         />
     );

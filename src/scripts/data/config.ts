@@ -142,21 +142,25 @@ export const ENVELOPE = Object.freeze({
     ATTACK: {
         DEFAULT: 0.01,
         MIN: 0.01,
-        MAX: 10
+        MAX: 10,
+        STEP: 0.01
     },
     DECAY: {
         DEFAULT: 0.01,
         MIN: 0.01,
-        MAX: 10
+        MAX: 10,
+        STEP: 0.01
     },
     SUSTAIN: {
         DEFAULT: 100,
         MIN: 0,
-        MAX: 100
+        MAX: 100,
+        STEP: 1
     },
     RELEASE: {
         DEFAULT: 0.01,
         MIN: 0.01,
-        MAX: 10
+        MAX: 10,
+        STEP: 0.01
     }
 });

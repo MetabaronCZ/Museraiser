@@ -25,21 +25,17 @@ export const IntroUI: React.SFC = () => {
                         <LinkButton onClick={() => dispatch(openOverlay('CREATE'))}>
                             {TXT.intro.create}
                         </LinkButton>
-                    </GridColumn>
 
-                    <GridColumn align="right">
-                        {TXT.menu.create.shortcut}
-                    </GridColumn>
-                </GridRow>
+                        <br />
 
-                <GridRow>
-                    <GridColumn>
                         <LinkButton onClick={() => dispatch(selectProject())}>
                             {TXT.intro.open}
                         </LinkButton>
                     </GridColumn>
 
                     <GridColumn align="right">
+                        {TXT.menu.create.shortcut}
+                        <br />
                         {TXT.menu.open.shortcut}
                     </GridColumn>
                 </GridRow>

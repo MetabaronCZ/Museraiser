@@ -4,10 +4,12 @@
     &-row {
         display: flex;
         flex-direction: row;
+        margin: 0 (-$vu) 2*$vu;
 
         &-column {
             @extend %text-body;
             flex: 1;
+            margin: 0 $vu;
 
             &.Grid-row-column--center {
                 text-align: center;

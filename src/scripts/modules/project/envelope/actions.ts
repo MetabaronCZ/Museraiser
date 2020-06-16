@@ -7,11 +7,11 @@ const { ATTACK, DECAY, SUSTAIN, RELEASE } = ENVELOPE;
 
 export const Envelope = {
     setAttack: (env: EnvelopeData, attack: number): void => {
-        attack = limitNumber(attack, ATTACK.MIN, ATTACK.MAX);
+        attack = limitNumber(attack, ATTACK.MIN, ATTACK.MAX, true);
         env.attack = attack;
     },
     setDecay: (env: EnvelopeData, decay: number): void => {
-        decay = limitNumber(decay, DECAY.MIN, DECAY.MAX);
+        decay = limitNumber(decay, DECAY.MIN, DECAY.MAX, true);
         env.decay = decay;
     },
     setSusutain: (env: EnvelopeData, sustain: number): void => {
@@ -19,7 +19,7 @@ export const Envelope = {
         env.sustain = sustain;
     },
     setRelease: (env: EnvelopeData, release: number): void => {
-        release = limitNumber(release, RELEASE.MIN, RELEASE.MAX);
+        release = limitNumber(release, RELEASE.MIN, RELEASE.MAX, true);
         env.release = release;
     }
 };

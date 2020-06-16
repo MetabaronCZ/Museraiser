@@ -1,0 +1,12 @@
+.FormEnvelope {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2*$vu;
+
+    &-item {
+        flex: 1;
+        min-height: ($slider-size + $line-height-default);
+        text-align: center;
+    }
+}

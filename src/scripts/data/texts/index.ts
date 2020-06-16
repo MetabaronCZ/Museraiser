@@ -1,6 +1,7 @@
 import { appTexts } from 'data/texts/app';
 import { menuTexts } from 'data/texts/menu';
 import { trackTexts } from 'data/texts/track';
+import { sampleTexts } from 'data/texts/sample';
 import { masterTexts } from 'data/texts/master';
 import { projectTexts } from 'data/texts/project';
 import { reverbTTexts } from 'data/texts/reverbs';
@@ -41,26 +42,7 @@ export const TXT = {
         title: 'Pattern',
         empty: 'No pattern selected'
     },
-    sample: {
-        title: 'Sample',
-        select: 'Select',
-        name: 'Name',
-        loop: 'Loop',
-        start: 'Play',
-        stop: 'Stop',
-        volume: 'Volume',
-        selectError: {
-            title: 'Invalid file',
-            message: 'Selected audio file is invalid!'
-        },
-        notSelected: 'No sample loaded',
-        filter: {
-            title1: 'Filter (low-pass)',
-            title2: 'Filter (high-pass)',
-            cutoff: 'Cutoff',
-            resonance: 'Resonance'
-        }
-    },
+    sample: sampleTexts,
     project: projectTexts,
     track: trackTexts,
     master: masterTexts,
