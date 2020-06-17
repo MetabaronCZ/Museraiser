@@ -91,7 +91,7 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
 
                                         <Button
                                             text={TXT.sample.stop}
-                                            onClick={() => Audio.auditStop()}
+                                            onClick={() => Audio.auditStop(true)}
                                         />
                                     </ButtonList>
                                 </GridColumn>

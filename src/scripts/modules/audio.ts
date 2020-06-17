@@ -8,6 +8,7 @@ import { createFilterNode } from 'modules/project/nodes/filter';
 import { createMasterNode } from 'modules/project/nodes/master';
 
 const { SAMPLE } = PROJECT;
+const STOP_OFFSET = 0.1;
 
 interface Audition {
     readonly sample: SampleData;
@@ -25,7 +26,7 @@ export const Audio = {
     ctx,
     auditStart: (sample: SampleData, master: MasterData) => {
         if (auditioned) {
-            auditioned.source.stop(0);
+            Audio.auditStop();
         }
         const src = ctx.createBufferSource();
         const data = toArrayBuffer(sample.buffer);
@@ -56,18 +57,24 @@ export const Audio = {
             };
         });
     },
-    auditStop: () => {
+    auditStop: (force = false) => {
         if (!auditioned) {
             return;
         }
         const { sample, source, gain } = auditioned;
-        const now = ctx.currentTime;
 
-        const releaseTime = now + sample.envelope.release;
+        const now = ctx.currentTime;
         gain.gain.cancelAndHoldAtTime(now);
+
+        if (force) {
+            source.stop(now + STOP_OFFSET);
+            return;
+        }
+        const releaseTime = now + sample.envelope.release;
+        gain.gain.setValueAtTime(gain.gain.value, now);
         gain.gain.linearRampToValueAtTime(0, releaseTime);
 
-        const stopTime = releaseTime + 0.1;
+        const stopTime = releaseTime + STOP_OFFSET;
         source.stop(stopTime);
     }
 };
