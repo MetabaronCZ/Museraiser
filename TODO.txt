@@ -5,7 +5,6 @@ BUGS
 
 TODO
 -----------------------------------------------------------
---  naimplementovat Sample.loop
 --  funkce insertBarAfter a insertBarBefore do Sequencer headeru
 --  Pattern.color (pro rozliseni v sekvenceru)
 --  kazdy Pattern bude mit time signature

@@ -9,7 +9,13 @@ import { createMasterNode } from 'modules/project/nodes/master';
 
 const { SAMPLE } = PROJECT;
 
-let auditioned: AudioBufferSourceNode | null = null;
+interface Audition {
+    readonly sample: SampleData;
+    readonly source: AudioBufferSourceNode;
+    readonly gain: GainNode;
+}
+
+let auditioned: Audition | null = null;
 
 const ctx = new AudioContext({
     sampleRate: SAMPLE.RATE
@@ -19,17 +25,18 @@ export const Audio = {
     ctx,
     auditStart: (sample: SampleData, master: MasterData): void => {
         if (auditioned) {
-            auditioned.stop(0);
+            auditioned.source.stop(0);
         }
         const src = ctx.createBufferSource();
         const data = toArrayBuffer(sample.buffer);
 
         ctx.decodeAudioData(data).then(buffer => {
-            auditioned = src;
+            const now = ctx.currentTime;
 
             src.buffer = buffer;
+            src.loop = sample.loop;
 
-            const gain = createGainNode(ctx, sample.volume);
+            const gain = createGainNode(ctx, sample.volume, sample.volumeEnvelope);
             const filter1 = createFilterNode(ctx, 'lowpass', sample.filter1);
             const filter2 = createFilterNode(ctx, 'highpass', sample.filter2);
             const masterGain = createMasterNode(ctx, master);
@@ -40,13 +47,25 @@ export const Audio = {
             gain.connect(masterGain);
             masterGain.connect(ctx.destination);
 
-            src.start(0);
+            src.start(now);
+
+            auditioned = {
+                source: src,
+                sample,
+                gain
+            };
         });
     },
     auditStop: (): void => {
         if (!auditioned) {
             return;
         }
-        auditioned.stop(0);
+        const { sample, source, gain } = auditioned;
+        const now = ctx.currentTime;
+        const releaseTime = now + sample.volumeEnvelope.release;
+
+        gain.gain.cancelAndHoldAtTime(now);
+        gain.gain.linearRampToValueAtTime(0, releaseTime);
+        source.stop(releaseTime);
     }
 };

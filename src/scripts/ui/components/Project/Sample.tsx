@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { TXT } from 'data/texts';
-import { SAMPLE, ENVELOPE } from 'data/config';
+import { SAMPLE } from 'data/config';
 
 import { Audio } from 'modules/audio';
 import { AppDispatch } from 'modules/store';
@@ -27,7 +27,7 @@ import { FormSlider } from 'ui/common/FormSlider';
 import { ButtonList } from 'ui/common/ButtonList';
 import { GridColumn } from 'ui/common/Grid/Column';
 import { FormCheckbox } from 'ui/common/FormCheckbox';
-import { FormEnvelope } from 'ui/common/FormEnvelope';
+import { VolumeEnvelope } from 'ui/components/Project/VolumeEnvelope';
 
 const { VOLUME, FILTER } = SAMPLE;
 const MAX_DISPLAY_NAME = 16;
@@ -85,7 +85,8 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                     <ButtonList>
                                         <Button
                                             text={TXT.sample.start}
-                                            onClick={() => Audio.auditStart(sample, master)}
+                                            onMouseUp={() => Audio.auditStop()}
+                                            onMouseDown={() => Audio.auditStart(sample, master)}
                                         />
 
                                         <Button
@@ -122,63 +123,14 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 </GridColumn>
 
                                 <GridColumn>
-                                    <FormEnvelope>
-                                        <FormField id="envelope-1-attack" label={TXT.sample.envelope.attack} wide>
-                                            <FormSlider
-                                                id="envelope-1-attack"
-                                                min={ENVELOPE.ATTACK.MIN}
-                                                max={ENVELOPE.ATTACK.MAX}
-                                                value={sample.volumeEnvelope.attack}
-                                                defaultValue={ENVELOPE.ATTACK.DEFAULT}
-                                                step={ENVELOPE.ATTACK.STEP}
-                                                unit="s"
-                                                vertical
-                                                onChange={value => dispatch(setSampleVolumeEnvelopeAttack(id, value))}
-                                            />
-                                        </FormField>
-
-                                        <FormField id="envelope-1-decay" label={TXT.sample.envelope.decay} wide>
-                                            <FormSlider
-                                                id="envelope-1-decay"
-                                                min={ENVELOPE.DECAY.MIN}
-                                                max={ENVELOPE.DECAY.MAX}
-                                                value={sample.volumeEnvelope.decay}
-                                                defaultValue={ENVELOPE.DECAY.DEFAULT}
-                                                step={ENVELOPE.DECAY.STEP}
-                                                unit="s"
-                                                vertical
-                                                onChange={value => dispatch(setSampleVolumeEnvelopeDecay(id, value))}
-                                            />
-                                        </FormField>
-
-                                        <FormField id="envelope-1-sustain" label={TXT.sample.envelope.sustain} wide>
-                                            <FormSlider
-                                                id="envelope-1-sustain"
-                                                min={ENVELOPE.SUSTAIN.MIN}
-                                                max={ENVELOPE.SUSTAIN.MAX}
-                                                value={sample.volumeEnvelope.sustain}
-                                                defaultValue={ENVELOPE.SUSTAIN.DEFAULT}
-                                                step={ENVELOPE.SUSTAIN.STEP}
-                                                unit="%"
-                                                vertical
-                                                onChange={value => dispatch(setSampleVolumeEnvelopeSustain(id, value))}
-                                            />
-                                        </FormField>
-
-                                        <FormField id="envelope-1-release" label={TXT.sample.envelope.release} wide>
-                                            <FormSlider
-                                                id="envelope-1-release"
-                                                min={ENVELOPE.RELEASE.MIN}
-                                                max={ENVELOPE.RELEASE.MAX}
-                                                value={sample.volumeEnvelope.release}
-                                                defaultValue={ENVELOPE.RELEASE.DEFAULT}
-                                                step={ENVELOPE.RELEASE.STEP}
-                                                unit="s"
-                                                vertical
-                                                onChange={value => dispatch(setSampleVolumeEnvelopeRelease(id, value))}
-                                            />
-                                        </FormField>
-                                    </FormEnvelope>
+                                    <VolumeEnvelope
+                                        id="volume"
+                                        envelope={sample.volumeEnvelope}
+                                        onAttack={value => dispatch(setSampleVolumeEnvelopeAttack(id, value))}
+                                        onDecay={value => dispatch(setSampleVolumeEnvelopeDecay(id, value))}
+                                        onSustain={value => dispatch(setSampleVolumeEnvelopeSustain(id, value))}
+                                        onRelease={value => dispatch(setSampleVolumeEnvelopeRelease(id, value))}
+                                    />
                                 </GridColumn>
                             </GridRow>
 
