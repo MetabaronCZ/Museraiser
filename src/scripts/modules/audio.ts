@@ -23,7 +23,7 @@ const ctx = new AudioContext({
 
 export const Audio = {
     ctx,
-    auditStart: (sample: SampleData, master: MasterData): void => {
+    auditStart: (sample: SampleData, master: MasterData) => {
         if (auditioned) {
             auditioned.source.stop(0);
         }
@@ -36,7 +36,7 @@ export const Audio = {
             src.buffer = buffer;
             src.loop = sample.loop;
 
-            const gain = createGainNode(ctx, sample.volume, sample.volumeEnvelope);
+            const gain = createGainNode(ctx, sample.volume, sample.envelope);
             const filter1 = createFilterNode(ctx, 'lowpass', sample.filter1);
             const filter2 = createFilterNode(ctx, 'highpass', sample.filter2);
             const masterGain = createMasterNode(ctx, master);
@@ -56,16 +56,18 @@ export const Audio = {
             };
         });
     },
-    auditStop: (): void => {
+    auditStop: () => {
         if (!auditioned) {
             return;
         }
         const { sample, source, gain } = auditioned;
         const now = ctx.currentTime;
-        const releaseTime = now + sample.volumeEnvelope.release;
 
+        const releaseTime = now + sample.envelope.release;
         gain.gain.cancelAndHoldAtTime(now);
         gain.gain.linearRampToValueAtTime(0, releaseTime);
-        source.stop(releaseTime);
+
+        const stopTime = releaseTime + 0.1;
+        source.stop(stopTime);
     }
 };

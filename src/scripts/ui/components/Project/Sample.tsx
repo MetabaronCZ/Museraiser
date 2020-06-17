@@ -13,8 +13,8 @@ import { TrackData } from 'modules/project/tracks/track';
 import {
     selectSample, setSampleLoop, setSampleVolume,
     setSampleFilterCutoff, setSampleFilterResonance,
-    setSampleVolumeEnvelopeAttack, setSampleVolumeEnvelopeDecay,
-    setSampleVolumeEnvelopeSustain, setSampleVolumeEnvelopeRelease
+    setSampleEnvelopeAttack, setSampleEnvelopeDecay,
+    setSampleEnvelopeSustain, setSampleEnvelopeRelease
 } from 'modules/project/actions';
 
 import { Grid } from 'ui/common/Grid';
@@ -125,11 +125,11 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                 <GridColumn>
                                     <VolumeEnvelope
                                         id="volume"
-                                        envelope={sample.volumeEnvelope}
-                                        onAttack={value => dispatch(setSampleVolumeEnvelopeAttack(id, value))}
-                                        onDecay={value => dispatch(setSampleVolumeEnvelopeDecay(id, value))}
-                                        onSustain={value => dispatch(setSampleVolumeEnvelopeSustain(id, value))}
-                                        onRelease={value => dispatch(setSampleVolumeEnvelopeRelease(id, value))}
+                                        envelope={sample.envelope}
+                                        onAttack={value => dispatch(setSampleEnvelopeAttack(id, value))}
+                                        onDecay={value => dispatch(setSampleEnvelopeDecay(id, value))}
+                                        onSustain={value => dispatch(setSampleEnvelopeSustain(id, value))}
+                                        onRelease={value => dispatch(setSampleEnvelopeRelease(id, value))}
                                     />
                                 </GridColumn>
                             </GridRow>

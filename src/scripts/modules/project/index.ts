@@ -85,10 +85,10 @@ type ProjectReducers = {
     readonly setSampleLoop: ProjectReducer<TrackActionPayload<boolean>>;
     readonly setSampleFilterCutoff: ProjectReducer<FilterActionPayload>;
     readonly setSampleFilterResonance: ProjectReducer<FilterActionPayload>;
-    readonly setSampleVolumeEnvelopeAttack: ProjectReducer<TrackActionPayload<number>>;
-    readonly setSampleVolumeEnvelopeDecay: ProjectReducer<TrackActionPayload<number>>;
-    readonly setSampleVolumeEnvelopeSustain: ProjectReducer<TrackActionPayload<number>>;
-    readonly setSampleVolumeEnvelopeRelease: ProjectReducer<TrackActionPayload<number>>;
+    readonly setSampleEnvelopeAttack: ProjectReducer<TrackActionPayload<number>>;
+    readonly setSampleEnvelopeDecay: ProjectReducer<TrackActionPayload<number>>;
+    readonly setSampleEnvelopeSustain: ProjectReducer<TrackActionPayload<number>>;
+    readonly setSampleEnvelopeRelease: ProjectReducer<TrackActionPayload<number>>;
     readonly removeTrackPatterns: ProjectReducer<TrackID>;
     readonly deleteTrack: ProjectReducer<TrackID>;
     readonly setMasterVolume: ProjectReducer<number>;
@@ -256,21 +256,21 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
             const { track: id, value: { filter, attr } } = action.payload;
             return editSample(state, draft, id, sample => Sample.setFilterResonance(sample, filter, attr));
         }),
-        setSampleVolumeEnvelopeAttack: (state, action) => produce(state, draft => {
+        setSampleEnvelopeAttack: (state, action) => produce(state, draft => {
             const { track: id, value: attack } = action.payload;
-            return editSample(state, draft, id, sample => Sample.setVolumeEnvelopeAttack(sample, attack));
+            return editSample(state, draft, id, sample => Sample.setEnvelopeAttack(sample, attack));
         }),
-        setSampleVolumeEnvelopeDecay: (state, action) => produce(state, draft => {
+        setSampleEnvelopeDecay: (state, action) => produce(state, draft => {
             const { track: id, value: decay } = action.payload;
-            return editSample(state, draft, id, sample => Sample.setVolumeEnvelopeDecay(sample, decay));
+            return editSample(state, draft, id, sample => Sample.setEnvelopeDecay(sample, decay));
         }),
-        setSampleVolumeEnvelopeSustain: (state, action) => produce(state, draft => {
+        setSampleEnvelopeSustain: (state, action) => produce(state, draft => {
             const { track: id, value: sustain } = action.payload;
-            return editSample(state, draft, id, sample => Sample.setVolumeEnvelopeSustain(sample, sustain));
+            return editSample(state, draft, id, sample => Sample.setEnvelopeSustain(sample, sustain));
         }),
-        setSampleVolumeEnvelopeRelease: (state, action) => produce(state, draft => {
+        setSampleEnvelopeRelease: (state, action) => produce(state, draft => {
             const { track: id, value: release } = action.payload;
-            return editSample(state, draft, id, sample => Sample.setVolumeEnvelopeRelease(sample, release));
+            return editSample(state, draft, id, sample => Sample.setEnvelopeRelease(sample, release));
         }),
         removeTrackPatterns: (state, action) => produce(state, draft => {
             const id = action.payload;

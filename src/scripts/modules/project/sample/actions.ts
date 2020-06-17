@@ -18,16 +18,16 @@ export const Sample = {
         const filter = ('FILTER1' === type ? sample.filter1 : sample.filter2);
         Filter.setResonance(filter, reso);
     },
-    setVolumeEnvelopeAttack: (sample: SampleData, attack: number): void => {
-        Envelope.setAttack(sample.volumeEnvelope, attack);
+    setEnvelopeAttack: (sample: SampleData, attack: number): void => {
+        Envelope.setAttack(sample.envelope, attack);
     },
-    setVolumeEnvelopeDecay: (sample: SampleData, decay: number): void => {
-        Envelope.setDecay(sample.volumeEnvelope, decay);
+    setEnvelopeDecay: (sample: SampleData, decay: number): void => {
+        Envelope.setDecay(sample.envelope, decay);
     },
-    setVolumeEnvelopeSustain: (sample: SampleData, sustain: number): void => {
-        Envelope.setSusutain(sample.volumeEnvelope, sustain);
+    setEnvelopeSustain: (sample: SampleData, sustain: number): void => {
+        Envelope.setSusutain(sample.envelope, sustain);
     },
-    setVolumeEnvelopeRelease: (sample: SampleData, release: number): void => {
-        Envelope.setRelease(sample.volumeEnvelope, release);
+    setEnvelopeRelease: (sample: SampleData, release: number): void => {
+        Envelope.setRelease(sample.envelope, release);
     }
 };

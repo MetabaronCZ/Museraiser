@@ -255,20 +255,20 @@ export const setSampleFilterResonance = (track: TrackID, filter: FilterType, res
     }));
 };
 
-export const setSampleVolumeEnvelopeAttack = (track: TrackID, attack: number): AppThunk => dispatch => {
-    dispatch(Project.actions.setSampleVolumeEnvelopeAttack({ track, value: attack }));
+export const setSampleEnvelopeAttack = (track: TrackID, attack: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setSampleEnvelopeAttack({ track, value: attack }));
 };
 
-export const setSampleVolumeEnvelopeDecay = (track: TrackID, decay: number): AppThunk => dispatch => {
-    dispatch(Project.actions.setSampleVolumeEnvelopeDecay({ track, value: decay }));
+export const setSampleEnvelopeDecay = (track: TrackID, decay: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setSampleEnvelopeDecay({ track, value: decay }));
 };
 
-export const setSampleVolumeEnvelopeSustain = (track: TrackID, sustain: number): AppThunk => dispatch => {
-    dispatch(Project.actions.setSampleVolumeEnvelopeSustain({ track, value: sustain }));
+export const setSampleEnvelopeSustain = (track: TrackID, sustain: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setSampleEnvelopeSustain({ track, value: sustain }));
 };
 
-export const setSampleVolumeEnvelopeRelease = (track: TrackID, release: number): AppThunk => dispatch => {
-    dispatch(Project.actions.setSampleVolumeEnvelopeRelease({ track, value: release }));
+export const setSampleEnvelopeRelease = (track: TrackID, release: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setSampleEnvelopeRelease({ track, value: release }));
 };
 
 export const setMasterVolume = (volume: number): AppThunk => dispatch => {

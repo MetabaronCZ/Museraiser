@@ -23,7 +23,7 @@ export interface SampleData {
     readonly volume: VolumeData;
     readonly filter1: FilterData;
     readonly filter2: FilterData;
-    readonly volumeEnvelope: EnvelopeData;
+    readonly envelope: EnvelopeData;
     buffer: string;
     name: string;
     loop: boolean;
@@ -46,7 +46,7 @@ export const createSample = (name: string, buffer: string, loop = false): Sample
     filter1: createFilter(),
     filter2: createFilter(),
     volume: createVolume(VOLUME.DEFAULT),
-    volumeEnvelope: createEnvelope()
+    envelope: createEnvelope()
 });
 
 export const parseSample = (sample: any): SampleData | null => {
@@ -60,7 +60,7 @@ export const parseSample = (sample: any): SampleData | null => {
         volume: parseVolume(sample.volume),
         filter1: parseFilter(sample.filter1),
         filter2: parseFilter(sample.filter2),
-        volumeEnvelope: parseEnvelope(sample.volumeEnvelope)
+        envelope: parseEnvelope(sample.envelope)
     };
 };
 
@@ -73,7 +73,7 @@ export const serializeSample = (data: SampleData | null): SampleSnapshot | null 
         volume: serializeVolume(data.volume),
         filter1: serializeFilter(data.filter1),
         filter2: serializeFilter(data.filter2),
-        volumeEnvelope: serializeEnvelope(data.volumeEnvelope)
+        volumeEnvelope: serializeEnvelope(data.envelope)
     };
 };
 

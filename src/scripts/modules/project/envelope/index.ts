@@ -1,3 +1,7 @@
+import { ENVELOPE } from 'data/config';
+
+const { ATTACK, DECAY, SUSTAIN, RELEASE } = ENVELOPE;
+
 export interface EnvelopeData {
     attack: number;
     decay: number;
@@ -13,17 +17,17 @@ export interface EnvelopeSnapshot {
 }
 
 export const createEnvelope = (): EnvelopeData => ({
-    attack: 0,
-    decay: 0,
-    release: 0,
-    sustain: 0
+    attack: ATTACK.DEFAULT,
+    decay: DECAY.DEFAULT,
+    sustain: SUSTAIN.DEFAULT,
+    release: RELEASE.DEFAULT
 });
 
 export const parseEnvelope = (data: any): EnvelopeData => ({
-    attack: parseInt(data.attack, 10),
-    decay: parseInt(data.decay, 10),
-    release: parseInt(data.release, 10),
-    sustain: parseInt(data.sustain, 10)
+    attack: parseFloat(data.attack),
+    decay: parseFloat(data.decay),
+    sustain: parseInt(data.sustain, 10),
+    release: parseFloat(data.release)
 });
 
 export const serializeEnvelope = (env: EnvelopeData): EnvelopeSnapshot => ({
