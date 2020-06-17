@@ -1,10 +1,12 @@
 import { toArrayBuffer } from 'core/buffer';
 import { PROJECT } from 'data/config';
 
-import { MasterData } from 'modules/project/master';
 import { SampleData } from 'modules/project/sample';
-import { createGainNode } from 'modules/project/nodes/volume';
-import { createFilterNode } from 'modules/project/nodes/filter';
+import { MasterData } from 'modules/project/master';
+import { TrackData } from 'modules/project/tracks/track';
+
+import { createTrackNode } from 'modules/project/nodes/track';
+import { createSampleNode } from 'modules/project/nodes/sample';
 import { createMasterNode } from 'modules/project/nodes/master';
 
 const { SAMPLE } = PROJECT;
@@ -24,35 +26,23 @@ const ctx = new AudioContext({
 
 export const Audio = {
     ctx,
-    auditStart: (sample: SampleData, master: MasterData) => {
+    auditStart: (sample: SampleData, track: TrackData, master: MasterData) => {
         if (auditioned) {
             Audio.auditStop();
         }
-        const src = ctx.createBufferSource();
         const data = toArrayBuffer(sample.buffer);
 
         ctx.decodeAudioData(data).then(buffer => {
-            const now = ctx.currentTime;
+            const { source, gain } = createSampleNode(ctx, sample, buffer);
+            const trackNode = createTrackNode(ctx, track, gain);
+            const masterNode = createMasterNode(ctx, master, trackNode);
 
-            src.buffer = buffer;
-            src.loop = sample.loop;
-
-            const gain = createGainNode(ctx, sample.volume, sample.envelope);
-            const filter1 = createFilterNode(ctx, 'lowpass', sample.filter1);
-            const filter2 = createFilterNode(ctx, 'highpass', sample.filter2);
-            const masterGain = createMasterNode(ctx, master);
-
-            src.connect(filter1);
-            filter1.connect(filter2);
-            filter2.connect(gain);
-            gain.connect(masterGain);
-            masterGain.connect(ctx.destination);
-
-            src.start(now);
+            masterNode.connect(ctx.destination);
+            source.start(ctx.currentTime);
 
             auditioned = {
-                source: src,
                 sample,
+                source,
                 gain
             };
         });

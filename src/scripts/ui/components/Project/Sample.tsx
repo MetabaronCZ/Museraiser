@@ -86,7 +86,7 @@ export const SampleUI: React.SFC<Props> = ({ track, master }) => {
                                         <Button
                                             text={TXT.sample.start}
                                             onMouseUp={() => Audio.auditStop()}
-                                            onMouseDown={() => Audio.auditStart(sample, master)}
+                                            onMouseDown={() => Audio.auditStart(sample, track, master)}
                                         />
 
                                         <Button
