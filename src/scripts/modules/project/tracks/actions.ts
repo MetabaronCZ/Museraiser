@@ -7,7 +7,7 @@ import { createSample } from 'modules/project/sample';
 import { Volume } from 'modules/project/volume/actions';
 import { TrackID, createTrack, TrackData } from 'modules/project/tracks/track';
 
-const { NAME, REVERB, DELAY, PAN } = TRACK;
+const { NAME, REVERB, PAN } = TRACK;
 
 export const Track = {
     mute: (tracks: TracksData, id: TrackID): void => {
@@ -39,10 +39,6 @@ export const Track = {
     setReverb: (track: TrackData, reverb: number): void => {
         reverb = limitNumber(reverb, REVERB.MIN, REVERB.MAX);
         track.reverb = reverb;
-    },
-    setDelay: (track: TrackData, delay: number): void => {
-        delay = limitNumber(delay, DELAY.MIN, DELAY.MAX);
-        track.delay = delay;
     },
     setSample: (track: TrackData, name: string, buffer: string): void => {
         const { sample } = track;

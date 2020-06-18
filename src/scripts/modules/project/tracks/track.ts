@@ -16,7 +16,7 @@ import {
     SequenceData, SequenceSnapshot, parseSequences, serializeSequences
 } from 'modules/project/sequence';
 
-const { VOLUME, REVERB, DELAY, PAN } = TRACK;
+const { VOLUME, REVERB, PAN } = TRACK;
 
 export const trackIDs = [
     'T01', 'T02', 'T03', 'T04', 'T05', 'T06', 'T07', 'T08',
@@ -33,7 +33,6 @@ export interface TrackData {
     solo: boolean;
     mute: boolean;
     pan: number;
-    delay: number;
     reverb: number;
     volume: VolumeData;
     sample: SampleData | null;
@@ -45,7 +44,6 @@ export interface TrackSnapshot {
     readonly solo: boolean;
     readonly mute: boolean;
     readonly pan: number;
-    readonly delay: number;
     readonly reverb: number;
     readonly volume: VolumeData;
     readonly patterns: PatternSnapshot[];
@@ -64,7 +62,6 @@ export const createTrack = (id: TrackID): TrackData => ({
     mute: false,
     sample: null,
     pan: PAN.DEFAULT,
-    delay: DELAY.DEFAULT,
     reverb: REVERB.DEFAULT,
     volume: createVolume(VOLUME.DEFAULT),
     patterns: [],
@@ -77,7 +74,6 @@ export const parseTrack = (data: any): TrackData => ({
     solo: !!data.solo,
     mute: !!data.mute,
     pan: parseInt(data.pan, 10),
-    delay: parseInt(data.delay, 10),
     reverb: parseInt(data.reverb, 10),
     volume: parseVolume(data.volume),
     sample: parseSample(data.sample),

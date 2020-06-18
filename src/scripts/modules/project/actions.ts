@@ -4,7 +4,6 @@ import { Audio } from 'modules/audio';
 import { Dialog } from 'modules/dialog';
 import { Logger } from 'modules/logger';
 import { readFile, saveFile } from 'modules/file';
-import { ReverbID } from 'modules/project/reverb';
 import { AppThunk, AppDispatch } from 'modules/store';
 import { TrackID } from 'modules/project/tracks/track';
 import { closeOverlay, openOverlay } from 'modules/overlay';
@@ -175,10 +174,6 @@ export const setTrackPan = (track: TrackID, pan: number): AppThunk => dispatch =
     dispatch(Project.actions.setTrackPan({ track, value: pan }));
 };
 
-export const setTrackDelay = (track: TrackID, delay: number): AppThunk => dispatch => {
-    dispatch(Project.actions.setTrackDelay({ track, value: delay }));
-};
-
 export const setTrackReverb = (track: TrackID, reverb: number): AppThunk => dispatch => {
     dispatch(Project.actions.setTrackReverb({ track, value: reverb }));
 };
@@ -275,18 +270,10 @@ export const setMasterVolume = (volume: number): AppThunk => dispatch => {
     dispatch(Project.actions.setMasterVolume(volume));
 };
 
-export const setMasterReverbType = (type: ReverbID): AppThunk => dispatch => {
-    dispatch(Project.actions.setMasterReverbType(type));
-};
-
 export const setMasterReverbDepth = (depth: number): AppThunk => dispatch => {
     dispatch(Project.actions.setMasterReverbDepth(depth));
 };
 
-export const setMasterDelayAmount = (amount: number): AppThunk => dispatch => {
-    dispatch(Project.actions.setMasterDelayAmount(amount));
-};
-
-export const setMasterDelayRate = (rate: number): AppThunk => dispatch => {
-    dispatch(Project.actions.setMasterDelayRate(rate));
+export const setMasterReverbDampening = (dampening: number): AppThunk => dispatch => {
+    dispatch(Project.actions.setMasterReverbDampening(dampening));
 };

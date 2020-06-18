@@ -14,7 +14,6 @@ export const trackTexts = {
         ico: 'M'
     },
     pan: 'Pan',
-    delay: 'Delay',
     reverb: 'Reverb',
     volume: 'Volume',
     notSelected: 'No track selected',

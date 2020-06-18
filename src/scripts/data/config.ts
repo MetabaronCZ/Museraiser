@@ -1,5 +1,3 @@
-import { ReverbID } from 'modules/project/reverb';
-
 /* eslint-disable no-underscore-dangle */
 declare const __ENVIRONMENT__: string;
 export const IS_DEV = ('dev' === __ENVIRONMENT__);
@@ -68,11 +66,6 @@ export const TRACK = Object.freeze({
         MIN: -100,
         MAX: +100
     },
-    DELAY: {
-        DEFAULT: 0,
-        MIN: 0,
-        MAX: 100
-    },
     REVERB: {
         DEFAULT: 0,
         MIN: 0,
@@ -86,23 +79,13 @@ export const MASTER = Object.freeze({
         MIN: 0,
         MAX: 100
     },
-    DELAY: {
-        AMOUNT: {
-            DEFAULT: 0,
+    REVERB: {
+        DEPTH: {
+            DEFAULT: 50,
             MIN: 0,
             MAX: 100
         },
-        RATE: {
-            DEFAULT: 0,
-            MIN: 0,
-            MAX: 10
-        }
-    },
-    REVERB: {
-        TYPE: {
-            DEFAULT: 'ROOM' as ReverbID
-        },
-        DEPTH: {
+        DAMPENING: {
             DEFAULT: 50,
             MIN: 0,
             MAX: 100

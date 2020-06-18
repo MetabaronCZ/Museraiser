@@ -17,7 +17,7 @@ const { BAR } = SEQUENCER;
 const perPage = BAR.PERPAGE;
 
 const trackMasterHeaders: string[] = [
-    TXT.track.volume, TXT.track.pan, TXT.track.delay, TXT.track.reverb
+    TXT.track.volume, TXT.track.pan, TXT.track.reverb
 ];
 
 interface Props {

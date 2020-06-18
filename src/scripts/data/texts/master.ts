@@ -1,12 +1,8 @@
 export const masterTexts = {
     title: 'Master',
-    delay: {
-        amount: 'Delay amount',
-        rate: 'Delay rate'
-    },
+    volume: 'Volume',
     reverb: {
-        type: 'Reverb type',
-        depth: 'Reverb depth'
-    },
-    volume: 'Volume'
+        depth: 'Reverb depth',
+        dampening: 'Reverb dampening'
+    }
 };

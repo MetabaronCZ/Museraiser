@@ -1,28 +1,25 @@
 import { MASTER } from 'data/config';
 
-const { TYPE, DEPTH } = MASTER.REVERB;
-
-export const reverbs = ['ROOM', 'HALL'] as const;
-export type ReverbID = typeof reverbs[number];
+const { DEPTH, DAMPENING } = MASTER.REVERB;
 
 export interface ReverbData {
-    type: ReverbID;
     depth: number;
+    dampening: number;
 }
 
 export interface ReverbSnapshot {
-    readonly type: ReverbID;
     readonly depth: number;
+    readonly dampening: number;
 }
 
 export const createReverb = (): ReverbData => ({
-    type: TYPE.DEFAULT,
-    depth: DEPTH.DEFAULT
+    depth: DEPTH.DEFAULT,
+    dampening: DAMPENING.DEFAULT
 });
 
 export const parseReverb = (data: any): ReverbData => ({
-    type: `${data.type}` as ReverbID,
-    depth: parseInt(data.depth, 10)
+    depth: parseInt(data.depth, 10),
+    dampening: parseInt(data.dampening, 10)
 });
 
 export const serializeReverb = (reverb: ReverbData): ReverbSnapshot => ({

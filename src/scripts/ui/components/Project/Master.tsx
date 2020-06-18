@@ -6,31 +6,21 @@ import { MASTER } from 'data/config';
 
 import { AppDispatch } from 'modules/store';
 import { MasterData } from 'modules/project/master';
-import { ReverbID, reverbs } from 'modules/project/reverb';
 import {
-    setMasterVolume,
-    setMasterDelayAmount, setMasterDelayRate,
-    setMasterReverbType, setMasterReverbDepth
+    setMasterVolume, setMasterReverbDepth, setMasterReverbDampening
 } from 'modules/project/actions';
 
 import { FormField } from 'ui/common/FormField';
-import { FormSelect } from 'ui/common/FormSelect';
 import { FormSlider } from 'ui/common/FormSlider';
-import { createSelectOptions } from 'ui/common/FormSelect/options';
 
-const { VOLUME, DELAY, REVERB } = MASTER;
-
-const reverbTypes = createSelectOptions<ReverbID>(reverbs.slice(0), type => ({
-    label: TXT.reverb[type],
-    value: type
-}));
+const { VOLUME, REVERB } = MASTER;
 
 interface Props {
     readonly master: MasterData;
 }
 
 export const MasterUI: React.SFC<Props> = ({ master }) => {
-    const { volume, delay, reverb } = master;
+    const { volume, reverb } = master;
     const dispatch = useDispatch<AppDispatch>();
     return (
         <>
@@ -46,39 +36,6 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
                 />
             </FormField>
 
-            <FormField id="delay-amount" label={TXT.master.delay.amount}>
-                <FormSlider
-                    id="delay-amount"
-                    value={delay.amount}
-                    min={DELAY.AMOUNT.MIN}
-                    max={DELAY.AMOUNT.MAX}
-                    defaultValue={DELAY.AMOUNT.DEFAULT}
-                    unit="%"
-                    onChange={value => dispatch(setMasterDelayAmount(value))}
-                />
-            </FormField>
-
-            <FormField id="delay-rate" label={TXT.master.delay.rate}>
-                <FormSlider
-                    id="delay-rate"
-                    value={delay.rate}
-                    min={DELAY.RATE.MIN}
-                    max={DELAY.RATE.MAX}
-                    defaultValue={DELAY.RATE.DEFAULT}
-                    unit="x"
-                    onChange={value => dispatch(setMasterDelayRate(value))}
-                />
-            </FormField>
-
-            <FormField id="reverb-type" label={TXT.master.reverb.type}>
-                <FormSelect
-                    id="reverb-type"
-                    value={reverb.type}
-                    options={reverbTypes}
-                    onChange={value => dispatch(setMasterReverbType(value as ReverbID))}
-                />
-            </FormField>
-
             <FormField id="reverb-depth" label={TXT.master.reverb.depth}>
                 <FormSlider
                     id="reverb-depth"
@@ -88,6 +45,18 @@ export const MasterUI: React.SFC<Props> = ({ master }) => {
                     defaultValue={REVERB.DEPTH.DEFAULT}
                     unit="%"
                     onChange={value => dispatch(setMasterReverbDepth(value))}
+                />
+            </FormField>
+
+            <FormField id="reverb-dampening" label={TXT.master.reverb.dampening}>
+                <FormSlider
+                    id="reverb-dampening"
+                    value={reverb.dampening}
+                    min={REVERB.DAMPENING.MIN}
+                    max={REVERB.DAMPENING.MAX}
+                    defaultValue={REVERB.DAMPENING.DEFAULT}
+                    unit="%"
+                    onChange={value => dispatch(setMasterReverbDampening(value))}
                 />
             </FormField>
         </>

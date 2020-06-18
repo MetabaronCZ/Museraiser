@@ -4,7 +4,6 @@ import { trackTexts } from 'data/texts/track';
 import { sampleTexts } from 'data/texts/sample';
 import { masterTexts } from 'data/texts/master';
 import { projectTexts } from 'data/texts/project';
-import { reverbTTexts } from 'data/texts/reverbs';
 import { recentProjectTexts } from 'data/texts/recent-project';
 
 const year = new Date().getFullYear();
@@ -46,7 +45,6 @@ export const TXT = {
     project: projectTexts,
     track: trackTexts,
     master: masterTexts,
-    reverb: reverbTTexts,
     paging: {
         first: 'First page',
         prev: 'Previous page',

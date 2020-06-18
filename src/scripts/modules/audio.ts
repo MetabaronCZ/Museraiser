@@ -1,4 +1,5 @@
 import { toArrayBuffer } from 'core/buffer';
+
 import { PROJECT } from 'data/config';
 
 import { SampleData } from 'modules/project/sample';
@@ -8,6 +9,7 @@ import { TrackData } from 'modules/project/tracks/track';
 import { createTrackNode } from 'modules/project/nodes/track';
 import { createSampleNode } from 'modules/project/nodes/sample';
 import { createMasterNode } from 'modules/project/nodes/master';
+import { createReverbNode } from 'modules/project/nodes/reverb';
 
 const { SAMPLE } = PROJECT;
 const STOP_OFFSET = 0.1;
@@ -36,8 +38,9 @@ export const Audio = {
             const { source, gain } = createSampleNode(ctx, sample, buffer);
             const trackNode = createTrackNode(ctx, track, gain);
             const masterNode = createMasterNode(ctx, master, trackNode);
+            const reverbNode = createReverbNode(ctx, track.reverb, master.reverb, masterNode);
 
-            masterNode.connect(ctx.destination);
+            reverbNode.connect(ctx.destination);
             source.start(ctx.currentTime);
 
             auditioned = {

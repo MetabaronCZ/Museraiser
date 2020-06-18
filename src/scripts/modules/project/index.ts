@@ -1,7 +1,6 @@
 import produce from 'immer';
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
-import { ReverbID } from 'modules/project/reverb';
 import { MasterData } from 'modules/project/master';
 import { ProjectFileData } from 'modules/project/file';
 import { FilterType, SampleData } from 'modules/project/sample';
@@ -77,7 +76,6 @@ type ProjectReducers = {
     readonly soloTrack: ProjectReducer<TrackID>;
     readonly muteTrack: ProjectReducer<TrackID>;
     readonly setTrackPan: ProjectReducer<TrackActionPayload<number>>;
-    readonly setTrackDelay: ProjectReducer<TrackActionPayload<number>>;
     readonly setTrackReverb: ProjectReducer<TrackActionPayload<number>>;
     readonly setTrackVolume: ProjectReducer<TrackActionPayload<number>>;
     readonly setSample: ProjectReducer<SampleActionPayload>;
@@ -92,10 +90,8 @@ type ProjectReducers = {
     readonly removeTrackPatterns: ProjectReducer<TrackID>;
     readonly deleteTrack: ProjectReducer<TrackID>;
     readonly setMasterVolume: ProjectReducer<number>;
-    readonly setMasterReverbType: ProjectReducer<ReverbID>;
     readonly setMasterReverbDepth: ProjectReducer<number>;
-    readonly setMasterDelayRate: ProjectReducer<number>;
-    readonly setMasterDelayAmount: ProjectReducer<number>;
+    readonly setMasterReverbDampening: ProjectReducer<number>;
 };
 
 const edit = (state: ProjectDataState, draft: ProjectDataState): ProjectDataState => {
@@ -224,10 +220,6 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
             const { track: id, value: pan } = action.payload;
             return editTrack(state, draft, id, track => Track.setPan(track, pan));
         }),
-        setTrackDelay: (state, action) => produce(state, draft => {
-            const { track: id, value: delay } = action.payload;
-            return editTrack(state, draft, id, track => Track.setDelay(track, delay));
-        }),
         setTrackReverb: (state, action) => produce(state, draft => {
             const { track: id, value: reverb } = action.payload;
             return editTrack(state, draft, id, track => Track.setReverb(track, reverb));
@@ -284,21 +276,13 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
             const volume = action.payload;
             return editMaster(state, draft, master => Master.setVolume(master, volume));
         }),
-        setMasterReverbType: (state, action) => produce(state, draft => {
-            const type = action.payload;
-            return editMaster(state, draft, master => Master.setReverbType(master, type));
-        }),
         setMasterReverbDepth: (state, action) => produce(state, draft => {
             const depth = action.payload;
             return editMaster(state, draft, master => Master.setReverbDepth(master, depth));
         }),
-        setMasterDelayAmount: (state, action) => produce(state, draft => {
-            const amount = action.payload;
-            return editMaster(state, draft, master => Master.setDelayAmount(master, amount));
-        }),
-        setMasterDelayRate: (state, action) => produce(state, draft => {
-            const rate = action.payload;
-            return editMaster(state, draft, master => Master.setDelayRate(master, rate));
+        setMasterReverbDampening: (state, action) => produce(state, draft => {
+            const dampening = action.payload;
+            return editMaster(state, draft, master => Master.setReverbDampening(master, dampening));
         })
     }
 });
