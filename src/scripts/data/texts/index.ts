@@ -39,7 +39,8 @@ export const TXT = {
     },
     pattern: {
         title: 'Pattern',
-        empty: 'No pattern selected'
+        empty: 'Select pattern to start editing',
+        noPatterns: 'No patterns created'
     },
     sample: sampleTexts,
     project: projectTexts,
