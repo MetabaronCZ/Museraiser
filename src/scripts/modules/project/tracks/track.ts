@@ -27,8 +27,8 @@ export type TrackID = typeof trackIDs[number];
 
 export interface TrackData {
     readonly id: TrackID;
-    readonly patterns: PatternData[];
-    readonly sequences: SequenceData[];
+    patterns: PatternData[];
+    sequences: SequenceData[];
     name: string;
     solo: boolean;
     mute: boolean;

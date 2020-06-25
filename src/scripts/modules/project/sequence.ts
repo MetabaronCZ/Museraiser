@@ -1,23 +1,27 @@
+import { v1 as uuid } from 'uuid';
+
 export interface SequenceData {
-    readonly pattern: number;
+    readonly id: string;
+    readonly pattern: string;
     start: number;
-    length: number;
 }
 
 export interface SequenceSnapshot {
-    readonly pattern: number;
+    readonly id: string;
+    readonly pattern: string;
     readonly start: number;
-    readonly length: number;
 }
 
-export const createSequence = (pattern: number, start: number, length: number): SequenceData => ({
-    pattern, start, length
+export const createSequence = (pattern: string, start: number): SequenceData => ({
+    id: uuid(),
+    pattern,
+    start
 });
 
 const parseSequence = (data: any): SequenceData => ({
-    pattern: parseInt(data.pattern, 10),
-    start: parseInt(data.start, 10),
-    length: parseInt(data.length, 10)
+    id: `${data.id}`,
+    pattern: `${data.pattern}`,
+    start: parseInt(data.start, 10)
 });
 
 export const parseSequences = (data: any): SequenceData[] => {

@@ -22,6 +22,7 @@ export interface ProjectData {
     readonly maxUndo: number;
     readonly maxRedo: number;
     track: TrackID | null; // selected track
+    pattern: string | null; // selected pattern
     undo: ProjectFileData[];
     redo: ProjectFileData[];
     saved: boolean;
@@ -32,6 +33,7 @@ const createProjectData = (data: ProjectSettings): ProjectData => ({
     saved: !!data.path,
     maxUndo: data.undo,
     maxRedo: data.redo,
+    pattern: null,
     track: null,
     undo: [],
     redo: []
@@ -87,6 +89,10 @@ type ProjectReducers = {
     readonly setSampleEnvelopeDecay: ProjectReducer<TrackActionPayload<number>>;
     readonly setSampleEnvelopeSustain: ProjectReducer<TrackActionPayload<number>>;
     readonly setSampleEnvelopeRelease: ProjectReducer<TrackActionPayload<number>>;
+    readonly createTrackPattern: ProjectReducer<TrackActionPayload<number>>;
+    readonly deleteTrackPattern: ProjectReducer<TrackActionPayload<string>>;
+    readonly selectPattern: ProjectReducer<TrackActionPayload<string | null>>;
+    readonly removeTrackPattern: ProjectReducer<TrackActionPayload<number>>;
     readonly removeTrackPatterns: ProjectReducer<TrackID>;
     readonly deleteTrack: ProjectReducer<TrackID>;
     readonly setMasterVolume: ProjectReducer<number>;
@@ -201,6 +207,7 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
         selectTrack: (state, action) => produce(state, draft => {
             if (draft) {
                 draft.track = action.payload;
+                draft.pattern = null;
             }
             return draft;
         }),
@@ -263,6 +270,35 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
         setSampleEnvelopeRelease: (state, action) => produce(state, draft => {
             const { track: id, value: release } = action.payload;
             return editSample(state, draft, id, sample => Sample.setEnvelopeRelease(sample, release));
+        }),
+        selectPattern: (state, action) => produce(state, draft => {
+            if (draft) {
+                const { track: id, value: patternID } = action.payload;
+
+                if (null === patternID) {
+                    draft.pattern = null;
+                } else {
+                    const { patterns } = draft.file.tracks[id];
+                    const pattern = patterns.find(ptn => patternID === ptn.id);
+
+                    if (pattern) {
+                        draft.pattern = patternID;
+                    }
+                }
+            }
+            return draft;
+        }),
+        createTrackPattern: (state, action) => produce(state, draft => {
+            const { track: id, value: start } = action.payload;
+            return editTrack(state, draft, id, track => Track.createPattern(track, start));
+        }),
+        deleteTrackPattern: (state, action) => produce(state, draft => {
+            const { track: id, value: pattern } = action.payload;
+            return editTrack(state, draft, id, track => Track.deletePattern(track, pattern));
+        }),
+        removeTrackPattern: (state, action) => produce(state, draft => {
+            const { track: id, value: bar } = action.payload;
+            return editTrack(state, draft, id, track => Track.removePattern(track, bar));
         }),
         removeTrackPatterns: (state, action) => produce(state, draft => {
             const id = action.payload;

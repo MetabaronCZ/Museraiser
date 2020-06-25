@@ -20,7 +20,7 @@ const filters: AppFilters = {
     AUDIO: [{ name: 'Audio files', extensions: PROJECT.SAMPLE.EXT }]
 };
 
-interface ContextItem {
+export interface ContextItem {
     readonly title: string;
     readonly onClick: () => void;
 }

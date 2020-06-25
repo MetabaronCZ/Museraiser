@@ -1,0 +1,15 @@
+.Bar {
+    $rad: $border-radius-default;
+    display: block;
+    height: 100%;
+    background: $color-dark;
+    cursor: pointer;
+
+    &--first {
+        border-radius: $rad 0 0 $rad;
+    }
+
+    &--last {
+        border-radius: 0 $rad $rad 0;
+    }
+}

@@ -5,7 +5,7 @@ BUGS
 
 TODO
 -----------------------------------------------------------
---  funkce insertBarAfter a insertBarBefore do Sequencer headeru
+--  po vlozeni Patternu prepocitat Bar[], aby se pridala nova stranka, pokud presahuje posledni
 --  Pattern.color (pro rozliseni v sekvenceru)
 --  kazdy Pattern bude mit time signature
     - 1 - 8 beats / bar

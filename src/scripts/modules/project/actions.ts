@@ -182,6 +182,36 @@ export const setTrackVolume = (track: TrackID, volume: number): AppThunk => disp
     dispatch(Project.actions.setTrackVolume({ track, value: volume }));
 };
 
+export const selectTrackPattern = (track: TrackID, pattern: string | null): AppThunk => dispatch => {
+    dispatch(selectTrack(track));
+    dispatch(Project.actions.selectPattern({ track, value: pattern }));
+};
+
+export const createTrackPattern = (track: TrackID, start: number): AppThunk => (dispatch, getState) => {
+    dispatch(Project.actions.createTrackPattern({ track, value: start }));
+
+    const { project } = getState();
+
+    if (project) {
+        // select created pattern
+        const { patterns } = project.file.tracks[track];
+        const pattern = patterns[0] ? patterns[0].id : null;
+        dispatch(selectTrackPattern(track, pattern));
+    }
+};
+
+export const deleteTrackPattern = (track: TrackID, pattern: string): AppThunk => dispatch => {
+    Dialog.ask(TXT.pattern.delete.ask).then(result => {
+        if (result) {
+            dispatch(Project.actions.deleteTrackPattern({ track, value: pattern }));
+        }
+    });
+};
+
+export const removeTrackPattern = (track: TrackID, bar: number): AppThunk => dispatch => {
+    dispatch(Project.actions.removeTrackPattern({ track, value: bar }));
+};
+
 export const removeTrackPatterns = (track: TrackID): AppThunk => dispatch => {
     Dialog.ask(TXT.track.removePatterns.message).then(result => {
         if (result) {

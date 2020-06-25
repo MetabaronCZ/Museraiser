@@ -40,7 +40,12 @@ export const TXT = {
     pattern: {
         title: 'Pattern',
         empty: 'Select pattern to start editing',
-        noPatterns: 'No patterns created'
+        noPatterns: 'No patterns created',
+        delete: {
+            title: 'Delete pattern',
+            ico: '✕',
+            ask: 'Do you want to delete this pattern? This will also delete its usage in sequencer.'
+        }
     },
     sample: sampleTexts,
     project: projectTexts,

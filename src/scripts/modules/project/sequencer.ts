@@ -1,5 +1,7 @@
 import { SEQUENCER } from 'data/config';
+
 import { TracksData } from 'modules/project/tracks';
+import { TrackData } from 'modules/project/tracks/track';
 
 const { BAR } = SEQUENCER;
 
@@ -7,12 +9,25 @@ export interface Bar {
     readonly id: number;
 }
 
+export interface BarInfo {
+    readonly title: string;
+    readonly isFirst: boolean;
+    readonly isLast: boolean;
+    readonly pattern: string;
+    readonly sequence: string;
+}
+
 export const createBars = (tracks: TracksData): Bar[] => {
     let count = BAR.PERPAGE;
 
-    main: for (const { sequences } of Object.values(tracks)) {
-        for (const { start, length } of sequences) {
-            const ptnEnd = start + length;
+    main: for (const { sequences, patterns } of Object.values(tracks)) {
+        for (const { id, pattern: patternID, start} of sequences) {
+            const pattern = patterns.find(ptn => patternID === ptn.id);
+
+            if (!pattern) {
+                throw new Error(`Could not create bars: invalid sequence ${id}`);
+            }
+            const ptnEnd = start + pattern.length;
             count = Math.max(ptnEnd, count);
 
             if (count >= BAR.MAX) {
@@ -25,4 +40,26 @@ export const createBars = (tracks: TracksData): Bar[] => {
     return Array(count).fill(0).map((_, i) => ({
         id: i
     }));
+};
+
+export const getBarInfo = (track: TrackData, bar: number): BarInfo | null => {
+    const { patterns, sequences } = track;
+
+    for (const ptn of patterns) {
+        for (const seq of sequences) {
+            const start = seq.start;
+            const end = start + ptn.length - 1;
+
+            if (start <= bar && end >= bar) {
+                return {
+                    title: ptn.name,
+                    pattern: seq.pattern,
+                    sequence: seq.id,
+                    isFirst: bar === start,
+                    isLast: bar === end
+                };
+            }
+        }
+    }
+    return null;
 };

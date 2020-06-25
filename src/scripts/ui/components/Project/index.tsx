@@ -22,8 +22,12 @@ export const ProjectUI: React.SFC = () => {
         Logger.error('Could not open project');
         return <IntroUI />;
     }
-    const { name, tracks, master } = project.file;
-    const track = project.track ? tracks[project.track] : null;
+    const { file, track: trackID, pattern: patternID } = project;
+    const { name, tracks, master } = file;
+
+    const track = trackID ? tracks[trackID] : null;
+    const pattern = track ? (track.patterns.find(ptn => patternID === ptn.id) || null) : null;
+
     return (
         <div className="Project">
             <div className="Project-top">
@@ -34,12 +38,12 @@ export const ProjectUI: React.SFC = () => {
             <div className="Project-bottom">
                 <div className="Project-bottom-patterns">
                     <Heading text={TXT.track.patterns} />
-                    <PatternsUI track={track} />
+                    <PatternsUI track={track ? track.id : null} />
                 </div>
 
                 <div className="Project-bottom-pianoRoll">
                     <Heading text={TXT.pattern.title} />
-                    <PianoRollUI />
+                    <PianoRollUI pattern={pattern} />
                 </div>
 
                 <div className="Project-bottom-sample">
