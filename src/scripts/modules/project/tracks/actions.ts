@@ -8,6 +8,7 @@ import { Volume } from 'modules/project/volume/actions';
 import { createSequence } from 'modules/project/sequence';
 import { createPattern, isPatternOverlap } from 'modules/project/pattern';
 import { TrackID, createTrack, TrackData } from 'modules/project/tracks/track';
+import { Pattern } from 'modules/project/pattern/actions';
 
 const { NAME, REVERB, PAN } = TRACK;
 
@@ -87,6 +88,14 @@ export const Track = {
         const { patterns, sequences } = track;
         track.patterns = patterns.filter(ptn => patternID !== ptn.id);
         track.sequences = sequences.filter(seq => patternID !== seq.pattern);
+    },
+    setPatternName: (track: TrackData, patternID: string, name: string) => {
+        const pattern = track.patterns.find(ptn => patternID === ptn.id);
+
+        if (!pattern) {
+            throw new Error(`Could not set pattern name: invalid ID ${patternID}`);
+        }
+        Pattern.setname(pattern, name);
     },
     removePattern: (track: TrackData, bar: number) => {
         const { patterns, sequences } = track;

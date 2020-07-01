@@ -121,6 +121,13 @@ export const SEQUENCER = Object.freeze({
     }
 });
 
+export const PATTERN = Object.freeze({
+    NAME: {
+        MIN: 1,
+        MAX: 16
+    }
+});
+
 export const ENVELOPE = Object.freeze({
     ATTACK: {
         DEFAULT: 0.01,

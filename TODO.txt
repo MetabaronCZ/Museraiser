@@ -5,6 +5,7 @@ BUGS
 
 TODO
 -----------------------------------------------------------
+--  Bar.insert
 --  po vlozeni Patternu prepocitat Bar[], aby se pridala nova stranka, pokud presahuje posledni
 --  kazdy Pattern bude mit time signature
     - 1 - 8 beats / bar
@@ -13,12 +14,4 @@ TODO
     - vypnout AudioContext pri uzavreni projektu
 --  nahradit systemove dialogy za notifikacni UI komponentu
 --  ukladat pozici a rozmery okna
---  v ramci projektu vytvaret sceny:
-    - cely song je scena
-    - sceny pro battle songy: INTRO, NEUTRAL, WINNING, LOSING, WON_OUTRO, LOSE_OUTRO
-    - pripravit eventy: zmena sceny po skonceni aktualniho "baru" (???nebo dvoj-baru)
-    - moznost kopirovat sekvence patternu mezi scenami
-    - vytvorit scenu z existujici (duplikovat)
-    - projekt tedy bude obsahovat: samply, patterny, sceny (sekvence patternu vsech stop)
-    ? tempo pro kazdou scenu zvlast
 --  responzivne po 1024x768

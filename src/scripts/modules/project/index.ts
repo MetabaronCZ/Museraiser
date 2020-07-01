@@ -59,6 +59,11 @@ type SampleActionPayload = TrackActionPayload<{
     readonly buffer: string; // base64 encoded sample buffer
 }>;
 
+type PatternActionPayload<T> = TrackActionPayload<{
+    readonly pattern: string; // pattern ID
+    readonly attr: T;
+}>;
+
 type FilterActionPayload = TrackActionPayload<{
     readonly filter: FilterType;
     readonly attr: number; // filter attribute
@@ -93,6 +98,7 @@ type ProjectReducers = {
     readonly deleteTrackPattern: ProjectReducer<TrackActionPayload<string>>;
     readonly selectPattern: ProjectReducer<TrackActionPayload<string | null>>;
     readonly removeTrackPattern: ProjectReducer<TrackActionPayload<number>>;
+    readonly setTrackPatternName: ProjectReducer<PatternActionPayload<string>>;
     readonly removeTrackPatterns: ProjectReducer<TrackID>;
     readonly deleteTrack: ProjectReducer<TrackID>;
     readonly setMasterVolume: ProjectReducer<number>;
@@ -299,6 +305,10 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
         removeTrackPattern: (state, action) => produce(state, draft => {
             const { track: id, value: bar } = action.payload;
             return editTrack(state, draft, id, track => Track.removePattern(track, bar));
+        }),
+        setTrackPatternName: (state, action) => produce(state, draft => {
+            const { track: id, value: { pattern, attr: name } } = action.payload;
+            return editTrack(state, draft, id, track => Track.setPatternName(track, pattern, name));
         }),
         removeTrackPatterns: (state, action) => produce(state, draft => {
             const id = action.payload;

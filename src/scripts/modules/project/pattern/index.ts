@@ -17,7 +17,9 @@ export interface PatternSnapshot {
     readonly name: string;
 }
 
-export const createPattern = (name = 'Pattern'): PatternData => ({
+export const getDefaultPatternName = (): string => 'Pattern';
+
+export const createPattern = (name = getDefaultPatternName()): PatternData => ({
     id: uuid(),
     length: 1,
     notes: [],

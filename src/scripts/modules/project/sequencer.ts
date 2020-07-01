@@ -45,20 +45,23 @@ export const createBars = (tracks: TracksData): Bar[] => {
 export const getBarInfo = (track: TrackData, bar: number): BarInfo | null => {
     const { patterns, sequences } = track;
 
-    for (const ptn of patterns) {
-        for (const seq of sequences) {
-            const start = seq.start;
-            const end = start + ptn.length - 1;
+    for (const seq of sequences) {
+        const ptn = patterns.find(p => seq.pattern === p.id);
 
-            if (start <= bar && end >= bar) {
-                return {
-                    title: ptn.name,
-                    pattern: seq.pattern,
-                    sequence: seq.id,
-                    isFirst: bar === start,
-                    isLast: bar === end
-                };
-            }
+        if (!ptn) {
+            continue;
+        }
+        const start = seq.start;
+        const end = start + ptn.length - 1;
+
+        if (start <= bar && end >= bar) {
+            return {
+                title: ptn.name,
+                pattern: ptn.id,
+                sequence: seq.id,
+                isFirst: bar === start,
+                isLast: bar === end
+            };
         }
     }
     return null;

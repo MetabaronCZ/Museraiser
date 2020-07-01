@@ -8,9 +8,10 @@ import { clickOnly } from 'modules/events';
 import { ProjectDataState } from 'modules/project';
 import { AppDispatch, AppState } from 'modules/store';
 import { TrackID } from 'modules/project/tracks/track';
-import { selectTrackPattern, deleteTrackPattern } from 'modules/project/actions';
+import { deleteTrackPattern } from 'modules/project/actions';
 
 import { Paragraph } from 'ui/common/Paragraph';
+import { PatternTitle } from 'ui/components/Project/PatternTitle';
 
 interface Props {
     readonly track: TrackID | null;
@@ -42,52 +43,24 @@ export const PatternsUI: React.SFC<Props> = ({ track: trackID }) => {
                     })}
                     key={ptn.id}
                 >
-                    <button
-                        className="Patterns-item-title"
-                        type="button"
-                        onClick={clickOnly(
-                            () => dispatch(selectTrackPattern(track.id, ptn.id))
-                        )}
-                    >
-                        {ptn.name}
-                    </button>
+                    <div className="Patterns-item-title">
+                        <PatternTitle id={ptn.id} name={ptn.name} track={track.id} />
+                    </div>
 
-                    <button
-                        className="Patterns-item-action"
-                        type="button"
-                        title={TXT.pattern.delete.title}
-                        onClick={clickOnly(
-                            () => dispatch(deleteTrackPattern(track.id, ptn.id))
-                        )}
-                    >
-                        {TXT.pattern.delete.ico}
-                    </button>
+                    <div className="Patterns-item-action">
+                        <button
+                            className="PatternButton"
+                            type="button"
+                            title={TXT.pattern.delete.title}
+                            onClick={clickOnly(
+                                () => dispatch(deleteTrackPattern(track.id, ptn.id))
+                            )}
+                        >
+                            {TXT.pattern.delete.ico}
+                        </button>
+                    </div>
                 </li>
             ))}
         </ul>
     );
 };
-
-/*
-<List>
-    {track.patterns.map(ptn => (
-        <ButtonList type="stretched" key={ptn.id}>
-            <LinkButton
-                onClick={() => dispatch(selectTrackPattern(track.id, ptn.id))}
-            >
-                {selected === ptn.id
-                    ? <strong>{ptn.name}</strong>
-                    : ptn.name
-                }
-            </LinkButton>
-
-            <LinkButton
-                title={TXT.pattern.delete.title}
-                onClick={() => dispatch(deleteTrackPattern(track.id, ptn.id))}
-            >
-                {TXT.pattern.delete.ico}
-            </LinkButton>
-        </ButtonList>
-    ))}
-</List>
-*/

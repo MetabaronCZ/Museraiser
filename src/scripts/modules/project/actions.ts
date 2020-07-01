@@ -208,6 +208,10 @@ export const deleteTrackPattern = (track: TrackID, pattern: string): AppThunk =>
     });
 };
 
+export const setTrackPatternName = (track: TrackID, pattern: string, name: string): AppThunk => dispatch => {
+    dispatch(Project.actions.setTrackPatternName({ track, value: { pattern, attr: name } }));
+};
+
 export const removeTrackPattern = (track: TrackID, bar: number): AppThunk => dispatch => {
     dispatch(Project.actions.removeTrackPattern({ track, value: bar }));
 };
