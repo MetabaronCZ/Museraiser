@@ -11,32 +11,37 @@ import { BarUI } from 'ui/components/Project/Sequencer/Bar';
 import { getBarMenu } from 'ui/components/Project/Sequencer/menu';
 
 interface Props {
-    readonly tracks: TracksData;
     readonly bars: Bar[];
-    readonly selected: TrackID | null;
+    readonly tracks: TracksData;
+    readonly track: TrackID | null;
+    readonly pattern: string | null;
 }
 
-export const SequencerUI: React.SFC<Props> = ({ tracks, bars, selected }) => {
+export const SequencerUI: React.SFC<Props> = ({ tracks, bars, track, pattern }) => {
     const dispatch = useDispatch<AppDispatch>();
     return (
         <ul className="Sequencer">
-            {Object.values(tracks).map(({ id }) => (
+            {Object.values(tracks).map(({ id: trackID }) => (
                 <li
                     className={cn('Sequencer-track', {
-                        'is-selected': id === selected
+                        'is-selected': trackID === track
                     })}
-                    key={id}
+                    key={trackID}
                 >
                     {bars.map(bar => {
-                        const barInfo = getBarInfo(tracks[id], bar.id);
+                        const barInfo = getBarInfo(tracks[trackID], bar.id);
                         return (
                             <div
                                 className="Sequencer-track-bar"
                                 key={bar.id}
-                                onContextMenu={getBarMenu(dispatch, id, bar.id, !!barInfo)}
+                                onContextMenu={getBarMenu(dispatch, trackID, bar.id, !!barInfo)}
                             >
                                 {!!barInfo && (
-                                    <BarUI track={id} info={barInfo} />
+                                    <BarUI
+                                        track={trackID}
+                                        info={barInfo}
+                                        selected={pattern === barInfo.pattern}
+                                    />
                                 )}
                             </div>
                         );

@@ -6,7 +6,6 @@ BUGS
 TODO
 -----------------------------------------------------------
 --  po vlozeni Patternu prepocitat Bar[], aby se pridala nova stranka, pokud presahuje posledni
---  Pattern.color (pro rozliseni v sekvenceru)
 --  kazdy Pattern bude mit time signature
     - 1 - 8 beats / bar
     - delky not 1/64 az 64/64 (1/1)

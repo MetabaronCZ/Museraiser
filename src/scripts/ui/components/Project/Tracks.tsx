@@ -22,10 +22,11 @@ const trackMasterHeaders: string[] = [
 
 interface Props {
     readonly tracks: TracksData;
-    readonly selected: TrackID | null;
+    readonly track: TrackID | null;
+    readonly pattern: string | null;
 }
 
-export const TracksUI: React.SFC<Props> = ({ tracks, selected }) => {
+export const TracksUI: React.SFC<Props> = ({ tracks, track, pattern }) => {
     const [page, setPage] = useState<number>(0);
 
     const bars = createBars(tracks);
@@ -38,7 +39,7 @@ export const TracksUI: React.SFC<Props> = ({ tracks, selected }) => {
         <div className="Tracks">
             <div className="Tracks-control">
                 <TracksHeaderUI items={[TXT.project.tracks]} />
-                <TracksControlUI tracks={tracks} selected={selected} />
+                <TracksControlUI tracks={tracks} selected={track} />
             </div>
 
             <div className="Tracks-grid">
@@ -46,8 +47,9 @@ export const TracksUI: React.SFC<Props> = ({ tracks, selected }) => {
 
                 <SequencerUI
                     tracks={tracks}
+                    track={track}
+                    pattern={pattern}
                     bars={bars.slice(from, to)}
-                    selected={selected}
                 />
 
                 <PagingUI
@@ -61,7 +63,7 @@ export const TracksUI: React.SFC<Props> = ({ tracks, selected }) => {
 
             <div className="Tracks-master">
                 <TracksHeaderUI items={trackMasterHeaders} />
-                <TracksMasterUI tracks={tracks} selected={selected} />
+                <TracksMasterUI tracks={tracks} selected={track} />
             </div>
         </div>
     );

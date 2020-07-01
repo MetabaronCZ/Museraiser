@@ -1,0 +1,30 @@
+.Patterns {
+    list-style-type: none;
+    margin-bottom: 2*$vu;
+
+    &-item {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 1px;
+
+        &-title,
+        &-action {
+            @extend %button-default;
+            padding: 0 ($vu/2);
+        }
+
+        &-title {
+            flex: 1;
+            text-align: left;
+        }
+
+        &-action {
+            text-align: center;
+            margin-left: ($vu/2);
+        }
+
+        &.is-selected {
+            background: $color-light;
+        }
+    }
+}

@@ -11,15 +11,17 @@ import { selectTrackPattern } from 'modules/project/actions';
 interface Props {
     readonly track: TrackID;
     readonly info: BarInfo;
+    readonly selected: boolean;
 }
 
-export const BarUI: React.SFC<Props> = ({ track, info }) => {
+export const BarUI: React.SFC<Props> = ({ track, info, selected }) => {
     const dispatch = useDispatch<AppDispatch>();
     return (
         <div
             className={cn('Bar', {
                 'Bar--first': info.isFirst,
-                'Bar--last': info.isLast
+                'Bar--last': info.isLast,
+                'is-selected': selected
             })}
             title={info.title}
             onClick={clickOnly(() => dispatch(selectTrackPattern(track, info.pattern)))}

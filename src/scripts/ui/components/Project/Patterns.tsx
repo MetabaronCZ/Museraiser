@@ -1,17 +1,16 @@
 import React from 'react';
+import cn from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TXT } from 'data/texts';
 
+import { clickOnly } from 'modules/events';
 import { ProjectDataState } from 'modules/project';
 import { AppDispatch, AppState } from 'modules/store';
 import { TrackID } from 'modules/project/tracks/track';
 import { selectTrackPattern, deleteTrackPattern } from 'modules/project/actions';
 
-import { List } from 'ui/common/List';
 import { Paragraph } from 'ui/common/Paragraph';
-import { LinkButton } from 'ui/common/LinkButton';
-import { ButtonList } from 'ui/common/ButtonList';
 
 interface Props {
     readonly track: TrackID | null;
@@ -29,33 +28,66 @@ export const PatternsUI: React.SFC<Props> = ({ track: trackID }) => {
     if (!track) {
         return <Paragraph>{TXT.track.notSelected}</Paragraph>;
     }
-    const selected = project.pattern;
     const { patterns } = track;
 
     if (!patterns.length) {
         return <Paragraph>{TXT.pattern.noPatterns}</Paragraph>;
     }
     return (
-        <List>
+        <ul className="Patterns">
             {track.patterns.map(ptn => (
-                <ButtonList type="stretched" key={ptn.id}>
-                    <LinkButton
-                        onClick={() => dispatch(selectTrackPattern(track.id, ptn.id))}
+                <li
+                    className={cn('Patterns-item', {
+                        'is-selected': ptn.id === project.pattern
+                    })}
+                    key={ptn.id}
+                >
+                    <button
+                        className="Patterns-item-title"
+                        type="button"
+                        onClick={clickOnly(
+                            () => dispatch(selectTrackPattern(track.id, ptn.id))
+                        )}
                     >
-                        {selected === ptn.id
-                            ? <strong>{ptn.name}</strong>
-                            : ptn.name
-                        }
-                    </LinkButton>
+                        {ptn.name}
+                    </button>
 
-                    <LinkButton
+                    <button
+                        className="Patterns-item-action"
+                        type="button"
                         title={TXT.pattern.delete.title}
-                        onClick={() => dispatch(deleteTrackPattern(track.id, ptn.id))}
+                        onClick={clickOnly(
+                            () => dispatch(deleteTrackPattern(track.id, ptn.id))
+                        )}
                     >
                         {TXT.pattern.delete.ico}
-                    </LinkButton>
-                </ButtonList>
+                    </button>
+                </li>
             ))}
-        </List>
+        </ul>
     );
 };
+
+/*
+<List>
+    {track.patterns.map(ptn => (
+        <ButtonList type="stretched" key={ptn.id}>
+            <LinkButton
+                onClick={() => dispatch(selectTrackPattern(track.id, ptn.id))}
+            >
+                {selected === ptn.id
+                    ? <strong>{ptn.name}</strong>
+                    : ptn.name
+                }
+            </LinkButton>
+
+            <LinkButton
+                title={TXT.pattern.delete.title}
+                onClick={() => dispatch(deleteTrackPattern(track.id, ptn.id))}
+            >
+                {TXT.pattern.delete.ico}
+            </LinkButton>
+        </ButtonList>
+    ))}
+</List>
+*/

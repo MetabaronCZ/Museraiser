@@ -32,7 +32,7 @@ export const ProjectUI: React.SFC = () => {
         <div className="Project">
             <div className="Project-top">
                 <Heading size="large" text={`${TXT.project.title}: ${name}`} />
-                <TracksUI tracks={tracks} selected={project.track} />
+                <TracksUI tracks={tracks} track={trackID} pattern={patternID} />
             </div>
 
             <div className="Project-bottom">

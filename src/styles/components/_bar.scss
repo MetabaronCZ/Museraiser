@@ -3,13 +3,24 @@
     display: block;
     height: 100%;
     background: $color-dark;
+    border: $border-size solid $color-dark;
+    border-left-width: 0;
+    border-right-width: 0;
     cursor: pointer;
 
     &--first {
-        border-radius: $rad 0 0 $rad;
+        border-left-width: $border-size;
+        border-top-left-radius: $rad;
+        border-bottom-left-radius: $rad;
     }
 
     &--last {
-        border-radius: 0 $rad $rad 0;
+        border-right-width: $border-size;
+        border-top-right-radius: $rad;
+        border-bottom-right-radius: $rad;
+    }
+
+    &.is-selected {
+        background-color: $color-lighter;
     }
 }
