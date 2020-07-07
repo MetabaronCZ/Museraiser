@@ -47,8 +47,8 @@ export const TracksUI: React.SFC<Props> = ({ tracks, track, pattern }) => {
 
                 <SequencerUI
                     tracks={tracks}
-                    track={track}
-                    pattern={pattern}
+                    selectedTrack={track}
+                    selectedPattern={pattern}
                     bars={bars.slice(from, to)}
                 />
 

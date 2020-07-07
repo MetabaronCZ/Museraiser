@@ -5,7 +5,7 @@ import { TRACK } from 'data/config';
 import { TracksData } from 'modules/project/tracks';
 import { createSample } from 'modules/project/sample';
 import { Volume } from 'modules/project/volume/actions';
-import { createSequence } from 'modules/project/sequence';
+import { createSequence, getSequence } from 'modules/project/sequence';
 import { createPattern, isPatternOverlap } from 'modules/project/pattern';
 import { TrackID, createTrack, TrackData } from 'modules/project/tracks/track';
 import { Pattern } from 'modules/project/pattern/actions';
@@ -97,13 +97,12 @@ export const Track = {
         }
         Pattern.setname(pattern, name);
     },
-    removePattern: (track: TrackData, bar: number) => {
-        const { patterns, sequences } = track;
+    removeSequence: (track: TrackData, bar: number) => {
+        const seq = getSequence(track, bar);
 
-        track.sequences = sequences.filter(seq => {
-            const pattern = patterns.find(ptn => seq.pattern === ptn.id);
-            return !!pattern && (seq.start > bar || seq.start + pattern.length < bar);
-        });
+        if (seq) {
+            track.sequences = track.sequences.filter(s => seq.id !== s.id);
+        }
     },
     removePatterns: (track: TrackData) => {
         track.sequences.length = 0;

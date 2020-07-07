@@ -200,6 +200,10 @@ export const createTrackPattern = (track: TrackID, start: number): AppThunk => (
     }
 };
 
+export const insertTrackPattern = (track: TrackID, pattern: string, bar: number): AppThunk => dispatch => {
+    dispatch(Project.actions.insertTrackPattern({ track, value: { pattern, attr: bar } }));
+};
+
 export const deleteTrackPattern = (track: TrackID, pattern: string): AppThunk => dispatch => {
     Dialog.ask(TXT.pattern.delete.ask).then(result => {
         if (result) {
@@ -212,8 +216,8 @@ export const setTrackPatternName = (track: TrackID, pattern: string, name: strin
     dispatch(Project.actions.setTrackPatternName({ track, value: { pattern, attr: name } }));
 };
 
-export const removeTrackPattern = (track: TrackID, bar: number): AppThunk => dispatch => {
-    dispatch(Project.actions.removeTrackPattern({ track, value: bar }));
+export const removeTrackSequence = (track: TrackID, bar: number): AppThunk => dispatch => {
+    dispatch(Project.actions.removeTrackSequence({ track, value: bar }));
 };
 
 export const removeTrackPatterns = (track: TrackID): AppThunk => dispatch => {

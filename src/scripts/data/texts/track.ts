@@ -22,7 +22,8 @@ export const trackTexts = {
         message: `Track name should be between ${TRACK.NAME.MIN} and ${TRACK.NAME.MAX} characters!`
     },
     createPattern: 'Create pattern',
-    removePattern: 'Remove pattern',
+    insertPattern: 'Insert pattern',
+    removeSequence: 'Remove pattern',
     removePatterns: {
         title: 'Remove paterns',
         message: 'Do you want to remove patterns from this track?'

@@ -95,9 +95,10 @@ type ProjectReducers = {
     readonly setSampleEnvelopeSustain: ProjectReducer<TrackActionPayload<number>>;
     readonly setSampleEnvelopeRelease: ProjectReducer<TrackActionPayload<number>>;
     readonly createTrackPattern: ProjectReducer<TrackActionPayload<number>>;
+    readonly insertTrackPattern: ProjectReducer<PatternActionPayload<number>>;
     readonly deleteTrackPattern: ProjectReducer<TrackActionPayload<string>>;
     readonly selectPattern: ProjectReducer<TrackActionPayload<string | null>>;
-    readonly removeTrackPattern: ProjectReducer<TrackActionPayload<number>>;
+    readonly removeTrackSequence: ProjectReducer<TrackActionPayload<number>>;
     readonly setTrackPatternName: ProjectReducer<PatternActionPayload<string>>;
     readonly removeTrackPatterns: ProjectReducer<TrackID>;
     readonly deleteTrack: ProjectReducer<TrackID>;
@@ -298,13 +299,17 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
             const { track: id, value: start } = action.payload;
             return editTrack(state, draft, id, track => Track.createPattern(track, start));
         }),
+        insertTrackPattern: (state, action) => produce(state, draft => {
+            const { track: id, value: { pattern, attr: bar } } = action.payload;
+            return editTrack(state, draft, id, track => Track.insertPattern(track, pattern, bar));
+        }),
         deleteTrackPattern: (state, action) => produce(state, draft => {
             const { track: id, value: pattern } = action.payload;
             return editTrack(state, draft, id, track => Track.deletePattern(track, pattern));
         }),
-        removeTrackPattern: (state, action) => produce(state, draft => {
+        removeTrackSequence: (state, action) => produce(state, draft => {
             const { track: id, value: bar } = action.payload;
-            return editTrack(state, draft, id, track => Track.removePattern(track, bar));
+            return editTrack(state, draft, id, track => Track.removeSequence(track, bar));
         }),
         setTrackPatternName: (state, action) => produce(state, draft => {
             const { track: id, value: { pattern, attr: name } } = action.payload;

@@ -13,34 +13,34 @@ import { getBarMenu } from 'ui/components/Project/Sequencer/menu';
 interface Props {
     readonly bars: Bar[];
     readonly tracks: TracksData;
-    readonly track: TrackID | null;
-    readonly pattern: string | null;
+    readonly selectedTrack: TrackID | null;
+    readonly selectedPattern: string | null;
 }
 
-export const SequencerUI: React.SFC<Props> = ({ tracks, bars, track, pattern }) => {
+export const SequencerUI: React.SFC<Props> = ({ tracks, bars, selectedTrack, selectedPattern }) => {
     const dispatch = useDispatch<AppDispatch>();
     return (
         <ul className="Sequencer">
-            {Object.values(tracks).map(({ id: trackID }) => (
+            {Object.values(tracks).map(track => (
                 <li
                     className={cn('Sequencer-track', {
-                        'is-selected': trackID === track
+                        'is-selected': selectedTrack === track.id
                     })}
-                    key={trackID}
+                    key={track.id}
                 >
                     {bars.map(bar => {
-                        const barInfo = getBarInfo(tracks[trackID], bar.id);
+                        const barInfo = getBarInfo(track, bar.id);
                         return (
                             <div
                                 className="Sequencer-track-bar"
                                 key={bar.id}
-                                onContextMenu={getBarMenu(dispatch, trackID, bar.id, !!barInfo)}
+                                onContextMenu={getBarMenu(dispatch, track, bar.id, !!barInfo)}
                             >
                                 {!!barInfo && (
                                     <BarUI
-                                        track={trackID}
+                                        track={track.id}
                                         info={barInfo}
-                                        selected={pattern === barInfo.pattern}
+                                        selected={selectedPattern === barInfo.pattern}
                                     />
                                 )}
                             </div>

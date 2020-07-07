@@ -1,5 +1,5 @@
 import p from 'path';
-import { remote, FileFilter } from 'electron';
+import { remote, FileFilter, Menu } from 'electron';
 
 import { TXT } from 'data/texts';
 import { PROJECT } from 'data/config';
@@ -22,8 +22,25 @@ const filters: AppFilters = {
 
 export interface ContextItem {
     readonly title: string;
-    readonly onClick: () => void;
+    readonly disabled?: boolean;
+    readonly submenu?: ContextItem[];
+    readonly onClick?: () => void;
 }
+
+const getContextMenu = (items: ContextItem[]): Menu => {
+    const menu = new remote.Menu();
+
+    for (const { title, disabled = false, submenu, onClick } of items) {
+        const item = new remote.MenuItem({
+            label: title,
+            enabled: !disabled,
+            submenu: submenu ? getContextMenu(submenu) : undefined,
+            click: onClick
+        });
+        menu.append(item);
+    }
+    return menu;
+};
 
 export const Dialog = {
     ask: (text: string, positive = defPositive, negative = defNegative): AskDialog => {
@@ -68,15 +85,7 @@ export const Dialog = {
         remote.dialog.showErrorBox(title, msg);
     },
     contextMenu: (items: ContextItem[]): void => {
-        const menu = new remote.Menu();
-
-        for (const { title, onClick } of items) {
-            const item = new remote.MenuItem({
-                label: title,
-                click: onClick
-            });
-            menu.append(item);
-        }
+        const menu = getContextMenu(items);
         menu.popup();
     }
 };
