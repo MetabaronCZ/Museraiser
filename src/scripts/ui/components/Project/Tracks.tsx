@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { TXT } from 'data/texts';
 import { SEQUENCER } from 'data/config';
 
+import { createPaging } from 'modules/paging';
 import { TracksData } from 'modules/project/tracks';
 import { TrackID } from 'modules/project/tracks/track';
 import { createBars } from 'modules/project/sequencer';
@@ -30,7 +31,9 @@ export const TracksUI: React.SFC<Props> = ({ tracks, track, pattern }) => {
     const [page, setPage] = useState<number>(0);
 
     const bars = createBars(tracks);
-    const from = page * perPage;
+    const paging = createPaging(page, bars.length, perPage, BAR.PAGING, setPage);
+
+    const from = paging.page * perPage;
     const to = from + perPage;
 
     const headers = Array(perPage).fill(0).map((_, i) => `${from + i + 1}`);
@@ -52,13 +55,7 @@ export const TracksUI: React.SFC<Props> = ({ tracks, track, pattern }) => {
                     bars={bars.slice(from, to)}
                 />
 
-                <PagingUI
-                    page={page}
-                    perPage={perPage}
-                    count={bars.length}
-                    maxPages={BAR.PAGING}
-                    onPage={setPage}
-                />
+                <PagingUI paging={paging} />
             </div>
 
             <div className="Tracks-master">

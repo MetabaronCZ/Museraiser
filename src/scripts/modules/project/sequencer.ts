@@ -37,6 +37,14 @@ export const createBars = (tracks: TracksData): Bar[] => {
         }
     }
 
+    // update count to be multiple of per-page value
+    const residuum = count % BAR.PERPAGE;
+
+    if (residuum) {
+        count += BAR.PERPAGE - residuum;
+        count = Math.min(count, BAR.MAX);
+    }
+
     return Array(count).fill(0).map((_, i) => ({
         id: i
     }));
