@@ -14,10 +14,11 @@ import { FormInput } from 'ui/common/FormInput';
 interface Props {
     readonly id: string;
     readonly name: string;
+    readonly count: number; // pattern usage count
     readonly track: TrackID;
 }
 
-export const PatternTitle: React.SFC<Props> = ({ id, name, track }) => {
+export const PatternTitle: React.SFC<Props> = ({ id, name, count, track }) => {
     const dispatch = useDispatch<AppDispatch>();
     const [editable, setEditable] = useState(false);
 
@@ -42,7 +43,7 @@ export const PatternTitle: React.SFC<Props> = ({ id, name, track }) => {
             onClick={clickOnly(() => dispatch(selectTrackPattern(track, id)))}
             onDoubleClick={() => setEditable(true)}
         >
-            {name}
+            {name} ({count})
         </button>
     );
 };

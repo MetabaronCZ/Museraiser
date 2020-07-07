@@ -29,7 +29,7 @@ export const PatternsUI: React.SFC<Props> = ({ track: trackID }) => {
     if (!track) {
         return <Paragraph>{TXT.track.notSelected}</Paragraph>;
     }
-    const { patterns } = track;
+    const { patterns, sequences } = track;
 
     if (!patterns.length) {
         return <Paragraph>{TXT.pattern.noPatterns}</Paragraph>;
@@ -44,7 +44,12 @@ export const PatternsUI: React.SFC<Props> = ({ track: trackID }) => {
                     key={ptn.id}
                 >
                     <div className="Patterns-item-title">
-                        <PatternTitle id={ptn.id} name={ptn.name} track={track.id} />
+                        <PatternTitle
+                            id={ptn.id}
+                            name={ptn.name}
+                            track={track.id}
+                            count={sequences.filter(seq => ptn.id === seq.pattern).length}
+                        />
                     </div>
 
                     <div className="Patterns-item-action">
