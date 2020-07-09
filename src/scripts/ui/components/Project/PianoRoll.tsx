@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
 import cn from 'classnames';
+import React, { useState } from 'react';
 
 import { TXT } from 'data/texts';
 import { SEQUENCER } from 'data/config';
+import { sharpNotes } from 'data/notes';
 
 import { createPaging } from 'modules/paging';
+import { getNoteName } from 'modules/project/note';
 import { PatternData } from 'modules/project/pattern';
 
 import { PagingUI } from 'ui/common/Paging';
 import { Paragraph } from 'ui/common/Paragraph';
-import { sharpNotes } from 'data/notes';
-import { getNoteName } from 'modules/project/note';
 
 const { BEAT, OCTAVE } = SEQUENCER;
 const NOTES_PER_BEAT = BEAT.DIVISION;
