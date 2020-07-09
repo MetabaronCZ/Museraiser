@@ -5,9 +5,14 @@ BUGS
 
 TODO
 -----------------------------------------------------------
---  kazdy Pattern bude mit time signature
+>>  kazdy Pattern bude mit time signature
     - 1 - 8 beats / bar
-    - delky not 1/64 az 64/64 (1/1)
+    - delky not 1/16 az 16/16 (1/1)
+    --  pridat OCT+, OCT- tlacitka pro vertikalni posun PianoRoll UI
+        - nastavit v komponente jako useState s hodnotou 5
+--  pridat funkci "Add page" k sekvenceru i PianoRoll
+    - u sekvenceru prepocitavat jinak pages, ale neukladat
+    - u PianoRoll kontrolovat, jestli je za vsemi sekvencemi patternu misto
 --  pridat Panic button
     - vypnout AudioContext pri uzavreni projektu
 --  nahradit systemove dialogy za notifikacni UI komponentu

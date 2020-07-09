@@ -1,0 +1,49 @@
+.PianoRoll {
+    list-style-type: none;
+
+    &-row {
+        display: flex;
+        flex-direction: row;
+        height: $vu;
+        margin-bottom: 1px;
+
+        &-note {
+            @extend %text-small;
+            flex: 1;
+            font-size: $vu;
+            line-height: $vu;
+            background: $color-light;
+            margin-right: 1px;
+            text-align: center;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            &.PianoRoll-row-note--odd {
+                background-color: lighten($color-light, 5%);
+            }
+
+            &.PianoRoll-row-note--white {
+                flex-basis: 2*$vu;
+                background-color: $color-lightest;
+            }
+
+            &.PianoRoll-row-note--black {
+                flex-basis: 2*$vu;
+                color: $color-lightest;
+                background-color: $color-dark;
+            }
+        }
+
+        &:nth-child(12n) {
+            margin-bottom: 2px;
+        }
+
+        &:hover {
+            .PianoRoll-row-note:not(.PianoRoll-row-note--white):not(.PianoRoll-row-note--black) {
+                background: $color-neutral;
+            }
+        }
+    }
+}

@@ -118,6 +118,14 @@ export const SEQUENCER = Object.freeze({
         PERPAGE: 16,
         PAGING: 10,
         MAX: 999
+    },
+    BEAT: {
+        DEFAULT: 4,
+        PAGING: 10,
+        DIVISION: 16
+    },
+    OCTAVE: {
+        LENGTH: 12
     }
 });
 
