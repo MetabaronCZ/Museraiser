@@ -56,5 +56,15 @@ export const TXT = {
         prev: 'Previous page',
         next: 'Next page',
         last: 'Last page'
+    },
+    pianoRoll: {
+        octaveUp: {
+            title: 'Octave up',
+            ico: '∧'
+        },
+        octaveDown: {
+            title: 'Octave down',
+            ico: '∨'
+        }
     }
 };

@@ -1,5 +1,10 @@
 import { noteNames, sharpNotes } from 'data/notes';
 
+import { limitNumber } from 'core/number';
+import { SEQUENCER } from 'data/config';
+
+const { OCTAVE } = SEQUENCER;
+
 export type NoteLength = 1 | 2 | 4 | 8 | 16;
 
 export interface NoteData {
@@ -32,7 +37,9 @@ export const serializeNote = (note: NoteData): NoteSnapshot => ({
 });
 
 export const getNoteName = (pitch: number): string => {
-    const octave = -1 + Math.floor(pitch / 12);
+    let octave = OCTAVE.MIN + Math.floor(pitch / 12);
+    octave = limitNumber(octave, OCTAVE.MIN, OCTAVE.MAX);
+
     const index = pitch % 12;
     const note = noteNames[index] || '?';
     const isSharp = sharpNotes.includes(index);

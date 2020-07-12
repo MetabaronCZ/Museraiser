@@ -125,6 +125,8 @@ export const SEQUENCER = Object.freeze({
         DIVISION: 16
     },
     OCTAVE: {
+        MIN: -1,
+        MAX: 9,
         LENGTH: 12
     }
 });

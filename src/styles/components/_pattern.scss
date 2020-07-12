@@ -1,0 +1,41 @@
+.Pattern {
+    display: flex;
+    flex-direction: row;
+
+    &-grid {
+        flex: 1;
+    }
+
+    &-actions {
+        display: flex;
+        flex-direction: column;
+        background: $color-neutral;
+        margin-left: ($vu/2);
+
+        &-center {
+            flex: 1;
+        }
+
+        &-button {
+            @extend %button-reset;
+            width: 2*$vu;
+            line-height: 3*$vu;
+            color: $color-lighter;
+            text-align: center;
+
+            &:hover,
+            &:focus {
+                background: $color-dark;
+            }
+    
+            &:disabled {
+                color: $color-light;
+    
+                &:hover,
+                &:focus {
+                    background: $color-neutral;
+                }
+            }
+        }
+    }
+}
