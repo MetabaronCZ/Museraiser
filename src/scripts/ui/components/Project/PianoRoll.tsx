@@ -46,8 +46,16 @@ export const PianoRollUI: React.SFC<Props> = ({ track, pattern }) => {
         return <Paragraph>{TXT.pattern.empty}</Paragraph>;
     }
     const { beats } = pattern;
-    const paging = createPaging(page, pattern.length * beats, beats, BEAT.PAGING, setPage);
 
+    const paging = createPaging(
+        page,
+        pattern.length * beats,
+        beats,
+        BEAT.PAGING,
+        setPage,
+        canAddPatternPage(track, pattern),
+        () => dispatch(addTrackPatternPage(track.id, pattern.id))
+    );
     const rows = Array(OCTAVE.LENGTH * OCTAVES_TO_DISPLAY)
         .fill(0)
         .map((_, i) => OCTAVE.LENGTH * octave + i)
@@ -92,18 +100,6 @@ export const PianoRollUI: React.SFC<Props> = ({ track, pattern }) => {
                         onClick={clickOnly(() => changeOctave(octave + 1, setOctave))}
                     >
                         {TXT.pianoRoll.octaveUp.ico}
-                    </button>
-
-                    <div className="Pattern-actions-center" />
-
-                    <button
-                        className="Pattern-actions-button"
-                        type="button"
-                        title={TXT.pianoRoll.addPage.title}
-                        disabled={!canAddPatternPage(track, pattern)}
-                        onClick={clickOnly(() => dispatch(addTrackPatternPage(track.id, pattern.id)))}
-                    >
-                        {TXT.pianoRoll.addPage.ico}
                     </button>
 
                     <div className="Pattern-actions-center" />

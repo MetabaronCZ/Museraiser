@@ -11,6 +11,8 @@ interface Props {
 
 export const PagingUI: React.SFC<Props> = ({ paging }) => (
     <ul className="Paging">
+        <li className="Paging-item" />
+
         <li className="Paging-item">
             <PagingLink
                 text="≪"
@@ -62,6 +64,17 @@ export const PagingUI: React.SFC<Props> = ({ paging }) => (
                 active={paging.last.active}
                 onClick={paging.last.onClick}
             />
+        </li>
+
+        <li className="Paging-item">
+            {!!paging.onAddPage && (
+                <PagingLink
+                    text="✚"
+                    title={TXT.paging.addPage}
+                    active={!!paging.canAddPage}
+                    onClick={paging.onAddPage}
+                />
+            )}
         </li>
     </ul>
 );

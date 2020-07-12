@@ -19,6 +19,7 @@ export interface BarInfo {
 
 export const createBars = (tracks: TracksData): Bar[] => {
     let count = BAR.PERPAGE;
+    let hasSequences = false;
 
     main: for (const { sequences, patterns } of Object.values(tracks)) {
         for (const { id, pattern: patternID, start} of sequences) {
@@ -29,6 +30,7 @@ export const createBars = (tracks: TracksData): Bar[] => {
             }
             const ptnEnd = start + pattern.length;
             count = Math.max(ptnEnd, count);
+            hasSequences = true;
 
             if (count >= BAR.MAX) {
                 count = Math.min(count, BAR.MAX);
@@ -45,6 +47,11 @@ export const createBars = (tracks: TracksData): Bar[] => {
         count = Math.min(count, BAR.MAX);
     }
 
+    // add blank page to end
+    if (hasSequences) {
+        count += BAR.PERPAGE;
+        count = Math.min(count, BAR.MAX);
+    }
     return Array(count).fill(0).map((_, i) => ({
         id: i
     }));

@@ -1,6 +1,7 @@
 import { limitNumber } from 'core/number';
 
 type OnClick = () => void;
+type OnAddPage = () => void;
 type OnPage = (page: number) => void;
 
 interface PagingButton {
@@ -20,9 +21,11 @@ export interface Paging {
     readonly prev: PagingButton;
     readonly next: PagingButton;
     readonly last: PagingButton;
+    readonly canAddPage?: boolean;
+    readonly onAddPage?: OnAddPage;
 }
 
-export const createPaging = (page: number, count: number, perPage: number, maxPages: number, onPage: OnPage): Paging => {
+export const createPaging = (page: number, count: number, perPage: number, maxPages: number, onPage: OnPage, canAddPage = false, onAddPage?: OnAddPage): Paging => {
     const lastPage = Math.ceil(count / perPage) - 1;
 
     // page value correction
@@ -57,6 +60,8 @@ export const createPaging = (page: number, count: number, perPage: number, maxPa
         last: {
             active: page < lastPage,
             onClick: () => onPage(lastPage)
-        }
+        },
+        canAddPage,
+        onAddPage
     };
 };

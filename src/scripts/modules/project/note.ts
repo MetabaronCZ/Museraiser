@@ -44,5 +44,5 @@ export const getNoteName = (pitch: number): string => {
     const note = noteNames[index] || '?';
     const isSharp = sharpNotes.includes(index);
 
-    return `${note}${octave}${isSharp ? '#' : ''}`;
+    return `${note}${isSharp ? '#' : '–'}${octave}`;
 };
