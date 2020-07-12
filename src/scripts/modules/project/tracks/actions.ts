@@ -5,10 +5,10 @@ import { TRACK } from 'data/config';
 import { TracksData } from 'modules/project/tracks';
 import { createSample } from 'modules/project/sample';
 import { Volume } from 'modules/project/volume/actions';
-import { createSequence, getSequence } from 'modules/project/sequence';
-import { createPattern, isPatternOverlap } from 'modules/project/pattern';
-import { TrackID, createTrack, TrackData } from 'modules/project/tracks/track';
 import { Pattern } from 'modules/project/pattern/actions';
+import { createSequence, getSequence } from 'modules/project/sequence';
+import { TrackID, createTrack, TrackData } from 'modules/project/tracks/track';
+import { createPattern, isPatternOverlap, canAddPatternPage } from 'modules/project/pattern';
 
 const { NAME, REVERB, PAN } = TRACK;
 
@@ -96,6 +96,16 @@ export const Track = {
             throw new Error(`Could not set pattern name: invalid ID ${patternID}`);
         }
         Pattern.setname(pattern, name);
+    },
+    addPatternPage: (track: TrackData, patternID: string) => {
+        const pattern = track.patterns.find(ptn => patternID === ptn.id);
+
+        if (!pattern) {
+            throw new Error(`Could not add pattern page: invalid ID ${patternID}`);
+        }
+        if (canAddPatternPage(track, pattern)) {
+            Pattern.addPage(pattern);
+        }
     },
     removeSequence: (track: TrackData, bar: number) => {
         const seq = getSequence(track, bar);

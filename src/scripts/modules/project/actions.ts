@@ -216,6 +216,10 @@ export const setTrackPatternName = (track: TrackID, pattern: string, name: strin
     dispatch(Project.actions.setTrackPatternName({ track, value: { pattern, attr: name } }));
 };
 
+export const addTrackPatternPage = (track: TrackID, pattern: string): AppThunk => dispatch => {
+    dispatch(Project.actions.addTrackPatternPage({ track, value: pattern }));
+};
+
 export const removeTrackSequence = (track: TrackID, bar: number): AppThunk => dispatch => {
     dispatch(Project.actions.removeTrackSequence({ track, value: bar }));
 };

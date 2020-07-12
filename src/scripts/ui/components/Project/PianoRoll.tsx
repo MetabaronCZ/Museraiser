@@ -1,5 +1,6 @@
 import cn from 'classnames';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { limitNumber } from 'core/number';
 
@@ -7,9 +8,13 @@ import { TXT } from 'data/texts';
 import { SEQUENCER } from 'data/config';
 import { sharpNotes } from 'data/notes';
 
+import { clickOnly } from 'modules/events';
+import { AppDispatch } from 'modules/store';
 import { createPaging } from 'modules/paging';
 import { getNoteName } from 'modules/project/note';
-import { PatternData } from 'modules/project/pattern';
+import { TrackData } from 'modules/project/tracks/track';
+import { addTrackPatternPage } from 'modules/project/actions';
+import { PatternData, canAddPatternPage } from 'modules/project/pattern';
 
 import { PagingUI } from 'ui/common/Paging';
 import { Paragraph } from 'ui/common/Paragraph';
@@ -21,22 +26,23 @@ const OCTAVES_TO_DISPLAY = 3;
 
 type OnOctave = (octave: number) => void;
 
-const changeOctave = (value: number, cb: OnOctave) => (e: React.MouseEvent) => {
-    e.preventDefault();
-
+const changeOctave = (value: number, cb: OnOctave): void => {
     value = limitNumber(value, OCTAVE.MIN + 1, OCTAVE.MAX - 2);
     cb(value);
 };
 
 interface Props {
+    readonly track: TrackData | null;
     readonly pattern: PatternData | null;
 }
 
-export const PianoRollUI: React.SFC<Props> = ({ pattern }) => {
+export const PianoRollUI: React.SFC<Props> = ({ track, pattern }) => {
+    const dispatch = useDispatch<AppDispatch>();
+
     const [page, setPage] = useState<number>(0);
     const [octave, setOctave] = useState<number>(5);
 
-    if (!pattern) {
+    if (!track || !pattern) {
         return <Paragraph>{TXT.pattern.empty}</Paragraph>;
     }
     const { beats } = pattern;
@@ -83,7 +89,7 @@ export const PianoRollUI: React.SFC<Props> = ({ pattern }) => {
                         type="button"
                         title={TXT.pianoRoll.octaveUp.title}
                         disabled={octave === OCTAVE.MAX - 2}
-                        onClick={changeOctave(octave + 1, setOctave)}
+                        onClick={clickOnly(() => changeOctave(octave + 1, setOctave))}
                     >
                         {TXT.pianoRoll.octaveUp.ico}
                     </button>
@@ -93,9 +99,21 @@ export const PianoRollUI: React.SFC<Props> = ({ pattern }) => {
                     <button
                         className="Pattern-actions-button"
                         type="button"
+                        title={TXT.pianoRoll.addPage.title}
+                        disabled={!canAddPatternPage(track, pattern)}
+                        onClick={clickOnly(() => dispatch(addTrackPatternPage(track.id, pattern.id)))}
+                    >
+                        {TXT.pianoRoll.addPage.ico}
+                    </button>
+
+                    <div className="Pattern-actions-center" />
+
+                    <button
+                        className="Pattern-actions-button"
+                        type="button"
                         title={TXT.pianoRoll.octaveDown.title}
                         disabled={octave === OCTAVE.MIN + 1}
-                        onClick={changeOctave(octave - 1, setOctave)}
+                        onClick={clickOnly(() => changeOctave(octave - 1, setOctave))}
                     >
                         {TXT.pianoRoll.octaveDown.ico}
                     </button>

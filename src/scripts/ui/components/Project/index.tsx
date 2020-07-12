@@ -43,7 +43,7 @@ export const ProjectUI: React.SFC = () => {
 
                 <div className="Project-bottom-pianoRoll">
                     <Heading text={TXT.pattern.title} />
-                    <PianoRollUI pattern={pattern} />
+                    <PianoRollUI track={track} pattern={pattern} />
                 </div>
 
                 <div className="Project-bottom-sample">

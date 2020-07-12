@@ -65,6 +65,10 @@ export const TXT = {
         octaveDown: {
             title: 'Octave down',
             ico: '∨'
+        },
+        addPage: {
+            title: 'Add page',
+            ico: '✚'
         }
     }
 };

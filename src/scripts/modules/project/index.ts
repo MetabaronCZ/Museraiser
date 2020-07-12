@@ -100,6 +100,7 @@ type ProjectReducers = {
     readonly selectPattern: ProjectReducer<TrackActionPayload<string | null>>;
     readonly removeTrackSequence: ProjectReducer<TrackActionPayload<number>>;
     readonly setTrackPatternName: ProjectReducer<PatternActionPayload<string>>;
+    readonly addTrackPatternPage: ProjectReducer<TrackActionPayload<string>>;
     readonly removeTrackPatterns: ProjectReducer<TrackID>;
     readonly deleteTrack: ProjectReducer<TrackID>;
     readonly setMasterVolume: ProjectReducer<number>;
@@ -314,6 +315,10 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
         setTrackPatternName: (state, action) => produce(state, draft => {
             const { track: id, value: { pattern, attr: name } } = action.payload;
             return editTrack(state, draft, id, track => Track.setPatternName(track, pattern, name));
+        }),
+        addTrackPatternPage: (state, action) => produce(state, draft => {
+            const { track: id, value: pattern } = action.payload;
+            return editTrack(state, draft, id, track => Track.addPatternPage(track, pattern));
         }),
         removeTrackPatterns: (state, action) => produce(state, draft => {
             const id = action.payload;
