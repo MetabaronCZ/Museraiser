@@ -1,3 +1,5 @@
+import { NoteLength } from 'modules/project/note';
+
 /* eslint-disable no-underscore-dangle */
 declare const __ENVIRONMENT__: string;
 export const IS_DEV = ('dev' === __ENVIRONMENT__);
@@ -126,7 +128,7 @@ export const SEQUENCER = Object.freeze({
     },
     OCTAVE: {
         MIN: -1,
-        MAX: 9,
+        MAX: 8,
         LENGTH: 12
     }
 });
@@ -135,6 +137,24 @@ export const PATTERN = Object.freeze({
     NAME: {
         MIN: 1,
         MAX: 16
+    },
+    POLYPHONY: {
+        MAX: 8
+    }
+});
+
+export const NOTE = Object.freeze({
+    LENGTH: {
+        DEFAULT: '1/16' as NoteLength
+    },
+    PITCH: {
+        MIN: 0,
+        MAX: 119
+    },
+    VELOCITY: {
+        MIN: 0,
+        MAX: 127,
+        DEFAULT: 127
     }
 });
 

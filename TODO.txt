@@ -5,9 +5,8 @@ BUGS
 
 TODO
 -----------------------------------------------------------
->>  kazdy Pattern bude mit time signature
-    - 1 - 8 beats / bar
-    - delky not 1/16 az 16/16 (1/1)
+--  kazdy Pattern bude mit time signature
+    >> 1 - 8 beats / bar
 --  pridat Panic button
     - vypnout AudioContext pri uzavreni projektu
 --  nahradit systemove dialogy za notifikacni UI komponentu

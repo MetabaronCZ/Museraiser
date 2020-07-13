@@ -4,16 +4,21 @@ import { SEQUENCER } from 'data/config';
 
 import { getSequence } from 'modules/project/sequence';
 import { TrackData } from 'modules/project/tracks/track';
-import { NoteData, NoteSnapshot, parseNotes, serializeNote } from 'modules/project/note';
+import {
+    NoteData, NoteSnapshot,
+    parseNotes, serializeNote, getNoteLengthValue
+} from 'modules/project/note';
+
+const { BEAT } = SEQUENCER;
 
 export type BeatID = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
 export interface PatternData {
     readonly id: string;
-    readonly notes: NoteData[];
     name: string;
     beats: BeatID;
     length: number;
+    notes: NoteData[];
 }
 
 export interface PatternSnapshot {
@@ -28,7 +33,7 @@ export const getDefaultPatternName = (): string => 'Pattern';
 
 export const createPattern = (name = getDefaultPatternName()): PatternData => ({
     id: uuid(),
-    beats: SEQUENCER.BEAT.DEFAULT as BeatID,
+    beats: BEAT.DEFAULT as BeatID,
     length: 1,
     notes: [],
     name
@@ -53,10 +58,11 @@ const getPatternLength = (pattern: PatternData): number => {
     let end = 1;
 
     for (const note of pattern.notes) {
-        const noteEnd = note.start + note.length - 1;
+        const length = getNoteLengthValue(note.length);
+        const noteEnd = note.start + length - 1;
         end = Math.max(end, noteEnd);
     }
-    return end;
+    return Math.ceil(end / (pattern.beats * BEAT.DIVISION));
 };
 
 export const serializePatterns = (patterns: PatternData[]): PatternSnapshot[] => {
@@ -77,4 +83,16 @@ export const canAddPatternPage = (track: TrackData, pattern: PatternData): boole
     return !track.sequences
         .filter(seq => pattern.id === seq.pattern)
         .find(seq => getSequence(track, seq.start + pattern.length));
+};
+
+export const getPatternNote = (pattern: PatternData, pitch: number, time: number): NoteData | null => {
+    for (const note of pattern.notes) {
+        const length = getNoteLengthValue(note.length);
+        const noteEnd = note.start + length - 1;
+
+        if (pitch === note.pitch && note.start <= time && noteEnd >= time) {
+            return note;
+        }
+    }
+    return null;
 };

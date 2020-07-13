@@ -3,6 +3,7 @@ import { TXT } from 'data/texts';
 import { Audio } from 'modules/audio';
 import { Dialog } from 'modules/dialog';
 import { Logger } from 'modules/logger';
+import { NoteData } from 'modules/project/note';
 import { readFile, saveFile } from 'modules/file';
 import { AppThunk, AppDispatch } from 'modules/store';
 import { TrackID } from 'modules/project/tracks/track';
@@ -218,6 +219,14 @@ export const setTrackPatternName = (track: TrackID, pattern: string, name: strin
 
 export const addTrackPatternPage = (track: TrackID, pattern: string): AppThunk => dispatch => {
     dispatch(Project.actions.addTrackPatternPage({ track, value: pattern }));
+};
+
+export const insertTrackPatternNote = (track: TrackID, pattern: string, note: NoteData): AppThunk => dispatch => {
+    dispatch(Project.actions.insertTrackPatternNote({ track, value: { pattern, attr: note } }));
+};
+
+export const removeTrackPatternNote = (track: TrackID, pattern: string, note: string): AppThunk => dispatch => {
+    dispatch(Project.actions.removeTrackPatternNote({ track, value: { pattern, attr: note } }));
 };
 
 export const removeTrackSequence = (track: TrackID, bar: number): AppThunk => dispatch => {

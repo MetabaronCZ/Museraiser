@@ -10,6 +10,7 @@ import { Track } from 'modules/project/tracks/actions';
 import { Sample } from 'modules/project/sample/actions';
 import { Master } from 'modules/project/master/actions';
 import { ProjectFile } from 'modules/project/file/actions';
+import { NoteData } from 'modules/project/note';
 
 type OnTrackEdit = (track: TrackData) => void;
 type OnSampleEdit = (sample: SampleData) => void;
@@ -101,6 +102,8 @@ type ProjectReducers = {
     readonly removeTrackSequence: ProjectReducer<TrackActionPayload<number>>;
     readonly setTrackPatternName: ProjectReducer<PatternActionPayload<string>>;
     readonly addTrackPatternPage: ProjectReducer<TrackActionPayload<string>>;
+    readonly insertTrackPatternNote: ProjectReducer<PatternActionPayload<NoteData>>;
+    readonly removeTrackPatternNote: ProjectReducer<PatternActionPayload<string>>;
     readonly removeTrackPatterns: ProjectReducer<TrackID>;
     readonly deleteTrack: ProjectReducer<TrackID>;
     readonly setMasterVolume: ProjectReducer<number>;
@@ -319,6 +322,14 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
         addTrackPatternPage: (state, action) => produce(state, draft => {
             const { track: id, value: pattern } = action.payload;
             return editTrack(state, draft, id, track => Track.addPatternPage(track, pattern));
+        }),
+        insertTrackPatternNote: (state, action) => produce(state, draft => {
+            const { track: id, value: { pattern, attr: note } } = action.payload;
+            return editTrack(state, draft, id, track => Track.insertPatternNote(track, pattern, note));
+        }),
+        removeTrackPatternNote: (state, action) => produce(state, draft => {
+            const { track: id, value: { pattern, attr: note } } = action.payload;
+            return editTrack(state, draft, id, track => Track.removePatternNote(track, pattern, note));
         }),
         removeTrackPatterns: (state, action) => produce(state, draft => {
             const id = action.payload;

@@ -9,6 +9,7 @@ import { Pattern } from 'modules/project/pattern/actions';
 import { createSequence, getSequence } from 'modules/project/sequence';
 import { TrackID, createTrack, TrackData } from 'modules/project/tracks/track';
 import { createPattern, isPatternOverlap, canAddPatternPage } from 'modules/project/pattern';
+import { NoteData } from 'modules/project/note';
 
 const { NAME, REVERB, PAN } = TRACK;
 
@@ -106,6 +107,22 @@ export const Track = {
         if (canAddPatternPage(track, pattern)) {
             Pattern.addPage(pattern);
         }
+    },
+    insertPatternNote: (track: TrackData, patternID: string, note: NoteData) => {
+        const pattern = track.patterns.find(ptn => patternID === ptn.id);
+
+        if (!pattern) {
+            throw new Error(`Could not insert pattern note: invalid ID ${patternID}`);
+        }
+        Pattern.insertNote(pattern, note);
+    },
+    removePatternNote: (track: TrackData, patternID: string, note: string) => {
+        const pattern = track.patterns.find(ptn => patternID === ptn.id);
+
+        if (!pattern) {
+            throw new Error(`Could not insert pattern note: invalid ID ${patternID}`);
+        }
+        Pattern.removeNote(pattern, note);
     },
     removeSequence: (track: TrackData, bar: number) => {
         const seq = getSequence(track, bar);

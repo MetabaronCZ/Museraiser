@@ -1,4 +1,4 @@
-.Bar {
+.Note {
     $rad: $border-radius-default;
     display: block;
     height: 100%;
@@ -8,19 +8,15 @@
     border-right-width: 0;
     cursor: pointer;
 
-    &.Bar--first {
+    &.Note--first {
         border-left-width: $border-size;
         border-top-left-radius: $rad;
         border-bottom-left-radius: $rad;
     }
 
-    &.Bar--last {
+    &.Note--last {
         border-right-width: $border-size;
         border-top-right-radius: $rad;
         border-bottom-right-radius: $rad;
-    }
-
-    &.is-selected {
-        background-color: $color-lighter;
     }
 }
