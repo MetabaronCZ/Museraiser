@@ -1,3 +1,8 @@
 .FormSelect {
     @extend %form-field, %text-body;
+
+    &.FormSelect--mini {
+        display: inline-block;
+        width: auto;
+    }
 }

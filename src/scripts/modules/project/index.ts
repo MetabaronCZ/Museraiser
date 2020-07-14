@@ -1,16 +1,16 @@
 import produce from 'immer';
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
+import { NoteData } from 'modules/project/note';
+import { BeatID } from 'modules/project/pattern';
 import { MasterData } from 'modules/project/master';
 import { ProjectFileData } from 'modules/project/file';
-import { FilterType, SampleData } from 'modules/project/sample';
-import { TrackID, TrackData } from 'modules/project/tracks/track';
-
 import { Track } from 'modules/project/tracks/actions';
 import { Sample } from 'modules/project/sample/actions';
 import { Master } from 'modules/project/master/actions';
 import { ProjectFile } from 'modules/project/file/actions';
-import { NoteData } from 'modules/project/note';
+import { FilterType, SampleData } from 'modules/project/sample';
+import { TrackID, TrackData } from 'modules/project/tracks/track';
 
 type OnTrackEdit = (track: TrackData) => void;
 type OnSampleEdit = (sample: SampleData) => void;
@@ -101,6 +101,7 @@ type ProjectReducers = {
     readonly selectPattern: ProjectReducer<TrackActionPayload<string | null>>;
     readonly removeTrackSequence: ProjectReducer<TrackActionPayload<number>>;
     readonly setTrackPatternName: ProjectReducer<PatternActionPayload<string>>;
+    readonly setTrackPatternBeats: ProjectReducer<PatternActionPayload<BeatID>>;
     readonly addTrackPatternPage: ProjectReducer<TrackActionPayload<string>>;
     readonly insertTrackPatternNote: ProjectReducer<PatternActionPayload<NoteData>>;
     readonly removeTrackPatternNote: ProjectReducer<PatternActionPayload<string>>;
@@ -318,6 +319,10 @@ export const Project = createSlice<ProjectDataState, ProjectReducers>({
         setTrackPatternName: (state, action) => produce(state, draft => {
             const { track: id, value: { pattern, attr: name } } = action.payload;
             return editTrack(state, draft, id, track => Track.setPatternName(track, pattern, name));
+        }),
+        setTrackPatternBeats: (state, action) => produce(state, draft => {
+            const { track: id, value: { pattern, attr: beats } } = action.payload;
+            return editTrack(state, draft, id, track => Track.setPatternBeats(track, pattern, beats));
         }),
         addTrackPatternPage: (state, action) => produce(state, draft => {
             const { track: id, value: pattern } = action.payload;

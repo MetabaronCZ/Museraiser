@@ -1,14 +1,20 @@
 import { PATTERN, NOTE } from 'data/config';
 
 import { NoteData, getNoteLengthValue } from 'modules/project/note';
-import { PatternData, getPatternNote } from 'modules/project/pattern';
+import {
+    PatternData, BeatID, getPatternNote, getPatternLength
+} from 'modules/project/pattern';
 
 const { NAME } = PATTERN;
 
 export const Pattern = {
-    setname: (pattern: PatternData, name: string): void => {
+    setName: (pattern: PatternData, name: string): void => {
         name = name.substring(0, NAME.MAX);
         pattern.name = name;
+    },
+    setBeats: (pattern: PatternData, beats: BeatID): void => {
+        pattern.beats = beats;
+        pattern.length = getPatternLength(pattern);
     },
     addPage: (pattern: PatternData): void => {
         pattern.length++;

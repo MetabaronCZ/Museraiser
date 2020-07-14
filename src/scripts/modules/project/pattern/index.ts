@@ -11,7 +11,8 @@ import {
 
 const { BEAT } = SEQUENCER;
 
-export type BeatID = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+export const patternBeats = [1, 2, 3, 4, 5, 6, 7, 8] as const;
+export type BeatID = typeof patternBeats[number];
 
 export interface PatternData {
     readonly id: string;
@@ -54,7 +55,7 @@ export const parsePatterns = (data: any): PatternData[] => {
     return data.map((ptn: any) => parsePattern(ptn));
 };
 
-const getPatternLength = (pattern: PatternData): number => {
+export const getPatternLength = (pattern: PatternData): number => {
     let end = 1;
 
     for (const note of pattern.notes) {

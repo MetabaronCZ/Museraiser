@@ -7,7 +7,8 @@ import { noteNames, sharpNotes } from 'data/notes';
 
 const { OCTAVE } = SEQUENCER;
 
-export type NoteLength = '1/1' | '1/2' | '1/4' | '1/8' | '1/16';
+export const noteLengths = ['1/1', '1/2', '1/4', '1/8', '1/16'] as const;
+export type NoteLength = typeof noteLengths[number];
 
 export interface NoteData {
     id: string;

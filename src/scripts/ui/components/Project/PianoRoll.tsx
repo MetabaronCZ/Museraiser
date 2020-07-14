@@ -14,15 +14,21 @@ import { createPaging } from 'modules/paging';
 import { TrackData } from 'modules/project/tracks/track';
 import { PatternData, canAddPatternPage, getPatternNote } from 'modules/project/pattern';
 import { getNoteName, NoteLength, createNote, getNoteLengthValue } from 'modules/project/note';
-import { addTrackPatternPage, insertTrackPatternNote, removeTrackPatternNote } from 'modules/project/actions';
 
+import {
+    addTrackPatternPage, insertTrackPatternNote,
+    removeTrackPatternNote, setTrackPatternBeats
+} from 'modules/project/actions';
+
+import { Heading } from 'ui/common/Heading';
 import { PagingUI } from 'ui/common/Paging';
 import { Paragraph } from 'ui/common/Paragraph';
+import { PatternActions } from 'ui/components/Project/PatternActions';
 
 const { BEAT, OCTAVE } = SEQUENCER;
 
-const NOTES_PER_BEAT = BEAT.DIVISION;
 const OCTAVES_TO_DISPLAY = 3;
+const NOTES_PER_BEAT = BEAT.DIVISION;
 
 type OnOctave = (octave: number) => void;
 
@@ -52,11 +58,16 @@ export const PianoRollUI: React.SFC<Props> = ({ track, pattern }) => {
 
     const [page, setPage] = useState<number>(0);
     const [octave, setOctave] = useState<number>(5);
-    const [noteLength/*, setNoteLength*/] = useState<NoteLength>(NOTE.LENGTH.DEFAULT);
-    const [noteVelocity/*, setNoteVelocity*/] = useState<number>(NOTE.VELOCITY.DEFAULT);
+    const [noteLength, setNoteLength] = useState<NoteLength>(NOTE.LENGTH.DEFAULT);
+    const [noteVelocity, setNoteVelocity] = useState<number>(NOTE.VELOCITY.DEFAULT);
 
     if (!track || !pattern) {
-        return <Paragraph>{TXT.pattern.empty}</Paragraph>;
+        return (
+            <>
+                <Heading text={TXT.pattern.title} />
+                <Paragraph>{TXT.pattern.empty}</Paragraph>
+            </>
+        );
     }
     const { beats } = pattern;
 
@@ -76,6 +87,22 @@ export const PianoRollUI: React.SFC<Props> = ({ track, pattern }) => {
 
     return (
         <>
+            <Heading
+                text={TXT.pattern.title}
+                extra={
+                    <PatternActions
+                        track={track}
+                        pattern={pattern}
+                        beats={beats}
+                        length={noteLength}
+                        velocity={noteVelocity}
+                        onLength={setNoteLength}
+                        onVelocity={setNoteVelocity}
+                        onBeat={value => dispatch(setTrackPatternBeats(track.id, pattern.id, value))}
+                    />
+                }
+            />
+
             <div className="Pattern">
                 <div className="Pattern-grid">
                     <ul className="PianoRoll">

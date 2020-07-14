@@ -4,6 +4,7 @@ import { Audio } from 'modules/audio';
 import { Dialog } from 'modules/dialog';
 import { Logger } from 'modules/logger';
 import { NoteData } from 'modules/project/note';
+import { BeatID } from 'modules/project/pattern';
 import { readFile, saveFile } from 'modules/file';
 import { AppThunk, AppDispatch } from 'modules/store';
 import { TrackID } from 'modules/project/tracks/track';
@@ -215,6 +216,10 @@ export const deleteTrackPattern = (track: TrackID, pattern: string): AppThunk =>
 
 export const setTrackPatternName = (track: TrackID, pattern: string, name: string): AppThunk => dispatch => {
     dispatch(Project.actions.setTrackPatternName({ track, value: { pattern, attr: name } }));
+};
+
+export const setTrackPatternBeats = (track: TrackID, pattern: string, beats: BeatID): AppThunk => dispatch => {
+    dispatch(Project.actions.setTrackPatternBeats({ track, value: { pattern, attr: beats } }));
 };
 
 export const addTrackPatternPage = (track: TrackID, pattern: string): AppThunk => dispatch => {

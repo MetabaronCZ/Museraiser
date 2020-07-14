@@ -2,16 +2,29 @@ import { limitNumber } from 'core/number';
 
 import { TRACK } from 'data/config';
 
+import { NoteData } from 'modules/project/note';
 import { TracksData } from 'modules/project/tracks';
 import { createSample } from 'modules/project/sample';
 import { Volume } from 'modules/project/volume/actions';
 import { Pattern } from 'modules/project/pattern/actions';
 import { createSequence, getSequence } from 'modules/project/sequence';
 import { TrackID, createTrack, TrackData } from 'modules/project/tracks/track';
-import { createPattern, isPatternOverlap, canAddPatternPage } from 'modules/project/pattern';
-import { NoteData } from 'modules/project/note';
+
+import {
+    PatternData, BeatID,
+    createPattern, isPatternOverlap, canAddPatternPage
+} from 'modules/project/pattern';
 
 const { NAME, REVERB, PAN } = TRACK;
+
+const getPattern = (track: TrackData, patternID: string): PatternData => {
+    const pattern = track.patterns.find(ptn => patternID === ptn.id);
+
+    if (!pattern) {
+        throw new Error(`Could not get pattern: invalid ID ${patternID}`);
+    }
+    return pattern;
+};
 
 export const Track = {
     mute: (tracks: TracksData, id: TrackID) => {
@@ -64,11 +77,7 @@ export const Track = {
     },
     insertPattern: (track: TrackData, patternID: string, start: number) => {
         const { patterns, sequences } = track;
-        const pattern = patterns.find(ptn => patternID === ptn.id);
-
-        if (!pattern) {
-            throw new Error(`Could not insert pattern: invalid ID ${patternID}`);
-        }
+        const pattern = getPattern(track, patternID);
 
         // check free space for pattern insertion
         for (const seq of sequences) {
@@ -91,37 +100,26 @@ export const Track = {
         track.sequences = sequences.filter(seq => patternID !== seq.pattern);
     },
     setPatternName: (track: TrackData, patternID: string, name: string) => {
-        const pattern = track.patterns.find(ptn => patternID === ptn.id);
-
-        if (!pattern) {
-            throw new Error(`Could not set pattern name: invalid ID ${patternID}`);
-        }
-        Pattern.setname(pattern, name);
+        const pattern = getPattern(track, patternID);
+        Pattern.setName(pattern, name);
+    },
+    setPatternBeats: (track: TrackData, patternID: string, beats: BeatID) => {
+        const pattern = getPattern(track, patternID);
+        Pattern.setBeats(pattern, beats);
     },
     addPatternPage: (track: TrackData, patternID: string) => {
-        const pattern = track.patterns.find(ptn => patternID === ptn.id);
+        const pattern = getPattern(track, patternID);
 
-        if (!pattern) {
-            throw new Error(`Could not add pattern page: invalid ID ${patternID}`);
-        }
         if (canAddPatternPage(track, pattern)) {
             Pattern.addPage(pattern);
         }
     },
     insertPatternNote: (track: TrackData, patternID: string, note: NoteData) => {
-        const pattern = track.patterns.find(ptn => patternID === ptn.id);
-
-        if (!pattern) {
-            throw new Error(`Could not insert pattern note: invalid ID ${patternID}`);
-        }
+        const pattern = getPattern(track, patternID);
         Pattern.insertNote(pattern, note);
     },
     removePatternNote: (track: TrackData, patternID: string, note: string) => {
-        const pattern = track.patterns.find(ptn => patternID === ptn.id);
-
-        if (!pattern) {
-            throw new Error(`Could not insert pattern note: invalid ID ${patternID}`);
-        }
+        const pattern = getPattern(track, patternID);
         Pattern.removeNote(pattern, note);
     },
     removeSequence: (track: TrackData, bar: number) => {

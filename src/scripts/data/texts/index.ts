@@ -59,6 +59,18 @@ export const TXT = {
         addPage: 'Add page'
     },
     pianoRoll: {
+        velocity: {
+            title: 'Note velocity',
+            short: 'Velocity'
+        },
+        length: {
+            title: 'Note length',
+            short: 'Length'
+        },
+        beats: {
+            title: 'Pattern beats',
+            short: 'Beats'
+        },
         octaveUp: {
             title: 'Octave up',
             ico: '∧'

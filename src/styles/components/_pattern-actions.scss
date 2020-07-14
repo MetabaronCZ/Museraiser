@@ -1,0 +1,15 @@
+.PatternActions {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+
+    
+    &-item {
+        margin-left: $vu;
+        text-transform: none;
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+}
