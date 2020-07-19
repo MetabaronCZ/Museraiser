@@ -6,10 +6,11 @@ import { NOTE } from 'data/config';
 import { TrackData } from 'modules/project/tracks/track';
 import { Pattern } from 'modules/project/pattern/actions';
 import { NoteLength, noteLengths } from 'modules/project/note';
-import { BeatID, patternBeats, PatternData, canAddPatternPage } from 'modules/project/pattern';
+import { BeatID, PatternData, patternBeats, canAddPatternPage } from 'modules/project/pattern';
 
 import { FormNumber } from 'ui/common/FormNumber';
 import { FormSelect } from 'ui/common/FormSelect';
+import { Playback } from 'ui/components/Project/Playback';
 import { createSelectOptions, FormSelectOption } from 'ui/common/FormSelect/options';
 
 type OnLength = (length: NoteLength) => void;
@@ -72,6 +73,10 @@ export const PatternActions: React.SFC<Props> = props => {
     const { track, pattern, length, velocity, beats, onLength, onVelocity, onBeat } = props;
     return (
         <ul className="PatternActions">
+            <li className="PatternActions-item">
+                <Playback track={track} pattern={pattern} />
+            </li>
+
             <li
                 className="PatternActions-item"
                 title={TXT.pianoRoll.beats.title}

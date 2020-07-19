@@ -138,6 +138,7 @@ export const PianoRollUI: React.SFC<Props> = ({ track, pattern }) => {
                                                         'Note--first': (time === note.start),
                                                         'Note--last': (time === note.start + getNoteLengthValue(note.length) - 1)
                                                     })}
+                                                    data-pitch={note.pitch}
                                                 />
                                             )}
                                         </div>

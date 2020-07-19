@@ -149,7 +149,8 @@ export const NOTE = Object.freeze({
     },
     PITCH: {
         MIN: 0,
-        MAX: 119
+        MAX: 119,
+        DEFAULT: 60
     },
     VELOCITY: {
         MIN: 0,

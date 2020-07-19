@@ -1,0 +1,19 @@
+.Playback {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+
+    &-item {
+        margin-left: $vu;
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+
+    &-button {
+        @extend %button-default;
+        width: 3*$vu;
+        padding: 0;
+    }
+}

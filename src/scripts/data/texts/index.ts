@@ -79,5 +79,19 @@ export const TXT = {
             title: 'Octave down',
             ico: '∨'
         }
+    },
+    playback: {
+        play: {
+            title: 'Play',
+            ico: '►'
+        },
+        pause: {
+            title: 'Pause',
+            ico: '❚❚'
+        },
+        stop: {
+            title: 'Stop',
+            ico: '∎'
+        }
     }
 };
