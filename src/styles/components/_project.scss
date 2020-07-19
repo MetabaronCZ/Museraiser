@@ -7,6 +7,25 @@
         padding-bottom: 2*$vu;
         margin-bottom: 2*$vu;
         border-bottom: $border-light;
+
+        &-header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: $vu;
+
+            &-title {
+                flex: 1;
+            }
+
+            &-playback {
+                padding-right: $right-column-width + 2*$vu;
+            }
+        }
+
+        &-tracks {
+            /* */
+        }
     }
 
     &-bottom {

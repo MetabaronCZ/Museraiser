@@ -7,16 +7,20 @@ import { Logger } from 'modules/logger';
 import { AppState } from 'modules/store';
 import { ProjectDataState } from 'modules/project';
 
+import { useProjectPlayback } from 'ui/hooks/project-playback';
+
 import { Heading } from 'ui/common/Heading';
 import { IntroUI } from 'ui/components/Intro';
 import { SampleUI } from 'ui/components/Project/Sample';
 import { MasterUI } from 'ui/components/Project/Master';
 import { TracksUI } from 'ui/components/Project/Tracks';
 import { PatternsUI } from 'ui/components/Project/Patterns';
+import { PlaybackUI } from 'ui/components/Project/PlaybackUI';
 import { PianoRollUI } from 'ui/components/Project/PianoRoll';
 
 export const ProjectUI: React.SFC = () => {
     const project = useSelector<AppState, ProjectDataState>(state => state.project);
+    const [running, paused, play, pause, stop] = useProjectPlayback(project);
 
     if (!project) {
         Logger.error('Could not open project');
@@ -31,8 +35,25 @@ export const ProjectUI: React.SFC = () => {
     return (
         <div className="Project">
             <div className="Project-top">
-                <Heading size="large" text={`${TXT.project.title}: ${name}`} />
-                <TracksUI tracks={tracks} track={trackID} pattern={patternID} />
+                <div className="Project-top-header">
+                    <div className="Project-top-header-title">
+                        <Heading size="large" text={`${TXT.project.title}: ${name}`} />
+                    </div>
+
+                    <div className="Project-top-header-playback">
+                        <PlaybackUI
+                            running={running}
+                            paused={paused}
+                            onPlay={play}
+                            onPause={pause}
+                            onStop={stop}
+                        />
+                    </div>
+                </div>
+
+                <div className="Project-top-tracks">
+                    <TracksUI tracks={tracks} track={trackID} pattern={patternID} />
+                </div>
             </div>
 
             <div className="Project-bottom">

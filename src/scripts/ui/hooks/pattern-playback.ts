@@ -4,17 +4,15 @@ import { toArrayBuffer } from 'core/buffer';
 import { SEQUENCER } from 'data/config';
 
 import { Audio } from 'modules/audio';
+import { Playback } from 'modules/playback';
 import { ProjectData } from 'modules/project';
 import { PatternData } from 'modules/project/pattern';
 import { TrackData } from 'modules/project/tracks/track';
 
-type OnPlayback = () => void;
-type UsePlayback = [boolean, boolean, OnPlayback, OnPlayback, OnPlayback];
-
 const { BEAT } = SEQUENCER;
 const emptyFn = (): void => undefined;
 
-export const usePlayback = (project: ProjectData | null, track: TrackData, pattern: PatternData): UsePlayback => {
+export const usePatternPlayback = (project: ProjectData | null, track: TrackData, pattern: PatternData): Playback => {
     const [running, setRunning] = useState<AudioBufferSourceNode[]>([]);
     const { sample } = track;
 

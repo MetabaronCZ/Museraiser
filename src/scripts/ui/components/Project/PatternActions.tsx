@@ -1,16 +1,21 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import { TXT } from 'data/texts';
 import { NOTE } from 'data/config';
 
+import { AppState } from 'modules/store';
+import { ProjectData } from 'modules/project';
 import { TrackData } from 'modules/project/tracks/track';
 import { Pattern } from 'modules/project/pattern/actions';
 import { NoteLength, noteLengths } from 'modules/project/note';
 import { BeatID, PatternData, patternBeats, canAddPatternPage } from 'modules/project/pattern';
 
+import { usePatternPlayback } from 'ui/hooks/pattern-playback';
+
 import { FormNumber } from 'ui/common/FormNumber';
 import { FormSelect } from 'ui/common/FormSelect';
-import { Playback } from 'ui/components/Project/Playback';
+import { PlaybackUI } from 'ui/components/Project/PlaybackUI';
 import { createSelectOptions, FormSelectOption } from 'ui/common/FormSelect/options';
 
 type OnLength = (length: NoteLength) => void;
@@ -71,10 +76,20 @@ interface Props {
 
 export const PatternActions: React.SFC<Props> = props => {
     const { track, pattern, length, velocity, beats, onLength, onVelocity, onBeat } = props;
+
+    const project = useSelector<AppState, ProjectData | null>(state => state.project);
+    const [running, paused, play, pause, stop] = usePatternPlayback(project, track, pattern);
+
     return (
         <ul className="PatternActions">
             <li className="PatternActions-item">
-                <Playback track={track} pattern={pattern} />
+                <PlaybackUI
+                    running={running}
+                    paused={paused}
+                    onPlay={play}
+                    onPause={pause}
+                    onStop={stop}
+                />
             </li>
 
             <li
